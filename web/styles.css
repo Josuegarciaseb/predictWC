@@ -1,0 +1,232 @@
+/* ============================================================
+   PredictWC — pronóstico Mundial 2026
+   Estética: publicación de datos deportivos (editorial, plana).
+   Archivo + Fira Code · dark · WCAG AA · numerals tabulares.
+   ============================================================ */
+:root{
+  --ink:#0d1117; --panel:#151b24; --panel-2:#1b222d; --panel-3:#222b38;
+  --line:#252e3b; --line-2:#36414f;
+  --text:#e8ecf2; --muted:#9aa6b6; --muted-2:#6c7787;
+  --accent:#f5a524; --accent-press:#d98c14;
+  --blue:#4b8bf4; --blue-soft:rgba(75,139,244,.14);
+  --gold:#f5c542; --silver:#c4ccd6; --bronze:#cd7f43;
+  --success:#3fb950; --danger:#f0506e;
+  --home:#4b8bf4; --draw:#6b7686; --away:#f5a524;
+  --t:170ms ease;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Archivo',system-ui,sans-serif;background:var(--ink);color:var(--text);
+  min-height:100vh;line-height:1.55;-webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(180deg,#10161f 0%,var(--ink) 380px);
+}
+.num{font-family:'Fira Code',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+svg.ic{width:18px;height:18px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* real flags (flagcdn) */
+.flag{display:inline-block;object-fit:cover;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.12);vertical-align:middle;background:var(--panel-3)}
+
+/* ===== MASTHEAD ===== */
+.masthead{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;
+  max-width:1280px;margin:0 auto;padding:40px 40px 24px;border-bottom:2px solid var(--text);
+}
+.kicker{font-size:11.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.wordmark{font-size:48px;font-weight:900;letter-spacing:-.025em;line-height:.95}
+.wordmark span{color:var(--accent)}
+.wordmark em{font-style:normal;font-weight:400;color:var(--muted-2);font-size:.6em;letter-spacing:0}
+.dek{color:var(--muted);font-size:14px;max-width:560px;margin-top:12px;line-height:1.5}
+.statstrip{display:flex;gap:0;flex-wrap:wrap}
+.statstrip div{padding:2px 22px;border-left:1px solid var(--line-2)}
+.statstrip div:first-child{padding-left:0;border-left:0}
+.statstrip dt{font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2)}
+.statstrip dd{font-size:26px;font-weight:600;color:var(--text);margin-top:2px}
+
+/* ===== TOP NAV (editorial underline) ===== */
+.topnav{
+  display:flex;gap:4px;flex-wrap:wrap;max-width:1280px;margin:0 auto;padding:0 40px;
+  border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(13,17,23,.92);
+  backdrop-filter:blur(6px);z-index:30;
+}
+.navlink{
+  background:none;border:0;cursor:pointer;font-family:inherit;color:var(--muted);
+  font-size:14px;font-weight:600;padding:16px 14px;position:relative;transition:color var(--t);
+}
+.navlink:hover{color:var(--text)}
+.navlink::after{content:"";position:absolute;left:14px;right:14px;bottom:-1px;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform var(--t)}
+.navlink[aria-selected="true"]{color:var(--text)}
+.navlink[aria-selected="true"]::after{transform:scaleX(1)}
+
+/* ===== PANELS ===== */
+main{max-width:1280px;margin:0 auto;padding:30px 40px 70px}
+.panel{display:none}
+.panel.active{display:block;animation:fade .28s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.panel-head{margin-bottom:22px}
+.panel-head h2{font-size:30px;font-weight:800;letter-spacing:-.02em}
+.panel-head p{color:var(--muted);font-size:14.5px;margin-top:6px;max-width:680px}
+.panel-head code{font-family:'Fira Code',monospace;font-size:13px;color:var(--accent);background:var(--panel-2);padding:1px 6px;border-radius:4px}
+
+.grid-2{display:grid;grid-template-columns:1.06fr .94fr;gap:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:22px}
+.card-title{
+  font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:9px;
+}
+.card-title::before{content:"";width:8px;height:8px;background:var(--accent);flex-shrink:0}
+.chart-box{position:relative;height:350px}
+.chart-box.tall{height:490px}
+
+/* ===== PODIUM ===== */
+.podium{display:flex;flex-direction:column}
+.pod-row{display:flex;align-items:center;gap:16px;padding:15px 4px;border-bottom:1px solid var(--line)}
+.pod-row:last-child{border-bottom:0}
+.pod-row .pos{font-family:'Fira Code',monospace;font-size:22px;font-weight:600;width:30px;text-align:center;color:var(--muted-2)}
+.pod-row.g .pos{color:var(--gold)} .pod-row.s .pos{color:var(--silver)} .pod-row.b .pos{color:var(--bronze)}
+.pod-row .flag{width:38px;height:26px}
+.pod-name{flex:1;font-weight:700;font-size:16px}
+.pod-bartrack{height:5px;background:var(--panel-3);border-radius:3px;margin-top:7px;overflow:hidden}
+.pod-bartrack i{display:block;height:100%;background:var(--accent);transition:width var(--t)}
+.pod-prob{font-family:'Fira Code',monospace;font-size:20px;font-weight:600;color:var(--text)}
+
+/* ===== TABLE ===== */
+.table-wrap{max-height:490px;overflow-y:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line)}
+th.r,td.r{text-align:right}
+th{position:sticky;top:0;background:var(--panel);color:var(--muted-2);font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;z-index:1}
+tbody tr{transition:background var(--t)}
+tbody tr:hover{background:var(--panel-2)}
+td .flag{width:24px;height:17px;margin-right:9px}
+td.val{font-family:'Fira Code',monospace;font-weight:600;font-variant-numeric:tabular-nums}
+.rk{font-family:'Fira Code',monospace;color:var(--muted-2);font-variant-numeric:tabular-nums}
+
+/* ===== CHIPS ===== */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
+.chip{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-family:inherit;
+  padding:6px 12px 6px 9px;border-radius:3px;border:1px solid var(--line-2);background:var(--panel-2);
+  color:var(--muted);font-size:13px;font-weight:600;transition:color var(--t),border-color var(--t),background var(--t);
+}
+.chip:hover{color:var(--text);border-color:var(--muted-2)}
+.chip[aria-pressed="true"]{color:var(--text);background:var(--panel-3)}
+.chip .flag{width:20px;height:14px}
+.chip .swatch{width:10px;height:10px;border-radius:50%;border:1px solid var(--muted-2);flex-shrink:0}
+
+/* ===== SEARCH ===== */
+.search-wrap{position:relative;margin-bottom:20px;max-width:360px}
+.search-wrap .ic{position:absolute;left:13px;top:50%;transform:translateY(-50%);stroke:var(--muted-2)}
+.search{
+  width:100%;padding:11px 14px 11px 40px;border-radius:4px;border:1px solid var(--line-2);
+  background:var(--ink);color:var(--text);font-size:14px;font-family:inherit;transition:border-color var(--t);
+}
+.search::placeholder{color:var(--muted-2)}
+.search:focus{outline:none;border-color:var(--accent)}
+
+/* ===== MATCH CARDS ===== */
+.match-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.match{background:var(--panel);padding:18px;transition:background var(--t)}
+.match:hover{background:var(--panel-2)}
+.match-date{display:flex;align-items:center;gap:6px;font-size:11.5px;letter-spacing:.04em;color:var(--muted-2);margin-bottom:13px;text-transform:uppercase;font-weight:600}
+.match-date .ic{width:14px;height:14px}
+.match-teams{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.mt{display:flex;align-items:center;gap:9px;flex:1;min-width:0}
+.mt.away{flex-direction:row-reverse;text-align:right}
+.mt .flag{width:30px;height:21px}
+.mt .nm{font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.score-pred{font-family:'Fira Code',monospace;font-size:24px;font-weight:700;color:var(--accent);padding:0 10px;font-variant-numeric:tabular-nums}
+.prob-bar{display:flex;height:8px;border-radius:2px;overflow:hidden;margin:16px 0 10px;background:var(--panel-3)}
+.prob-bar .seg{height:100%}
+.seg.l{background:var(--home)} .seg.d{background:var(--draw)} .seg.v{background:var(--away)}
+.prob-legend{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:13px}
+.prob-legend span{display:inline-flex;align-items:center;gap:6px;color:var(--muted)}
+.prob-legend i{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.prob-legend b{font-family:'Fira Code',monospace;color:var(--text);font-weight:600;font-variant-numeric:tabular-nums}
+.match-top3{font-family:'Fira Code',monospace;font-size:11.5px;color:var(--muted-2);border-top:1px solid var(--line);padding-top:11px;line-height:1.7}
+.match-top3 b{color:var(--muted);font-weight:600;display:block;font-family:'Archivo';text-transform:uppercase;letter-spacing:.08em;font-size:10px;margin-bottom:3px}
+
+/* ===== MATCH CLICKABLE + HEATMAP MODAL ===== */
+.match.clickable{cursor:pointer}
+.match.clickable:hover{background:var(--panel-2)}
+.match.clickable:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.match-cta{margin-top:11px;font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--accent);text-transform:uppercase}
+
+.hm-overlay{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+  background:rgba(5,8,12,.78);backdrop-filter:blur(4px);padding:24px;animation:fade .2s ease}
+.hm-overlay[hidden]{display:none}
+.hm-modal{position:relative;background:var(--panel);border:1px solid var(--line-2);border-radius:10px;
+  padding:30px 32px 26px;max-width:760px;width:100%;max-height:92vh;overflow:auto;box-shadow:0 24px 70px rgba(0,0,0,.55)}
+.hm-close{position:absolute;top:14px;right:16px;width:34px;height:34px;border-radius:6px;border:1px solid var(--line-2);
+  background:var(--panel-2);color:var(--muted);font-size:22px;line-height:1;cursor:pointer;transition:color var(--t),border-color var(--t)}
+.hm-close:hover{color:var(--text);border-color:var(--muted-2)}
+.hm-kicker{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.hm-title{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-top:6px;display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.hm-title .flag{width:34px;height:24px}
+.hm-vs{color:var(--muted-2);font-weight:400;font-size:.7em}
+.hm-sub{color:var(--muted);font-size:13px;margin-top:4px}
+.hm-axis-x{text-align:center;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin:22px 0 8px}
+.hm-plot{display:flex;align-items:stretch;gap:8px}
+.hm-axis-y{writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;font-size:11px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);flex-shrink:0}
+.hm-grid{display:grid;gap:3px;flex:1}
+.hm-head{display:flex;align-items:center;justify-content:center;font-family:'Fira Code',monospace;
+  font-weight:700;font-size:14px;color:var(--muted)}
+.hm-corner{font-family:'Fira Code',monospace;font-size:11px;color:var(--muted-2);display:flex;align-items:center;justify-content:center}
+.hm-cell{aspect-ratio:1;border-radius:4px;display:flex;align-items:center;justify-content:center;
+  font-family:'Fira Code',monospace;font-weight:600;font-size:12.5px;font-variant-numeric:tabular-nums}
+.hm-cell span{font-size:.7em;opacity:.7;margin-left:1px}
+.hm-foot{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.hm-foot span{display:inline-flex;align-items:center;gap:7px}
+.hm-foot i{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.hm-foot b{font-family:'Fira Code',monospace;color:var(--text);font-weight:600}
+@media(max-width:600px){
+  .hm-modal{padding:22px 16px}
+  .hm-cell{font-size:9.5px;border-radius:3px}
+  .hm-head{font-size:11px}
+}
+
+/* ===== METHODOLOGY ===== */
+.phases{list-style:none;counter-reset:none;display:grid;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.phase{display:flex;gap:20px;align-items:flex-start;background:var(--panel);padding:20px 22px;border-bottom:1px solid var(--line)}
+.phase:last-child{border-bottom:0}
+.ph-num{font-family:'Fira Code',monospace;font-size:15px;font-weight:600;color:var(--accent);padding-top:2px}
+.phase strong{font-size:16px;font-weight:800}
+.phase p{font-size:13.5px;color:var(--muted);margin-top:3px}
+.phase code,.phase b{font-family:inherit}
+.phase b{color:var(--text)}
+
+/* ===== SKELETON ===== */
+.skeleton{position:relative;overflow:hidden;background:var(--panel-2);border-radius:4px}
+.skeleton::after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);animation:shimmer 1.3s infinite}
+@keyframes shimmer{100%{transform:translateX(100%)}}
+.sk-bar{height:350px}.sk-bar.tall{height:490px}
+
+/* ===== FOOT ===== */
+.foot{display:flex;align-items:center;gap:9px;max-width:1280px;margin:0 auto;padding:20px 40px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+.foot .ic{width:15px;height:15px;stroke:var(--success)}
+.foot-sep{color:var(--muted-2)}
+.foot-credit{color:var(--muted-2);font-size:12px}
+.error-box{background:rgba(240,80,110,.08);border:1px solid var(--danger);border-radius:6px;padding:16px;color:#f7a8b6;font-size:13.5px;line-height:1.8}
+.error-box code{background:rgba(0,0,0,.35);padding:2px 6px;border-radius:4px;color:var(--gold);font-family:'Fira Code',monospace}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){.grid-2{grid-template-columns:1fr}}
+@media(max-width:760px){
+  .masthead{padding:28px 20px 18px;gap:22px}
+  .wordmark{font-size:36px}
+  .statstrip{width:100%}
+  .statstrip div{flex:1;padding:2px 14px}
+  .statstrip dd{font-size:21px}
+  .topnav{padding:0 20px;overflow-x:auto}
+  main{padding:24px 20px 56px}
+  .panel-head h2{font-size:24px}
+  .match-list{grid-template-columns:1fr}
+}
+
+/* ===== REDUCED MOTION ===== */
+@media(prefers-reduced-motion:reduce){*,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

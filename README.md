@@ -68,6 +68,7 @@ pip install -r requirements.txt
 o
 py -m pip install -r requirements.txt
 
+Igual aqui es con python o py
 python scripts/01_pipeline_elo.py
 python scripts/02_pipeline_poisson_dixon_coles.py
 python scripts/03_pipeline_ml.py

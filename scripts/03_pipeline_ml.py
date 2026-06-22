@@ -1,11 +1,3 @@
-"""
-scripts/03_pipeline_ml.py
-===========================
-Fase 3: construye las features (Elo + forma + h2h), entrena XGBoost y
-CatBoost, y los compara de forma honesta contra Dixon-Coles (Fase 2) en
-exactamente la misma ventana de backtest -- para saber si realmente suman
-algo o si es solo más complejidad sin beneficio real.
-"""
 import sys
 from pathlib import Path
 
@@ -55,7 +47,7 @@ def backtest(historico_feat: pd.DataFrame, historico_crudo: pd.DataFrame,
     print(f"\nBacktest (misma ventana que Fase 2): train={len(train)}  test={len(test)}  "
           f"({fecha_corte.date()} -> {fecha_max.date()})")
 
-    # --- XGBoost / CatBoost / blend ---
+
     modelos = ModelosML(categorias_torneo)
     modelos.fit(train)
     probs = modelos.predict_proba(test)
@@ -64,7 +56,7 @@ def backtest(historico_feat: pd.DataFrame, historico_crudo: pd.DataFrame,
     for nombre, p in probs.items():
         resultados[nombre] = evaluar(y_test, p)
 
-    # --- Dixon-Coles, misma ventana exacta, para comparar peras con peras ---
+
     dc = DixonColesModel(cutoff_years=11, half_life_years=2.5)
     dc.fit(historico_crudo, fecha_corte=str(fecha_corte.date()))
 
@@ -75,7 +67,7 @@ def backtest(historico_feat: pd.DataFrame, historico_crudo: pd.DataFrame,
     probs_dc = np.array(probs_dc_list)
     resultados["dixon_coles"] = evaluar(y_test, probs_dc)
 
-    # --- Baseline ingenuo ---
+
     distrib_real = np.bincount(y_test, minlength=3) / len(y_test)
     resultados["baseline_ingenuo"] = evaluar(y_test, np.tile(distrib_real, (len(y_test), 1)))
 
@@ -99,7 +91,7 @@ def main():
 
     backtest(historico_feat, hist_crudo, categorias_torneo, meses_holdout=18)
 
-    # --- Ajuste final con TODO el histórico, para predecir el Mundial 2026 ---
+
     print("\nEntrenando modelos finales con todo el histórico disponible...")
     modelos_finales = ModelosML(categorias_torneo)
     modelos_finales.fit(historico_feat)
@@ -126,7 +118,7 @@ def main():
     cols_mostrar = ["fecha", "local", "visitante", "prob_local_blend", "prob_empate_blend", "prob_visita_blend"]
     print(tabla[cols_mostrar].to_string(index=False))
 
-    # --- Guardar modelos entrenados para la Fase 4 (stacking) ---
+
     import joblib
     modelos_dir = Path(__file__).resolve().parent.parent / "data" / "processed" / "modelos_fase3"
     modelos_dir.mkdir(parents=True, exist_ok=True)

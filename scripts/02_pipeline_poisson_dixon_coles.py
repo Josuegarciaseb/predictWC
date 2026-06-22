@@ -1,10 +1,3 @@
-"""
-scripts/02_pipeline_poisson_dixon_coles.py
-============================================
-Fase 2: ajusta el modelo Poisson + Dixon-Coles, lo valida con un backtest
-temporal (para no engañarnos con métricas infladas) y genera la tabla final
-con el marcador más probable de cada uno de los 40 partidos del Mundial 2026.
-"""
 import sys
 from pathlib import Path
 
@@ -24,8 +17,6 @@ def log_loss_3clases(y_true_idx: np.ndarray, probs: np.ndarray, eps: float = 1e-
 
 
 def backtest(historico: pd.DataFrame, meses_holdout: int = 18):
-    """Entrena con todo lo anterior al período de holdout y evalúa en los
-    últimos `meses_holdout` meses de partidos con resultado conocido."""
     historico = historico.copy()
     historico["date"] = pd.to_datetime(historico["date"])
     fecha_max = historico["date"].max()
@@ -38,7 +29,7 @@ def backtest(historico: pd.DataFrame, meses_holdout: int = 18):
     modelo_bt = DixonColesModel(cutoff_years=11, half_life_years=2.5)
     modelo_bt.fit(historico, fecha_corte=str(fecha_corte.date()))
 
-    y_true_idx = []  # 0=local gana, 1=empate, 2=visita gana
+    y_true_idx = []
     probs = []
     for fila in holdout.itertuples(index=False):
         pred = modelo_bt.predecir_partido(fila.home_team, fila.away_team, bool(fila.neutral))
@@ -57,7 +48,7 @@ def backtest(historico: pd.DataFrame, meses_holdout: int = 18):
     accuracy_modelo = float((pred_idx == y_true_idx).mean())
     logloss_modelo = log_loss_3clases(y_true_idx, probs)
 
-    # Baselines de referencia
+
     distrib_real = np.bincount(y_true_idx, minlength=3) / len(y_true_idx)
     clase_mayoritaria = distrib_real.argmax()
     accuracy_mayoritaria = float((y_true_idx == clase_mayoritaria).mean())
@@ -75,10 +66,10 @@ def main():
     historico = pd.read_csv(PROCESSED_DIR / "historico_con_elo.csv", parse_dates=["date"])
     a_predecir = pd.read_csv(PROCESSED_DIR / "partidos_a_predecir.csv", parse_dates=["date"])
 
-    # --- Validación honesta antes de confiar en el modelo final ---
+
     backtest(historico, meses_holdout=18)
 
-    # --- Ajuste final con todo el histórico disponible ---
+
     modelo = DixonColesModel(cutoff_years=11, half_life_years=2.5)
     modelo.fit(historico)
 
@@ -87,7 +78,7 @@ def main():
     print("\n=== Top 15 selecciones por índice ofensivo (ataque - defensa) ===")
     print(modelo.ranking_ataque_defensa(15).round(3).to_string())
 
-    # --- Predicciones de los 40 partidos del Mundial 2026 ---
+
     filas = []
     for fila in a_predecir.itertuples(index=False):
         pred = modelo.predecir_partido(fila.home_team, fila.away_team, bool(fila.neutral))

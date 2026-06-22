@@ -1,14 +1,3 @@
-"""
-scripts/05_pipeline_montecarlo.py
-====================================
-Fase 5: simulación Monte Carlo del Mundial 2026 completo (grupos -> Octavos
-de 32 -> Octavos de Final -> Cuartos -> Semis -> Final).
-
-Ver src/montecarlo.py y src/torneo.py para el diseño y las limitaciones
-reconocidas (asignación simplificada de "mejores terceros" a la llave,
-Elo/ataque-defensa estáticos durante toda la simulación, árbol de Octavos32
--> Octavos16 asumido secuencial).
-"""
 import sys
 import time
 from pathlib import Path
@@ -43,7 +32,7 @@ def main():
     tabla = simular_torneo_montecarlo(dc, elo_final, historico, n_sims=N_SIMULACIONES, seed=42)
     print(f"Listo en {time.time() - t0:.0f}s")
 
-    # chequeos de consistencia (deben dar exactamente 32 / 1.0 / 2.0)
+
     print(f"\nChequeo -> suma prob_octavos_32: {tabla['prob_octavos_32'].sum():.1f} (esperado 32.0)")
     print(f"Chequeo -> suma prob_campeon:     {tabla['prob_campeon'].sum():.3f} (esperado 1.0)")
 

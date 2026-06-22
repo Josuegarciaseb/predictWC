@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PredictWC — Pronóstico Mundial FIFA 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="i-calendar"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></g>
+  <g id="i-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></g>
+  <g id="i-check"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></g>
+</defs></svg>
+
+<header class="masthead">
+  <div class="mast-left">
+    <p class="kicker">Pronóstico WC</p>
+    <h1 class="wordmark">Predict<span>WC</span> <em>2026</em></h1>
+    <p class="dek">Estimación del resultado de cada partido combinando Elo dinámico, Poisson/Dixon-Coles, gradient boosting, stacking y simulación Monte Carlo del torneo.</p>
+  </div>
+  <dl class="statstrip">
+    <div><dt>Accuracy</dt><dd class="num">61,4%</dd></div>
+    <div><dt>Log-loss</dt><dd class="num">0,828</dd></div>
+    <div><dt>Simulaciones</dt><dd class="num">5 000</dd></div>
+    <div><dt>Selecciones</dt><dd class="num">48</dd></div>
+  </dl>
+</header>
+
+<nav class="topnav" role="tablist" aria-label="Secciones">
+  <button class="navlink" role="tab" aria-selected="true"  aria-controls="overview" data-tab="overview">Favoritos</button>
+  <button class="navlink" role="tab" aria-selected="false" aria-controls="elo"       data-tab="elo">Ranking Elo</button>
+  <button class="navlink" role="tab" aria-selected="false" aria-controls="rondas"    data-tab="rondas">Avance por ronda</button>
+  <button class="navlink" role="tab" aria-selected="false" aria-controls="partidos"  data-tab="partidos">Partidos</button>
+  <button class="navlink" role="tab" aria-selected="false" aria-controls="about"     data-tab="about">Metodología</button>
+</nav>
+
+<main>
+  <!-- OVERVIEW -->
+  <section id="overview" class="panel active" role="tabpanel" tabindex="0">
+    <div class="panel-head">
+      <h2>Quién levanta la copa</h2>
+      <p>Probabilidad de campeón sobre 5 000 simulaciones Monte Carlo del torneo completo, de la fase de grupos a la final.</p>
+    </div>
+    <div class="grid-2">
+      <section class="card">
+        <h3 class="card-title">Los doce favoritos</h3>
+        <div class="chart-box"><canvas id="champChart" role="img" aria-label="Probabilidad de campeón de los doce favoritos"></canvas></div>
+        <p id="champSummary" class="sr-only"></p>
+      </section>
+      <section class="card">
+        <h3 class="card-title">Podio proyectado</h3>
+        <div id="podium" class="podium"></div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ELO -->
+  <section id="elo" class="panel" role="tabpanel" tabindex="0" hidden>
+    <div class="panel-head">
+      <h2>Ranking Elo actual</h2>
+      <p>Rating dinámico con ventaja de local y peso por goleada, calculado sobre resultados de selecciones desde 1872.</p>
+    </div>
+    <div class="grid-2">
+      <section class="card">
+        <h3 class="card-title">Top 15 por Elo</h3>
+        <div class="chart-box tall"><canvas id="eloChart" role="img" aria-label="Rating Elo de las quince mejores selecciones"></canvas></div>
+      </section>
+      <section class="card">
+        <h3 class="card-title">Clasificación completa</h3>
+        <div class="table-wrap"><table id="eloTable"></table></div>
+      </section>
+    </div>
+  </section>
+
+  <!-- RONDAS -->
+  <section id="rondas" class="panel" role="tabpanel" tabindex="0" hidden>
+    <div class="panel-head">
+      <h2>El camino hasta la final</h2>
+      <p>Probabilidad de superar cada ronda. Activa o desactiva selecciones para comparar trayectorias.</p>
+    </div>
+    <section class="card">
+      <div id="teamChips" class="chips" role="group" aria-label="Equipos a comparar"></div>
+      <div class="chart-box tall"><canvas id="roundsChart" role="img" aria-label="Probabilidad de avance por ronda de los equipos seleccionados"></canvas></div>
+    </section>
+  </section>
+
+  <!-- PARTIDOS -->
+  <section id="partidos" class="panel" role="tabpanel" tabindex="0" hidden>
+    <div class="panel-head">
+      <h2>Partido a partido</h2>
+      <p>Los 40 partidos de la primera ronda de grupos (20–27 junio 2026), según el stacking ensemble (Fase 4).</p>
+    </div>
+    <section class="card">
+      <div class="search-wrap">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-search"/></svg>
+        <input id="matchSearch" class="search" type="search" placeholder="Buscar selección…" aria-label="Buscar partidos por selección" />
+      </div>
+      <div id="matchList" class="match-list" aria-live="polite"></div>
+    </section>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="panel" role="tabpanel" tabindex="0" hidden>
+    <div class="panel-head"><h2>Metodología</h2>
+      <p>Un pipeline de cinco fases, de un CSV crudo a la probabilidad de título. Fuente: <code>martj42/international_results</code>.</p>
+    </div>
+    <ol class="phases">
+      <li class="phase"><span class="ph-num">01</span><div><strong>Elo dinámico</strong><p>Rating base con ventaja de local, K variable por torneo y peso por goleada.</p></div></li>
+      <li class="phase"><span class="ph-num">02</span><div><strong>Poisson / Dixon-Coles</strong><p>Marcador exacto más probable por partido. 60,5% de acierto.</p></div></li>
+      <li class="phase"><span class="ph-num">03</span><div><strong>XGBoost / CatBoost</strong><p>Probabilidades 1X2 con gradient boosting. 60,6–60,7% de acierto.</p></div></li>
+      <li class="phase"><span class="ph-num">04</span><div><strong>Stacking ensemble</strong><p>Meta-modelo sobre los anteriores. <b>61,4% de acierto · 0,828 log-loss.</b></p></div></li>
+      <li class="phase"><span class="ph-num">05</span><div><strong>Monte Carlo</strong><p>Simula el torneo completo 5 000 veces (formato de 48 equipos, octavos de 32).</p></div></li>
+    </ol>
+  </section>
+</main>
+
+<footer class="foot">
+  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>
+  <span id="loadStatus" role="status">Cargando datos…</span>
+  <span class="foot-sep">·</span>
+  <span class="foot-credit">Banderas: flagcdn.com</span>
+</footer>
+
+<!-- HEATMAP MODAL -->
+<div id="hmOverlay" class="hm-overlay" role="dialog" aria-modal="true" aria-label="Distribución de probabilidades del marcador" hidden>
+  <div class="hm-modal">
+    <button class="hm-close" aria-label="Cerrar">×</button>
+    <p class="hm-kicker">Distribución de probabilidades del marcador</p>
+    <h3 class="hm-title"></h3>
+    <p class="hm-sub"></p>
+    <div class="hm-axis-x"></div>
+    <div class="hm-plot">
+      <div class="hm-axis-y"></div>
+      <div class="hm-grid"></div>
+    </div>
+    <div class="hm-foot"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

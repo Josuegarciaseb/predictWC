@@ -1,45 +1,13 @@
-"""
-elo.py
-======
-Sistema de Elo dinámico para selecciones de fútbol.
-
-Bug del pseudocódigo original:
---------------------------------
-    if fila[fila['home_score'].notna() and fila['away_score'].notna()]:
-
-`fila['home_score']` ya es un escalar (no una Serie), por lo que no tiene
-método `.notna()` -> esto lanza AttributeError en cuanto se ejecuta. Además
-la indexación `fila[...]` con un booleano no tiene sentido sobre una Serie de
-una sola fila. Aquí se reemplaza por una verificación explícita con
-`pd.notna(...)`.
-
-Mejoras añadidas respecto al pseudocódigo original (metodología estándar de
-World Football Elo Ratings, eloratings.net):
--------------------------------------------------------------------------------
-1. Ventaja de local: +100 puntos al rating del local antes de calcular la
-   probabilidad esperada (se omite si el partido es en sede neutral).
-2. Multiplicador por diferencia de goles (G): una goleada pesa más que un
-   triunfo por la mínima.
-3. K variable por importancia del torneo (mundial > continental > amistoso).
-4. Partidos sin resultado (los 40 del Mundial 2026): se registra el Elo
-   "antes" del partido (es justamente el feature que se necesita para
-   predecirlos) pero NO se actualiza el rating, porque no hay resultado real.
-"""
 from __future__ import annotations
 
 import math
 import pandas as pd
 
 ELO_INICIAL = 1500
-VENTAJA_LOCAL = 100  # puntos sumados al elo del local si el partido no es neutral
+VENTAJA_LOCAL = 100
 
 
 def k_por_torneo(tournament: str) -> int:
-    """Devuelve el factor K según la importancia de la competición.
-
-    Categorías inspiradas en eloratings.net (mundial > eliminatorias /
-    torneos continentales > amistoso). Se puede ajustar libremente.
-    """
     t = tournament.lower()
 
     if t == "fifa world cup":
@@ -55,11 +23,10 @@ def k_por_torneo(tournament: str) -> int:
         return 30
     if t == "friendly":
         return 20
-    return 25  # default razonable para torneos menores / amistosos regionales
+    return 25
 
 
 def _multiplicador_goles(diferencia_goles: int) -> float:
-    """Factor G: castiga/premia según el margen de la victoria."""
     dg = abs(diferencia_goles)
     if dg <= 1:
         return 1.0
@@ -73,22 +40,6 @@ def calcular_elo_historico(
     elo_inicial: int = ELO_INICIAL,
     ventaja_local: int = VENTAJA_LOCAL,
 ) -> pd.DataFrame:
-    """Calcula el Elo dinámico partido a partido.
-
-    Parameters
-    ----------
-    df : DataFrame ordenado cronológicamente por 'date'. Puede incluir tanto
-         partidos con resultado como partidos sin resultado (NaN en
-         home_score/away_score) -- típicamente el histórico + los partidos
-         del Mundial 2026 a predecir, concatenados y ordenados por fecha.
-
-    Returns
-    -------
-    DataFrame (copia) con dos columnas nuevas:
-        elo_local_antes, elo_visita_antes
-    y un diccionario adicional `elo_final` (último rating de cada selección)
-    accesible vía `df.attrs['elo_final']` tras la llamada.
-    """
     df = df.sort_values("date").reset_index(drop=True).copy()
 
     elo_actual: dict[str, float] = {}
@@ -108,8 +59,6 @@ def calcular_elo_historico(
 
         hay_resultado = pd.notna(fila.home_score) and pd.notna(fila.away_score)
         if not hay_resultado:
-            # Partido futuro (ej. Mundial 2026 todavía no jugado): se guarda
-            # el Elo "antes" como feature, pero no hay nada que actualizar.
             continue
 
         ventaja = 0 if neutral else ventaja_local

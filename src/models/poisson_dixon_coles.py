@@ -1,38 +1,3 @@
-"""
-src/models/poisson_dixon_coles.py
-==================================
-Fase 2: modelo de goles Poisson con ataque/defensa por selección + corrección
-Dixon-Coles (1997) para marcadores bajos.
-
-Idea del modelo
-----------------
-Cada selección tiene una fuerza de ataque (alpha_i) y de defensa (beta_i).
-Los goles que el equipo local mete se modelan como Poisson(lambda) y los del
-visitante como Poisson(mu):
-
-    lambda = exp(intercept + ataque_local + defensa_visitante + ventaja_local)
-    mu     = exp(intercept + ataque_visitante + defensa_local)
-
-(ventaja_local se omite si el partido es en sede neutral)
-
-Ajuste en dos pasos (estándar en implementaciones modernas de Dixon-Coles,
-permite usar solvers de regresión Poisson eficientes en vez de optimizar a
-mano cientos de parámetros):
-
-1. Se reescribe cada partido como 2 observaciones (perspectiva del local y
-   del visitante) y se ajusta una regresión de Poisson con dummies de
-   "equipo atacante" y "equipo rival" -> de ahí salen ataque_i, defensa_i y
-   la ventaja de local. Se usa una pequeña penalización L2 (ridge) para
-   estabilidad y un peso temporal (decaimiento exponencial) para que los
-   partidos recientes pesen más.
-2. Con lambda/mu ya fijos, se ajusta el único parámetro rho de Dixon-Coles
-   maximizando la verosimilitud de los marcadores bajos observados
-   (0-0, 1-0, 0-1, 1-1), que el Poisson independiente puro subestima.
-
-Esto da, para cualquier partido, la matriz completa de probabilidad de cada
-marcador posible (goles_local x goles_visitante), de la cual se deriva el
-marcador más probable y las probabilidades 1X2.
-"""
 from __future__ import annotations
 
 import numpy as np
@@ -44,7 +9,6 @@ from sklearn.linear_model import PoissonRegressor
 
 
 def _tau(x: np.ndarray, y: np.ndarray, lam: np.ndarray, mu: np.ndarray, rho: float) -> np.ndarray:
-    """Factor de corrección Dixon-Coles para marcadores bajos."""
     out = np.ones_like(lam, dtype=float)
     m00 = (x == 0) & (y == 0)
     m01 = (x == 0) & (y == 1)
@@ -64,7 +28,7 @@ class DixonColesModel:
         self.half_life_years = half_life_years
         self.alpha_ridge = alpha_ridge
         self.max_goals = max_goals
-        # se llenan en fit()
+
         self.equipos_: list[str] = []
         self.idx_equipo_: dict[str, int] = {}
         self.attack_: pd.Series | None = None
@@ -72,19 +36,10 @@ class DixonColesModel:
         self.home_adv_: float = 0.0
         self.intercept_: float = 0.0
         self.rho_: float = 0.0
-        self.attack_global_promedio_: float = 0.0  # para equipos nunca vistos
+        self.attack_global_promedio_: float = 0.0
 
-    # ------------------------------------------------------------------
+
     def fit(self, df_historico: pd.DataFrame, fecha_corte: str | None = None) -> "DixonColesModel":
-        """Ajusta el modelo sobre partidos con resultado conocido.
-
-        Parameters
-        ----------
-        df_historico : debe tener columnas date, home_team, away_team,
-                        home_score, away_score, neutral.
-        fecha_corte : si se da, solo se usan partidos con date <= fecha_corte
-                      (para poder hacer backtesting sin fuga de información).
-        """
         df = df_historico.copy()
         df["date"] = pd.to_datetime(df["date"])
         if fecha_corte is not None:
@@ -142,7 +97,7 @@ class DixonColesModel:
         self.attack_global_promedio_ = float(self.attack_.mean())
         self._defense_global_promedio = float(self.defense_.mean())
 
-        # --- Paso 2: ajustar rho con lambda/mu ya fijos ---
+
         lam_train, mu_train = self._lambda_mu(
             train["home_team"].values, train["away_team"].values, train["neutral"].values
         )
@@ -160,10 +115,8 @@ class DixonColesModel:
         self.rho_ = float(res.x)
         return self
 
-    # ------------------------------------------------------------------
+
     def _fuerza(self, equipo: str) -> tuple[float, float]:
-        """Devuelve (ataque, defensa) de un equipo; fallback al promedio
-        global si el equipo no estaba en la ventana de entrenamiento."""
         ataque = self.attack_.get(equipo, self.attack_global_promedio_)
         defensa = self.defense_.get(equipo, self._defense_global_promedio)
         return ataque, defensa
@@ -182,10 +135,8 @@ class DixonColesModel:
         mu = np.exp(self.intercept_ + ataque_a + defensa_h)
         return lam, mu
 
-    # ------------------------------------------------------------------
+
     def matriz_marcador(self, home_team: str, away_team: str, neutral: bool = False) -> np.ndarray:
-        """Matriz [goles_local, goles_visita] -> probabilidad, ya con la
-        corrección Dixon-Coles aplicada y renormalizada a sumar 1."""
         lam, mu = self._lambda_mu([home_team], [away_team], [neutral])
         lam, mu = float(lam[0]), float(mu[0])
 
@@ -211,7 +162,7 @@ class DixonColesModel:
         p_empate = M[xs == ys].sum()
         p_visita = M[xs < ys].sum()
 
-        # top 3 marcadores más probables
+
         flat_idx = np.argsort(M.ravel())[::-1][:3]
         top3 = [(int(i // M.shape[1]), int(i % M.shape[1]), float(M.ravel()[i])) for i in flat_idx]
 

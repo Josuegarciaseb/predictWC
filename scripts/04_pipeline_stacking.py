@@ -1,17 +1,3 @@
-"""
-scripts/04_pipeline_stacking.py
-==================================
-Fase 4: Stacking ensemble.
-
-1. Genera meta-features (Dixon-Coles + XGBoost + CatBoost, reentrenados
-   walk-forward) para varios años de partidos pasados.
-2. Entrena el meta-modelo (regresión logística) con esas meta-features.
-3. Evalúa el ensemble en el MISMO holdout de 18 meses usado en las Fases 2-3,
-   para comparar de forma justa.
-4. Reentrena los modelos base con todo el histórico y genera la tabla final
-   combinada para los 40 partidos del Mundial 2026: marcador más probable
-   (Dixon-Coles) + probabilidades 1X2 ya calibradas por el ensemble.
-"""
 import sys
 import time
 from pathlib import Path
@@ -54,9 +40,7 @@ def main():
     fecha_max = historico_feat["date"].max()
     fecha_corte_holdout = fecha_max - pd.DateOffset(months=18)
 
-    # ================================================================
-    # 1) Walk-forward: generar meta-features de entrenamiento (sin fuga)
-    # ================================================================
+
     folds = generar_folds_walk_forward(historico_feat, anio_inicio=2019, fecha_corte_holdout=fecha_corte_holdout)
     print(f"Folds walk-forward para entrenar el meta-modelo: {len(folds)}")
 
@@ -78,17 +62,13 @@ def main():
     y_train = np.concatenate(y_train_partes)
     print(f"\nMeta-training set: {len(meta_train)} partidos")
 
-    # ================================================================
-    # 2) Entrenar el meta-modelo
-    # ================================================================
+
     ensemble = StackingEnsemble()
     ensemble.fit(meta_train, y_train)
     print("\nPesos del meta-modelo (coeficientes de la regresión logística):")
     print(ensemble.pesos().round(3).to_string())
 
-    # ================================================================
-    # 3) Evaluación en el holdout (misma ventana que Fases 2-3)
-    # ================================================================
+
     train_pre_holdout = historico_feat[historico_feat["date"] <= fecha_corte_holdout]
     holdout = historico_feat[historico_feat["date"] > fecha_corte_holdout]
     y_holdout = etiquetar_resultado(holdout).values
@@ -111,9 +91,7 @@ def main():
     print(f"  catboost               |  {acc_cb:.3f}   |  {ll_cb:.3f}")
     print(f"  STACKING (ensemble)    |  {acc_stack:.3f}   |  {ll_stack:.3f}")
 
-    # ================================================================
-    # 4) Producción: reentrenar con TODO el histórico y predecir Mundial 2026
-    # ================================================================
+
     print("\nReentrenando modelos base con todo el histórico para el Mundial 2026...")
     dc_full = DixonColesModel(cutoff_years=11, half_life_years=2.5)
     dc_full.fit(hist)

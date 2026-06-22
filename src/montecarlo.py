@@ -1,45 +1,3 @@
-"""
-src/montecarlo.py
-===================
-Fase 5: simulación Monte Carlo del Mundial 2026 completo.
-
-Diseño:
--------
-- Los 32 partidos de fase de grupos que YA tienen resultado real (están en
-  `historico_con_elo.csv` con fecha >= 2026-06-01 y torneo FIFA World Cup) se
-  usan tal cual -- no se simulan.
-- Los 40 partidos de fase de grupos restantes (`partidos_a_predecir.csv`) Y
-  cualquier partido de eliminación directa (que puede ser entre cualquier
-  par de las 48 selecciones, según cómo avance cada simulación) se generan
-  muestreando de la matriz de marcador de Dixon-Coles (Fase 2) para ese par
-  de equipos.
-
-Por qué Dixon-Coles y no el ensemble de la Fase 4 para esta parte:
-La Fase 4 mejora la calibración 1X2 usando features de forma reciente y
-head-to-head -- información que solo tiene sentido para partidos que
-realmente van a ocurrir con datos históricos reales detrás. Un cruce
-hipotético de octavos de eliminación entre dos selecciones que todavía no se
-sabe si van a clasificar no tiene "forma reciente" que calcular de forma
-honesta. Dixon-Coles, en cambio, genera una distribución de marcador completa
-para CUALQUIER par de selecciones directamente desde su ataque/defensa, así
-que es la pieza correcta para un motor de simulación genérico.
-
-Empates en eliminación directa: como no hay datos de tiempo extra/penales
-en el dataset, el desempate se resuelve re-normalizando P(gana local) y
-P(gana visita) de la propia matriz de Dixon-Coles (ignorando la masa de
-probabilidad de empate) y sorteando con esas probabilidades -- equivalente a
-asumir que el equipo "mejor" en el peor de los casos tiene más chances en
-penales, sin modelar el detalle de tiempo extra.
-
-Limitaciones reconocidas (ver también src/torneo.py):
-- Elo/ataque/defensa se usan ESTÁTICOS (el nivel de fin de la fase de grupos
-  real), sin actualizarlos partido a partido dentro de cada simulación. Es
-  la simplificación estándar en simuladores públicos de este tipo.
-- La asignación de "mejor tercero" a cada cruce de Octavos de 32 usa una
-  regla determinista simplificada, no la tabla oficial completa de FIFA.
-- El árbol de Octavos de 32 -> Octavos de Final se asume secuencial
-  (ganador M1 vs ganador M2, etc.), no está publicada la conexión exacta.
-"""
 from __future__ import annotations
 
 import random
@@ -70,7 +28,7 @@ class MotorSimulacion:
         self.rng = rng
         self._cache_matrices: dict[tuple[str, str], np.ndarray] = {}
 
-    # ------------------------------------------------------------------
+
     def _matriz(self, local: str, visita: str) -> np.ndarray:
         key = (local, visita)
         if key not in self._cache_matrices:
@@ -91,9 +49,6 @@ class MotorSimulacion:
         return self._muestrear_marcador(local, visita)
 
     def jugar_eliminacion(self, local: str, visita: str) -> str:
-        """Devuelve el ganador. Si el marcador queda empatado, se desempata
-        re-normalizando P(local)/P(visita) de la propia matriz (sin la masa
-        de empate) -- ver docstring del módulo."""
         gl, gv = self._muestrear_marcador(local, visita)
         if gl > gv:
             return local
@@ -106,11 +61,8 @@ class MotorSimulacion:
         p_local_norm = p_local / (p_local + p_visita)
         return local if self.rng.random() < p_local_norm else visita
 
-    # ------------------------------------------------------------------
+
     def _ordenar_tabla(self, stats: dict[str, dict], h2h_partidos: list[tuple[str, str, int, int]]) -> list[str]:
-        """Ordena los 4 equipos de un grupo aplicando desempates oficiales
-        (puntos -> liguilla entre empatados -> diferencia/goles generales ->
-        Elo como proxy del ranking FIFA -> azar)."""
         equipos = list(stats.keys())
 
         def clave_principal(eq):
@@ -128,7 +80,7 @@ class MotorSimulacion:
                 orden_final.extend(empatados)
                 continue
 
-            # liguilla solo entre los empatados
+
             mini = {e: {"pts": 0, "gd": 0, "gf": 0} for e in empatados}
             for a, b, ga, gb in h2h_partidos:
                 if a in mini and b in mini:
@@ -158,7 +110,6 @@ class MotorSimulacion:
         return orden_final
 
     def jugar_grupo(self, letra: str) -> list[str]:
-        """Devuelve los 4 equipos del grupo ya ordenados (1ro a 4to)."""
         equipos = GRUPOS[letra]
         stats = {e: {"pts": 0, "gf": 0, "ga": 0, "gd": 0} for e in equipos}
         partidos_jugados = []
@@ -201,12 +152,12 @@ class MotorSimulacion:
             return (-s["pts"], -s["gd"], -s["gf"], -self.elo_final.get(equipo, 1500), self.rng.random())
         return sorted(stats_terceros.keys(), key=clave)[:8]
 
-    # ------------------------------------------------------------------
+
     def asignar_llave_r32(self, tablas: dict[str, list[str]], terceros_clasificados: list[str],
                             stats_terceros: dict) -> dict[int, tuple[str, str]]:
         grupo_del_tercero = {eq: stats_terceros[eq]["grupo"] for eq in terceros_clasificados}
         disponibles = list(terceros_clasificados)
-        resueltos: dict[tuple[int, str], str] = {}  # (match_id, 'slot_a'/'slot_b') -> equipo
+        resueltos: dict[tuple[int, str], str] = {}
 
         slots_terceros = [m for m in BRACKET_R32 if m["slot_a"][0] == "tercero" or m["slot_b"][0] == "tercero"]
         for match in slots_terceros:
@@ -216,7 +167,7 @@ class MotorSimulacion:
                     grupos_candidatos = resto[0]
                     candidato = next((e for e in disponibles if grupo_del_tercero[e] in grupos_candidatos), None)
                     if candidato is None:
-                        candidato = disponibles[0]  # fallback si no calza ningún candidato
+                        candidato = disponibles[0]
                     disponibles.remove(candidato)
                     resueltos[(match["id"], lado)] = candidato
 
@@ -233,9 +184,6 @@ class MotorSimulacion:
         return partidos
 
     def jugar_eliminacion_directa(self, partidos_r32: dict[int, tuple[str, str]]) -> dict[str, str]:
-        """Juega Octavos32 -> Final con bracket secuencial. Devuelve, para
-        cada equipo que participó en eliminación directa, la última fase
-        que alcanzó."""
         avance = {}
         ronda_actual = [partidos_r32[i] for i in sorted(partidos_r32.keys())]
         nombre_fase = "octavos_32"
@@ -245,7 +193,7 @@ class MotorSimulacion:
             for local, visita in ronda_actual:
                 ganador = self.jugar_eliminacion(local, visita)
                 perdedor = visita if ganador == local else local
-                avance[perdedor] = nombre_fase  # el perdedor llegó hasta esta fase
+                avance[perdedor] = nombre_fase
                 ganadores.append(ganador)
 
             if len(ganadores) == 1:
@@ -258,18 +206,15 @@ class MotorSimulacion:
 
         return avance
 
-    # ------------------------------------------------------------------
+
     def simular_una_vez(self) -> dict[str, str]:
-        """Corre un torneo completo y devuelve, para cada una de las 48
-        selecciones, la fase más lejana alcanzada (incluye 'grupos' para
-        quienes no clasifican)."""
         tablas, stats_terceros = self.jugar_fase_de_grupos()
         terceros_clasificados = self.mejores_terceros(stats_terceros)
 
         avance = {}
         for letra, orden in tablas.items():
             for eq in orden[:2]:
-                avance[eq] = "octavos_32"  # mínimo asegurado, se sobreescribe si avanza más
+                avance[eq] = "octavos_32"
             for eq in orden[2:]:
                 avance[eq] = "grupos"
         for eq in terceros_clasificados:
