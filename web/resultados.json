@@ -1,0 +1,5 @@
+{
+  "_comment": "Resultados REALES de partidos ya jugados. Formato 'Local|Visitante': 'GolesLocal-GolesVisita'. Solo aparece en la sección de Resultados lo que esté aquí; cualquier partido sin entrada se muestra como pendiente (no se inventa ningún marcador). La web los recoge automáticamente, sin recargar, en cuanto los añades.",
+  "Germany|Ivory Coast": "2-1",
+  "Netherlands|Sweden": "5-1"
+}
