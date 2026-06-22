@@ -24,6 +24,7 @@ el Elo "antes del partido" sin tocar resultados reales.
 | `futuros = df[df['date'] > hoy]` trataba el target del proyecto como "basura a excluir" | Split explícito histórico/por-predecir; el Elo se calcula sobre la serie completa para que los partidos del Mundial arranquen con el Elo correcto |
 | Elo sin ventaja de local, sin peso por goleada y con K fijo | `elo.py`: +100 al local (si no es sede neutral), multiplicador `G` por diferencia de goles, `K` variable según importancia del torneo |
 | Nombres de selecciones que cambiaron (`former_names.csv`) detectados pero sin usar | `data_loader.estandarizar_nombres_equipos`: fusiona identidades 1:1 respetando fechas de vigencia. Casos sin sucesor único (Czechoslovakia, Yugoslavia, German DR) se dejan separados a propósito |
+| Prob. de campeón del favorito inflada (~24%, casi el doble del mercado) por sobreconfianza del modelo | `poisson_dixon_coles.py`: `strength_shrinkage=0.85` encoge ataque/defensa hacia la media del campo. Actúa como proxy de la incertidumbre sobre la fuerza real de cada equipo, que pesa más al componerse sobre 6 rondas que en un solo partido. Baja Argentina de 24% a ~19% con coste mínimo de calibración (log-loss de partido +0.008; el stacking final no se mueve) |
 
 ## Estructura
 
@@ -93,13 +94,17 @@ Dixon-Coles para ese par de equipos.
 
 | Selección | Llega a octavos32 | Cuartos | Semis | Final | **Campeón** |
 |---|---|---|---|---|---|
-| Argentina | 99.7% | 55.8% | 47.0% | 33.5% | **23.3%** |
-| España | 94.0% | 43.2% | 34.2% | 20.7% | **13.1%** |
-| Brasil | 100% | 55.1% | 37.6% | 22.9% | **12.3%** |
-| Inglaterra | 99.7% | 51.3% | 31.7% | 18.3% | **9.6%** |
-| Francia | 99.2% | 49.8% | 28.2% | 15.6% | **7.2%** |
-| Colombia | 98.8% | 33.1% | 22.7% | 11.3% | **5.9%** |
-| Portugal | 85.0% | 31.7% | 21.4% | 10.5% | **5.4%** |
+| Argentina | 99.6% | 52.3% | 41.5% | 29.4% | **19.4%** |
+| Brasil | 100% | 51.8% | 34.9% | 21.4% | **11.4%** |
+| España | 92.4% | 41.0% | 30.1% | 18.2% | **11.1%** |
+| Inglaterra | 99.4% | 48.7% | 29.1% | 16.8% | **9.2%** |
+| Francia | 98.9% | 46.0% | 26.4% | 14.0% | **6.8%** |
+| Colombia | 98.8% | 33.1% | 22.3% | 11.4% | **5.9%** |
+| Portugal | 83.4% | 29.4% | 20.0% | 10.8% | **5.7%** |
+
+> Las fuerzas de Dixon-Coles se calibran con `strength_shrinkage=0.85` (ver tabla de
+> correcciones arriba): sin ese encogimiento el favorito daba ~24% de campeón, casi el
+> doble del mercado. El reparto resultante queda alineado con las casas de apuestas.
 
 Tabla completa de los 48 equipos en `outputs/predicciones_fase5_montecarlo.csv`.
 Las probabilidades están internamente consistentes por construcción: suman
@@ -108,6 +113,12 @@ exactamente 32 equipos en "llega a octavos de 32", 2 en "llega a la final" y
 
 **Limitaciones reconocidas de esta fase** (documentadas también en el código,
 `src/torneo.py` y `src/montecarlo.py`):
+- La calibración por `strength_shrinkage` es un ajuste deliberado: a nivel de
+  partido individual el modelo está bien calibrado (el log-loss del backtest es
+  mínimo sin shrinkage). El encogimiento existe para corregir la sobreconfianza
+  **a nivel de torneo**, que surge al componer la ventaja del favorito sobre 6
+  rondas con fuerzas tratadas como certezas. Es un proxy de incertidumbre, no una
+  mejora de la predicción partido a partido.
 - El Elo/ataque-defensa de cada selección se usa **estático** durante toda la
   simulación (el nivel de cierre de la fase de grupos real), sin actualizarlo
   partido a partido dentro de cada simulación -- es la simplificación
@@ -132,7 +143,7 @@ exactamente 32 equipos en "llega a octavos de 32", 2 en "llega a la final" y
 | Fase | Qué hace | Métrica de validación |
 |---|---|---|
 | 1. Elo dinámico | Rating base con ventaja de local y peso por goleada | Ranking de sanity-check (Argentina, España, Francia arriba) |
-| 2. Poisson / Dixon-Coles | Marcador más probable por partido | 60.5% accuracy / 0.840 log-loss (backtest 18 meses) |
+| 2. Poisson / Dixon-Coles | Marcador más probable por partido | 60.5% accuracy / 0.848 log-loss (backtest 18 meses, con `strength_shrinkage=0.85`) |
 | 3. XGBoost / CatBoost | Probabilidades 1X2 vía gradient boosting | 60.6-60.7% accuracy (mismo backtest) |
 | 4. Stacking ensemble | Combina los anteriores con un meta-modelo | **61.4% accuracy / 0.828 log-loss** -- mejor que cualquiera individual |
 | 5. Monte Carlo | Simula el torneo completo 5,000 veces | Consistencia interna exacta (32/2/1.0) |

@@ -273,15 +273,22 @@ function renderGrid(){       // reconstruible sin duplicar listeners
   // orden cronológico: primero los del calendario más temprano (fecha ascendente)
   const games = [...store.games].sort((a,b)=> a.fecha.localeCompare(b.fecha) || a.local.localeCompare(b.local));
   grid.innerHTML = games.map(m =>
-    `<article class="pick-card compact" data-q="${(m.local+' '+m.visitante).toLowerCase()}" data-bet="${m.bets>0?1:0}">
+    `<article class="pick-card compact${m.hasMx?' tappable':''}" data-q="${(m.local+' '+m.visitante).toLowerCase()}" data-bet="${m.bets>0?1:0}"${m.hasMx?` data-key="${m.key}"`:''}>
        ${pickCardHTML(m)}
      </article>`).join("");
   attachFootHandlers(grid);
   applyGridFilter();
 }
 function attachFootHandlers(scope){
-  scope.querySelectorAll(".pick-foot").forEach(b => b.addEventListener("click", () => {
+  scope.querySelectorAll(".pick-foot").forEach(b => b.addEventListener("click", e => {
+    e.stopPropagation();
     const m = store.games.find(g => g.key === b.dataset.key);
+    if (m) openHeatmap(m);
+  }));
+  // en móvil, tocar la tarjeta entera abre la distribución del marcador
+  scope.querySelectorAll(".pick-card.tappable").forEach(card => card.addEventListener("click", e => {
+    if (e.target.closest("a,button")) return;          // respeta enlaces/botones internos
+    const m = store.games.find(g => g.key === card.dataset.key);
     if (m) openHeatmap(m);
   }));
 }

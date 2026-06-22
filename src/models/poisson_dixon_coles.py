@@ -23,11 +23,18 @@ def _tau(x: np.ndarray, y: np.ndarray, lam: np.ndarray, mu: np.ndarray, rho: flo
 
 class DixonColesModel:
     def __init__(self, cutoff_years: float = 11, half_life_years: float = 2.5,
-                 alpha_ridge: float = 1e-4, max_goals: int = 10):
+                 alpha_ridge: float = 1e-4, max_goals: int = 10,
+                 strength_shrinkage: float = 0.85):
         self.cutoff_years = cutoff_years
         self.half_life_years = half_life_years
         self.alpha_ridge = alpha_ridge
         self.max_goals = max_goals
+        # Encoge ataque/defensa hacia la media del campo (1.0 = sin cambio,
+        # <1.0 = menos favoritismo). Corrige la sobreconfianza del modelo:
+        # con estimaciones puntuales fijas, la ventaja del #1 se compone
+        # multiplicativamente por ronda y dispara su prob. de campeón muy por
+        # encima del mercado. Aplana el spread sin tocar al equipo promedio.
+        self.strength_shrinkage = strength_shrinkage
 
         self.equipos_: list[str] = []
         self.idx_equipo_: dict[str, int] = {}
@@ -97,6 +104,14 @@ class DixonColesModel:
         self.attack_global_promedio_ = float(self.attack_.mean())
         self._defense_global_promedio = float(self.defense_.mean())
 
+        # Shrinkage hacia la media (preserva al equipo promedio: la media de las
+        # series no cambia, por lo que intercept_ y home_adv_ siguen válidos).
+        # Se aplica ANTES de estimar rho para que rho se ajuste sobre los
+        # lambdas ya encogidos.
+        if self.strength_shrinkage != 1.0:
+            s = self.strength_shrinkage
+            self.attack_ = self.attack_global_promedio_ + s * (self.attack_ - self.attack_global_promedio_)
+            self.defense_ = self._defense_global_promedio + s * (self.defense_ - self._defense_global_promedio)
 
         lam_train, mu_train = self._lambda_mu(
             train["home_team"].values, train["away_team"].values, train["neutral"].values

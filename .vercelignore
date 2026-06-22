@@ -1,0 +1,10 @@
+# Solo se publica la web estática + los outputs que esta consume.
+# La parte de Python (entrenamiento/generación) no corre en el servidor.
+src/
+scripts/
+data/
+catboost_info/
+outputs/heatmaps/
+requirements.txt
+**/__pycache__/
+web/start.bat

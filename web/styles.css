@@ -22,7 +22,11 @@ body{
   font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink-2);
   min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;
   background-image:radial-gradient(120% 60% at 50% -10%,#eef4fb 0%,rgba(238,244,251,0) 60%);
+  -webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%;
+  overflow-x:clip;
 }
+/* los anclajes no quedan ocultos bajo el header pegajoso */
+:where(main,section)[id]{scroll-margin-top:74px}
 .num{font-family:'JetBrains Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 :focus-visible{outline:2px solid var(--green);outline-offset:3px}
@@ -45,6 +49,12 @@ a{color:inherit}
 .mainnav a:hover{color:var(--ink);background:var(--bg-soft)}
 .mainnav a.cta{background:var(--brand);color:#fff;padding:8px 16px}
 .mainnav a.cta:hover{background:#0f2640;color:#fff}
+.nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:42px;height:38px;
+  padding:0 9px;border:1px solid var(--line-strong);border-radius:9px;background:#fff;cursor:pointer}
+.nav-toggle span{display:block;height:2px;border-radius:2px;background:var(--ink);transition:transform var(--t),opacity var(--t)}
+.site-head.nav-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.site-head.nav-open .nav-toggle span:nth-child(2){opacity:0}
+.site-head.nav-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
 /* ===== HERO ===== */
 .hero{padding:64px 0 30px;text-align:center}
@@ -336,6 +346,28 @@ table.elo .rk{font-family:'JetBrains Mono',monospace;color:var(--muted-2)}
 .sk-bar{height:360px}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
+/* ===== BARRA INFERIOR MÓVIL (tab bar) ===== */
+.tabbar{display:none}
+@media(max-width:680px){
+  .tabbar{
+    display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;
+    background:rgba(255,255,255,.92);backdrop-filter:blur(14px);
+    border-top:1px solid var(--line);
+    padding:6px 4px calc(6px + env(safe-area-inset-bottom));
+    box-shadow:0 -2px 14px rgba(20,35,59,.07);
+  }
+  .tabbar a{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    min-height:50px;padding:5px 2px;border-radius:12px;
+    text-decoration:none;color:var(--muted-2);font-size:11px;font-weight:700;letter-spacing:.01em;
+    transition:color var(--t),background var(--t);
+  }
+  .tabbar a svg{width:23px;height:23px;stroke:currentColor;stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .tabbar a:active{background:var(--bg-soft-2)}
+  .tabbar a.active{color:var(--brand)}
+  .tabbar a.active svg{stroke:var(--brand)}
+}
+
 /* ===== RESPONSIVE ===== */
 @media(max-width:920px){
   .read-grid{grid-template-columns:1fr}
@@ -344,13 +376,109 @@ table.elo .rk{font-family:'JetBrains Mono',monospace;color:var(--muted-2)}
   .calc-card.form{position:static}
 }
 @media(max-width:680px){
-  .wrap{padding:0 18px}
-  .mainnav a:not(.cta){display:none}
+  /* deja sitio a la barra inferior fija */
+  body{padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+  /* 16px evita el auto-zoom de iOS al enfocar un campo */
+  .odd-input,.calc-select,.search,.seg-toggle button{font-size:16px}
+  .wrap{padding:0 16px;padding-left:calc(16px + env(safe-area-inset-left));padding-right:calc(16px + env(safe-area-inset-right))}
+
+  /* header + menú */
+  .site-head .wrap{height:58px}
   .brand small{display:inline}
-  .hero{padding:44px 0 20px}
-  .statstrip div{min-width:50%;border-left:0;border-top:1px solid var(--line)}
+  .nav-toggle{display:flex;width:44px;height:44px}
+  .mainnav{position:absolute;top:58px;left:0;right:0;flex-direction:column;align-items:stretch;gap:2px;
+    background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--shadow);padding:10px 16px 16px;
+    max-height:calc(100dvh - 58px);overflow-y:auto;display:none}
+  .site-head.nav-open .mainnav{display:flex}
+  .mainnav a{font-size:16px;padding:14px 12px;border-radius:10px;min-height:48px;display:flex;align-items:center}
+  .mainnav a.cta{margin-top:8px;justify-content:center;text-align:center}
+
+  /* hero */
+  .hero{padding:36px 0 18px}
+  .hero h1{margin-top:12px}
+  .hero .lede{margin-top:14px}
+  .hero-cta{margin-top:22px;width:100%}
+  .hero-cta .btn{flex:1;justify-content:center;padding:14px 18px;min-height:50px}
+
+  /* secciones más compactas */
+  section.block{padding:38px 0}
+  .sec-head{margin-bottom:22px}
+
+  /* stat strip 2×2 */
+  .statstrip{margin-top:30px}
+  .statstrip div{min-width:50%;border-left:0;border-top:1px solid var(--line);padding:16px 14px}
   .statstrip div:first-child,.statstrip div:nth-child(2){border-top:0}
-  .picks-grid{grid-template-columns:1fr}
-  .markets td:first-child{font-size:14px}
+  .statstrip div:nth-child(odd){border-right:1px solid var(--line)}
+  .statstrip dd{font-size:26px}
+
+  /* tarjetas a todo el ancho y con menos padding lateral */
+  .picks-grid{grid-template-columns:1fr;gap:14px}
+  .pick-card,.pick-card.feature,.calc-card,.read-col,.card{padding-left:18px;padding-right:18px}
+  .pick-card.feature{padding-top:24px;padding-bottom:24px}
+  .pick-card.compact{padding:18px;position:relative}
+  /* la tarjeta entera abre la distribución */
+  .pick-card.compact.tappable{cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .pick-card.compact.tappable:active{transform:scale(.99);border-color:var(--line-strong)}
+  .pick-head h3{font-size:18px}
+  .markets th{font-size:10px;padding-bottom:10px}
+  .markets td{padding:13px 0}
+  .markets td:first-child{font-size:14px;padding-right:8px}
+  .markets .m-pick{width:64px}
+
+  /* "cómo leer" en columna */
+  .read-grid{gap:12px}
+
+  /* calculadora */
+  .calc-grid{gap:14px}
+  .odds-grid{gap:10px}
+
+  /* favoritos / elo: gráficas más cortas en móvil */
+  .chart-box{height:300px}
+  .pod-row{gap:12px;padding:14px 0}
+  .pod-row .flag{width:32px;height:22px}
+
+  /* metodología */
+  .phase{gap:14px;padding:18px}
+
+  /* toolbar de picks: búsqueda full-width, filtros scrolleables */
+  .toolbar{gap:10px}
+  .search-wrap{max-width:none;width:100%}
+  .filters{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px}
+  .filters::-webkit-scrollbar{display:none}
+  .filters button{flex:0 0 auto;min-height:44px;white-space:nowrap}
+
+  /* botones táctiles cómodos */
+  .seg-toggle{flex-wrap:wrap}
+  .seg-toggle button{min-height:42px}
+  .calc-select{min-height:48px}
+  .btn-calc{min-height:54px}
+  .pick-foot{min-height:44px;padding:6px 0}
+
+  /* === heatmap como hoja inferior (bottom-sheet) === */
+  .hm-overlay{padding:0;align-items:flex-end}
+  .hm-modal{
+    border-radius:20px 20px 0 0;max-height:90dvh;padding:14px 16px calc(20px + env(safe-area-inset-bottom));
+    animation:sheet-up .26s cubic-bezier(.22,.61,.36,1);
+  }
+  /* agarre visual de la hoja */
+  .hm-modal::before{content:"";display:block;width:38px;height:4px;border-radius:3px;background:var(--line-strong);margin:2px auto 12px}
+  .hm-close{top:12px;right:12px;width:40px;height:40px;font-size:24px}
+  .hm-title{font-size:20px;padding-right:44px}
+  .hm-plot{gap:6px}
+  .hm-cell{font-size:11px}
+  .hm-foot{gap:8px 14px}
 }
+@media(max-width:420px){
+  .hero h1{font-size:28px}
+  .hero .lede{font-size:15px}
+  .statstrip dd{font-size:23px}
+  .odds-grid{grid-template-columns:repeat(2,1fr)}
+  .odds-grid .of:last-child{grid-column:1/-1}
+  .score-cards{grid-template-columns:repeat(2,1fr)}
+  .score-cards .score-card:nth-child(3){grid-column:1/-1}
+  .hm-cell{font-size:10px}
+  .hm-cell span{display:none}
+  .hm-axis-y{font-size:10px}
+}
+@keyframes sheet-up{from{transform:translateY(100%)}to{transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){*,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
