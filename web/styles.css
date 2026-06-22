@@ -41,7 +41,9 @@ a{color:inherit}
 /* ===== HEADER / NAV ===== */
 .site-head{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .site-head .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;gap:20px}
-.brand{display:flex;align-items:baseline;gap:9px;font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+.brand-logo{height:34px;width:auto;display:block;flex:none}
+.brand-text{display:inline-flex;align-items:baseline;gap:9px;min-width:0;white-space:nowrap}
 .brand .dot{color:var(--green)}
 .brand small{font-weight:600;font-size:11px;color:var(--muted-2);letter-spacing:.02em;display:none}
 .mainnav{display:flex;gap:6px;align-items:center}
@@ -383,9 +385,11 @@ table.elo .rk{font-family:'JetBrains Mono',monospace;color:var(--muted-2)}
   .wrap{padding:0 16px;padding-left:calc(16px + env(safe-area-inset-left));padding-right:calc(16px + env(safe-area-inset-right))}
 
   /* header + menú */
-  .site-head .wrap{height:58px}
+  .site-head .wrap{height:58px;gap:12px}
+  .brand{gap:8px;font-size:16px;flex:1 1 auto;overflow:hidden}
+  .brand-logo{height:30px}
   .brand small{display:inline}
-  .nav-toggle{display:flex;width:44px;height:44px}
+  .nav-toggle{display:flex;flex:none;width:44px;height:44px}
   .mainnav{position:absolute;top:58px;left:0;right:0;flex-direction:column;align-items:stretch;gap:2px;
     background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--shadow);padding:10px 16px 16px;
     max-height:calc(100dvh - 58px);overflow-y:auto;display:none}
