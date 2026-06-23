@@ -398,7 +398,7 @@ table.elo .rk{font-family:'JetBrains Mono',monospace;color:var(--muted-2)}
   .mainnav a.cta{margin-top:8px;justify-content:center;text-align:center}
 
   /* hero */
-  .hero{padding:36px 0 18px}
+  .hero{padding:36px 16px 18px}
   .hero h1{margin-top:12px}
   .hero .lede{margin-top:14px}
   .hero-cta{margin-top:22px;width:100%}
@@ -424,10 +424,19 @@ table.elo .rk{font-family:'JetBrains Mono',monospace;color:var(--muted-2)}
   .pick-card.compact.tappable{cursor:pointer;-webkit-tap-highlight-color:transparent}
   .pick-card.compact.tappable:active{transform:scale(.99);border-color:var(--line-strong)}
   .pick-head h3{font-size:18px}
+  /* tabla de mercados compacta: columnas numéricas con ancho fijo para que el
+     nombre del mercado tenga sitio y quepa en 2 líneas como máximo */
+  .markets{table-layout:fixed}
   .markets th{font-size:10px;padding-bottom:10px}
-  .markets td{padding:13px 0}
-  .markets td:first-child{font-size:14px;padding-right:8px}
-  .markets .m-pick{width:64px}
+  .markets td{padding:12px 0;vertical-align:top}
+  .markets td:first-child{font-size:13.5px;line-height:1.35;padding-right:6px;overflow-wrap:break-word}
+  .markets td:first-child .cc{display:none}      /* código de país redundante con el nombre en móvil */
+  .markets td .flag{width:17px;height:12px}
+  .markets td.m-model,.markets th:nth-child(2){width:44px}
+  .markets td:nth-child(3),.markets th:nth-child(3){width:48px}
+  .markets td.m-pick,.markets th:nth-child(4){width:62px}
+  .markets .m-model{font-size:13.5px;white-space:nowrap}
+  .markets .m-edge{font-size:12.5px;white-space:nowrap}
 
   /* "cómo leer" en columna */
   .read-grid{gap:12px}
