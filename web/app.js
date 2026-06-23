@@ -540,8 +540,28 @@ function renderCalculator(){
   setHead(); renderCalcResult();
 
   sel.addEventListener("change", ()=>{ setHead(); renderCalcResult(); });
+  // El teclado de iOS no ofrece el signo "−" (ni "+") en los modos numéricos.
+  // Para momios americanos (−150 / +260) el signo es imprescindible, así que se
+  // usa el teclado de texto; para decimales (1.91) basta el numérico con coma.
+  const OD_IDS = ["odd1","oddX","odd2","oddO","oddU","oddB"];
+  const AM_PH = {odd1:"-150",oddX:"+260",odd2:"+420",oddO:"-105",oddU:"-115",oddB:"+100"};
+  const DEC_PH = {odd1:"1.67",oddX:"4.60",odd2:"5.20",oddO:"1.95",oddU:"1.87",oddB:"2.00"};
+  const applyOddsKb = fmt => {
+    const american = fmt === "american";
+    OD_IDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.setAttribute("inputmode", american ? "text" : "decimal");
+      el.setAttribute("placeholder", (american ? AM_PH : DEC_PH)[id]);
+      el.setAttribute("autocapitalize", "off");
+      el.setAttribute("autocorrect", "off");
+      el.setAttribute("spellcheck", "false");
+    });
+  };
+  applyOddsKb(document.querySelector('.seg-toggle button[aria-pressed="true"]').dataset.fmt);
   document.querySelectorAll(".seg-toggle button").forEach(b => b.addEventListener("click", ()=>{
     document.querySelectorAll(".seg-toggle button").forEach(x=>x.setAttribute("aria-pressed", x===b));
+    applyOddsKb(b.dataset.fmt);
   }));
   document.getElementById("calcBtn").addEventListener("click", renderCalcResult);
   // Enter dentro del formulario: recalcula sin recargar la página
