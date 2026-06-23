@@ -81,6 +81,10 @@ const loadJSON = file => fetch(`../outputs/${file}`).then(r => r.json());
    partido, así que el valor aparece donde la fixture se separa de esa base. */
 const ANCHOR_OVER = 0.50, ANCHOR_BTTS = 0.49, MKT_BETA = 0.45;
 const marketLine = (model, anchor) => anchor + (model - anchor) * MKT_BETA;
+/* tasa base de mercado P(Over) por línea de total (la misma idea pegajosa que
+   ANCHOR_OVER, pero para cada línea x.5). Permite calcular el edge del total
+   más probable contra la baseline ingenua de ESA línea, no solo de la 2.5. */
+const TOTAL_ANCHOR = { 0.5:0.93, 1.5:0.74, 2.5:0.50, 3.5:0.28, 4.5:0.14 };
 
 function matrixOver25(M){         // P(local + visita >= 3)
   let s = 0;
@@ -91,6 +95,50 @@ function matrixBTTS(M){           // P(local>=1 y visita>=1)
   let s = 0;
   for (let a=1;a<M.length;a++) for (let b=1;b<M[a].length;b++) s += M[a][b];
   return s;
+}
+/* P(total de goles > línea) para cualquier línea x.5, leído de la matriz */
+function matrixOverLine(M, line){
+  const need = Math.ceil(line);    // Over 2.5 -> total >= 3
+  let s = 0;
+  for (let a=0;a<M.length;a++) for (let b=0;b<M[a].length;b++) if (a+b>=need) s += M[a][b];
+  return s;
+}
+/* Total de goles MÁS PROBABLE para ESTE partido, derivado 100% de la matriz.
+   Recorre las líneas x.5 y, para cada una, toma el lado favorito (Over o
+   Under) y su probabilidad. Devuelve la (línea, lado) con mayor probabilidad
+   de OCURRIR, descartando los cuasi-seguros (>CAP) por poco informativos.
+   Objetivo: el pick de goles que más veces va a acertar (más verdes). */
+function bestTotal(M){
+  if (!M) return null;
+  const lines = [0.5, 1.5, 2.5, 3.5, 4.5];
+  const CAP = 0.80;                                 // techo de probabilidad: por encima son casi-locks
+                                                    // triviales (Over 0.5 / Under 4.5). 0.80 ≈ 73% de
+                                                    // acierto esperado con líneas exigentes e informativas.
+  const sideAt = L => { const pO = matrixOverLine(M, L);
+    return { line:L, side: pO >= 0.5 ? "Over" : "Under", model: Math.max(pO, 1 - pO) }; };
+  let best = null;
+  for (const L of lines){                           // el más probable por debajo del CAP
+    const c = sideAt(L);
+    if (c.model > CAP) continue;
+    if (!best || c.model > best.model) best = c;
+  }
+  if (!best){                                       // todas >CAP: usa la línea menos extrema
+    for (const L of lines){ const c = sideAt(L); if (!best || c.model < best.model) best = c; }
+  }
+  return best;
+}
+/* mercado del "total más probable": la línea se ELIGE por probabilidad, pero
+   se trata como cualquier otro mercado de valor — su edge se mide contra la
+   baseline pegajosa de ESA línea (TOTAL_ANCHOR) y el pill sale BET/EVITAR/PASA
+   según ese edge. pickKey "O@1.5"/"U@3.5" lo entiende pickHit. */
+function probableTotal(M){
+  const b = bestTotal(M);
+  if (!b) return null;
+  const aOver  = TOTAL_ANCHOR[b.line] ?? 0.5;
+  const anchor = b.side === "Over" ? aOver : 1 - aOver;   // base del lado elegido
+  const house  = marketLine(b.model, anchor);            // mercado ingenuo para esa línea
+  return mkMarket(`${b.side} ${b.line} goles`, b.model, house,
+                  `${b.side === "Over" ? "O" : "U"}@${b.line}`);
 }
 function mkMarket(label, model, house, pickKey){
   const edge = model - house;
@@ -113,6 +161,11 @@ function settleScore(score){
     btts: gl>=1 && gv>=1 };
 }
 function pickHit(pickKey, r){
+  if (pickKey && pickKey.includes("@")){          // total con línea: "O@1.5" / "U@3.5"
+    const [side, ln] = pickKey.split("@");
+    const tot = r.gl + r.gv;
+    return side === "O" ? tot > parseFloat(ln) : tot < parseFloat(ln);
+  }
   switch (pickKey){
     case "1": case "2": return r.k1x2 === pickKey;
     case "X": return r.k1x2 === "X";
@@ -122,6 +175,12 @@ function pickHit(pickKey, r){
   }
   return null;
 }
+
+/* Nota: el dataset es SOLO goles (martj42/international_results). No hay datos
+   reales de remates, córners, tarjetas ni nada por jugador, así que NO se
+   muestran esos mercados: cualquier cifra sería una invención derivada del xG,
+   no una probabilidad medida. Solo se publican mercados que el modelo estima
+   de verdad a partir de goles (1X2, Over/Under 2.5, Ambos marcan). */
 
 function enrich(){
   const pois = {};
@@ -143,8 +202,10 @@ function enrich(){
     const markets = [side1x2];
     if (mx && mx.matriz){
       const M = mx.matriz;
-      const over = matrixOver25(M), btts = matrixBTTS(M);
-      markets.push(mkMarket("Over 2.5 goles",       over, marketLine(over, ANCHOR_OVER), "O"));
+      const btts = matrixBTTS(M);
+      // Total de goles: el Over/Under más probable, tratado como mercado de valor
+      const ct = probableTotal(M);
+      if (ct) markets.push(ct);
       markets.push(mkMarket("Ambos equipos marcan", btts, marketLine(btts, ANCHOR_BTTS), "B"));
     }
 
@@ -153,7 +214,7 @@ function enrich(){
     if (result) markets.forEach(mk => { if (mk.bet) mk.outcome = pickHit(mk.pickKey, result) ? "win" : "loss"; });
 
     const betMarkets = markets.filter(k=>k.bet);
-    const betEdge = betMarkets.reduce((s,k)=>s+k.edge,0);
+    const betEdge = betMarkets.reduce((s,k)=>s+(k.edge||0),0);
     return { ...m, key, xgL:lh, xgV:lv, markets, hasMx:!!mx,
       bets:betMarkets.length, betEdge, result,
       betsWon: betMarkets.filter(k=>k.outcome==="win").length };
@@ -220,8 +281,9 @@ function buildNote(m){
   else
     s.push(`<b>${favName}</b> es favorito (${pct(m1.model)}), pero sin separarse de la línea: no hay valor claro en el 1X2.`);
   if (mO){
-    if (mO.bet) s.push(`Over 2.5 ofrece valor: el modelo lo ve en ${pct(mO.model)} frente al ${pct(mO.house)} implícito.`);
-    else        s.push(`Over 2.5 no tiene valor: el modelo lo ve en ${pct(mO.model)}.`);
+    const ouLbl = mO.label.replace(/ goles$/, "");   // total más probable de ESTE partido
+    if (mO.bet) s.push(`<b>${ouLbl}</b> es el total más probable (${pct(mO.model)}) y ofrece valor: la línea lo implica en ${pct(mO.house)}.`);
+    else        s.push(`<b>${ouLbl}</b> es el total más probable (${pct(mO.model)}), pero sin separarse de la línea (${pct(mO.house)}): no hay valor claro.`);
   }
   if (mB){
     if (mB.bet) s.push(`Ambos marcan sí tiene edge: el modelo lo ve en ${pct(mB.model)} y la casa lo implica en ${pct(mB.house)}.`);
@@ -336,8 +398,8 @@ function renderResults(){
 /* ===================================================================
    CALCULADORA DE PICKS
    Marcadores más probables (Dixon-Coles) + mercados con edge real frente
-   a las cuotas de la casa (de-vig por grupo) + mercados secundarios
-   heurísticos (córners, tarjetas, tiros) derivados del xG.
+   a las cuotas de la casa (de-vig por grupo). Solo mercados derivados de
+   goles, que es lo único que el modelo estima de verdad.
    =================================================================== */
 function top3Scores(M){
   const a = [];
@@ -405,6 +467,10 @@ function calcAnalyze(game, odds){
     return { ...d, model:m, edge, bet: edge != null && edge >= BET_EDGE };
   });
 
+  // total más probable: el Over/Under con más chance de ocurrir, como mercado de valor
+  const ct = probableTotal(M);
+  if (ct) rows.push({ k:null, label:ct.label, model:ct.model, edge:ct.edge, bet:ct.bet });
+
   // confianza segun lo decisivo del 1X2
   const pMax = Math.max(model["1"], model.X, model["2"]);
   const favKey = model["1"]>=model["2"] ? "1" : "2";
@@ -414,20 +480,7 @@ function calcAnalyze(game, odds){
   else if (pMax <= 0.72){ conf={t:"Confianza media",c:"mid"}; ctx=`${favName} parte como favorito; el marcador exacto tiene más varianza.`; }
   else { conf={t:"Confianza baja",c:"low"}; ctx=`${favName} es favorito claro; el 1X2 es predecible pero el marcador exacto, no.`; }
 
-  // mercados secundarios heuristicos (desde xG)
-  const cL = 4.7*game.xgL, cV = 4.7*game.xgV, cT = cL+cV;
-  const yel = 3.4 + 2.4*(1 - Math.abs(model["1"]-model["2"]));
-  const sL = 3.05*game.xgL, sV = 3.05*game.xgV;
-  const leanOU = (v, l) => v > l+0.3 ? "Over" : v < l-0.3 ? "Under" : "—";
-  const sec = [
-    { m:"Córners totales", est:cT.toFixed(1), line:"~9.5", lean:leanOU(cT, 9.5) },
-    { m:`Córners ${name(game.local)}/${name(game.visitante)}`, est:`${cL.toFixed(1)} / ${cV.toFixed(1)}`, line:"—", lean: cV>cL?name(game.visitante):name(game.local) },
-    { m:"Tarjetas amarillas", est:yel.toFixed(1), line:"~4.5", lean:leanOU(yel, 4.5) },
-    { m:`Tiros a puerta ${name(game.local)}`, est:sL.toFixed(1), line:"—", lean:"—" },
-    { m:`Tiros a puerta ${name(game.visitante)}`, est:sV.toFixed(1), line:"—", lean:"—" },
-  ];
-
-  return { game, top3:top3Scores(M), rows, conf, ctx, sec };
+  return { game, top3:top3Scores(M), rows, conf, ctx };
 }
 
 function renderCalcResult(){
@@ -450,10 +503,6 @@ function renderCalcResult(){
     return `<tr><td>${r.label}</td><td class="m-model">${pct(r.model)}</td><td>${edgeCell}</td><td class="m-pick">${betPill(r)}</td></tr>`;
   }).join("");
 
-  const sec = a.sec.map(s=>`
-    <tr><td>${s.m}</td><td class="est">${s.est}</td><td class="ln">${s.line}</td>
-    <td class="lean${(s.lean==='—')?' none':''}">${s.lean}</td></tr>`).join("");
-
   document.getElementById("calcResult").innerHTML = `
     <div class="res-head">
       <h3>${teamTag(game.local)} <span class="vs">vs</span> ${teamTag(game.visitante)}</h3>
@@ -469,12 +518,6 @@ function renderCalcResult(){
     <table class="markets" style="margin-top:20px">
       <thead><tr><th>Mercado</th><th>Modelo</th><th>Edge</th><th>Pick</th></tr></thead>
       <tbody>${rows}</tbody>
-    </table>
-
-    <p class="sec-label">Mercados secundarios · heurístico</p>
-    <table class="sec-markets">
-      <thead><tr><th>Mercado</th><th>Estimación</th><th>Línea</th><th>Lean</th></tr></thead>
-      <tbody>${sec}</tbody>
     </table>
 
     <p class="res-foot">Edge = probabilidad del modelo − probabilidad del mercado (sin vig). <b>BET</b> aparece con edge ≥ 4%.${anyOdds?"":" Introduce las cuotas de tu casa para ver el edge real."}</p>
