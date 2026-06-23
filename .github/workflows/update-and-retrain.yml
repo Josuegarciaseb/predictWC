@@ -1,0 +1,73 @@
+name: Actualizar datos y re-entrenar
+
+# Se ejecuta:
+#  - todos los días a las 06:00 UTC (martj42 actualiza a diario)
+#  - manualmente desde la pestaña Actions (workflow_dispatch)
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+# Permiso para que el Action pueda hacer commit/push de los nuevos datos y outputs
+permissions:
+  contents: write
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar mi repo
+        uses: actions/checkout@v4
+
+      - name: Bajar CSVs más recientes de martj42/international_results
+        run: |
+          set -e
+          git clone --depth 1 https://github.com/martj42/international_results.git upstream
+          cp upstream/results.csv      data/raw/results.csv
+          cp upstream/shootouts.csv    data/raw/shootouts.csv
+          cp upstream/goalscorers.csv  data/raw/goalscorers.csv
+          cp upstream/former_names.csv data/raw/former_names.csv
+          rm -rf upstream
+
+      - name: ¿Cambiaron los datos?
+        id: check
+        run: |
+          if git diff --quiet -- data/raw; then
+            echo "cambios=false" >> "$GITHUB_OUTPUT"
+            echo "No hay datos nuevos. No se re-entrena."
+          else
+            echo "cambios=true" >> "$GITHUB_OUTPUT"
+            echo "Hay datos nuevos. Se re-entrena."
+          fi
+
+      - name: Instalar Python
+        if: steps.check.outputs.cambios == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Instalar dependencias
+        if: steps.check.outputs.cambios == 'true'
+        run: pip install -r requirements.txt
+
+      - name: Re-entrenar (correr todo el pipeline)
+        if: steps.check.outputs.cambios == 'true'
+        run: |
+          set -e
+          python scripts/01_pipeline_elo.py
+          python scripts/02_pipeline_poisson_dixon_coles.py
+          python scripts/03_pipeline_ml.py
+          python scripts/04_pipeline_stacking.py
+          python scripts/05_pipeline_montecarlo.py
+          python scripts/06_heatmap_marcador.py
+          python scripts/07_export_matrices.py
+
+      - name: Commit y push de datos + resultados
+        if: steps.check.outputs.cambios == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/raw data/processed outputs
+          git commit -m "Auto: actualización de datos y re-entreno ($(date -u +%Y-%m-%d))"
+          git push
