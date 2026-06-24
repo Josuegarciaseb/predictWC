@@ -815,12 +815,15 @@ async function syncRealResults(){
 async function init(){
   skeleton("champChart"); skeleton("eloChart");
   try{
+    // fase4/fase2/matrices: se leen del ARCHIVO acumulado (incluye los partidos
+    // ya jugados, que el dataset diario saca del set de predicción). Si el
+    // archivo aún no existe, se cae a los outputs "vivos".
     const [elo, mc, f4, f2, matrices, resultados] = await Promise.all([
       loadCSV("ranking_elo_actual.csv"),
       loadCSV("predicciones_fase5_montecarlo.csv"),
-      loadCSV("predicciones_fase4_stacking_ensemble.csv"),
-      loadCSV("predicciones_fase2_poisson_dixon_coles.csv"),
-      loadJSON("matrices_marcador.json").catch(() => ({})),
+      loadCSV("predicciones_fase4_archivo.csv").catch(() => loadCSV("predicciones_fase4_stacking_ensemble.csv")),
+      loadCSV("predicciones_fase2_archivo.csv").catch(() => loadCSV("predicciones_fase2_poisson_dixon_coles.csv")),
+      loadJSON("matrices_marcador_archivo.json").catch(() => loadJSON("matrices_marcador.json")).catch(() => ({})),
       fetch("resultados.json", { cache:"no-store" }).then(r => r.json()).catch(() => ({})),
     ]);
     store.elo = elo; store.mc = mc; store.f4 = f4; store.f2 = f2; store.matrices = matrices;

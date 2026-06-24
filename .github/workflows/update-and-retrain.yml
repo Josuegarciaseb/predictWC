@@ -62,6 +62,7 @@ jobs:
           python scripts/05_pipeline_montecarlo.py
           python scripts/06_heatmap_marcador.py --todos
           python scripts/07_export_matrices.py
+          python scripts/08_archivar_predicciones.py
 
       - name: Commit y push de datos + resultados
         if: steps.check.outputs.cambios == 'true'

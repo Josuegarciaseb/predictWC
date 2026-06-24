@@ -75,6 +75,9 @@ python scripts/02_pipeline_poisson_dixon_coles.py
 python scripts/03_pipeline_ml.py
 python scripts/04_pipeline_stacking.py
 python scripts/05_pipeline_montecarlo.py
+python scripts/06_heatmap_marcador.py --todos
+python scripts/07_export_matrices.py
+python scripts/08_archivar_predicciones.py
 ```
 
 `05_pipeline_montecarlo.py` simula el Mundial completo (no solo los 40
