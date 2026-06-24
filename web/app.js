@@ -321,19 +321,32 @@ function renderFeature(){
   store.feature = best;
   document.getElementById("featurePick").innerHTML = pickCardHTML(best, { feature:true });
 }
-let gridQ = "", gridFilter = "all";
+let gridQ = "", gridFilter = "all", gridFilterInit = false;
+/* fecha local de hoy en formato YYYY-MM-DD, para casar con la columna `fecha` */
+const todayStr = () => { const d = new Date(), p = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`; };
+function syncFilterButtons(){
+  document.querySelectorAll(".filters button").forEach(b =>
+    b.setAttribute("aria-pressed", String(b.dataset.filter === gridFilter)));
+}
 function applyGridFilter(){
   const grid = document.getElementById("picksGrid");
+  const hoy = todayStr();
   let shown = 0;
   grid.querySelectorAll(".pick-card").forEach(c => {
-    const on = c.dataset.q.includes(gridQ) && (gridFilter === "all" || c.dataset.bet === "1");
+    const pasa = gridFilter === "bet"   ? c.dataset.bet === "1"
+               : gridFilter === "today" ? c.dataset.fecha === hoy
+               : true;                                   // "all"
+    const on = c.dataset.q.includes(gridQ) && pasa;
     c.style.display = on ? "" : "none";
     if (on) shown++;
   });
   let empty = grid.querySelector(".empty");
   if (!shown){
     if (!empty){ empty = document.createElement("p"); empty.className = "empty"; grid.appendChild(empty); }
-    empty.textContent = "Ningún partido coincide con el filtro.";
+    empty.textContent = gridFilter === "today"
+      ? "No hay partidos para hoy. Pulsa “Todos” para ver el resto."
+      : "Ningún partido coincide con el filtro.";
   } else if (empty) empty.remove();
 }
 function wireToolbar(){      // se engancha una sola vez
@@ -348,10 +361,17 @@ function renderGrid(){       // reconstruible sin duplicar listeners
   // orden cronológico: primero los del calendario más temprano (fecha ascendente)
   const games = [...store.games].sort((a,b)=> a.fecha.localeCompare(b.fecha) || a.local.localeCompare(b.local));
   grid.innerHTML = games.map(m =>
-    `<article class="pick-card compact${m.hasMx?' tappable':''}" data-q="${(m.local+' '+m.visitante).toLowerCase()}" data-bet="${m.bets>0?1:0}"${m.hasMx?` data-key="${m.key}"`:''}>
+    `<article class="pick-card compact${m.hasMx?' tappable':''}" data-q="${(m.local+' '+m.visitante).toLowerCase()}" data-bet="${m.bets>0?1:0}" data-fecha="${m.fecha}"${m.hasMx?` data-key="${m.key}"`:''}>
        ${pickCardHTML(m)}
      </article>`).join("");
   attachFootHandlers(grid);
+  // Al cargar (una sola vez), enfoca los picks de HOY si hay partidos hoy;
+  // si no, se queda en "Todos" para no dejar el grid vacío.
+  if (!gridFilterInit){
+    gridFilterInit = true;
+    if (games.some(g => g.fecha === todayStr())) gridFilter = "today";
+    syncFilterButtons();
+  }
   applyGridFilter();
 }
 function attachFootHandlers(scope){
