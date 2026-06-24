@@ -161,6 +161,9 @@ function settleScore(score){
     btts: gl>=1 && gv>=1 };
 }
 function pickHit(pickKey, r){
+  if (pickKey && pickKey.startsWith("E@")){       // marcador exacto: "E@1-0"
+    return `${r.gl}-${r.gv}` === pickKey.slice(2);
+  }
   if (pickKey && pickKey.includes("@")){          // total con línea: "O@1.5" / "U@3.5"
     const [side, ln] = pickKey.split("@");
     const tot = r.gl + r.gv;
@@ -213,9 +216,19 @@ function enrich(){
     const result = settleScore(resolvedScore(key));
     if (result) markets.forEach(mk => { if (mk.bet) mk.outcome = pickHit(mk.pickKey, result) ? "win" : "loss"; });
 
+    // Marcador exacto (el marcador más probable): cuenta como acierto SOLO si
+    // se clava; fallar no penaliza (sin "loss") -- acertar un marcador exacto
+    // es muy difícil, así que se trata como bonus, no como pick a perder.
+    let exact = null;
+    if (m.marcador_mas_probable && /^\d+-\d+$/.test(m.marcador_mas_probable)){
+      exact = { label: `Marcador exacto ${m.marcador_mas_probable.replace("-","–")}`,
+                pickKey: `E@${m.marcador_mas_probable}`, exact: true };
+      if (result && pickHit(exact.pickKey, result)) exact.outcome = "win";
+    }
+
     const betMarkets = markets.filter(k=>k.bet);
     const betEdge = betMarkets.reduce((s,k)=>s+(k.edge||0),0);
-    return { ...m, key, xgL:lh, xgV:lv, markets, hasMx:!!mx,
+    return { ...m, key, xgL:lh, xgV:lv, markets, hasMx:!!mx, exact,
       bets:betMarkets.length, betEdge, result,
       betsWon: betMarkets.filter(k=>k.outcome==="win").length };
   });
@@ -363,6 +376,8 @@ function computeRecord(){
   store.games.forEach(g => {
     if (!g.result) return;
     g.markets.forEach(mk => { if (mk.bet && mk.outcome) settled.push({ g, mk }); });
+    // marcador exacto: solo entra cuando se acertó (outcome "win"); el fallo no cuenta
+    if (g.exact && g.exact.outcome === "win") settled.push({ g, mk: g.exact });
   });
   settled.sort((a,b)=> a.g.fecha.localeCompare(b.g.fecha) || a.g.local.localeCompare(b.g.local));
   const won = settled.filter(s=>s.mk.outcome==="win").length;
