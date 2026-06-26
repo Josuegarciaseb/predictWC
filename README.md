@@ -59,8 +59,156 @@ wc2026_predictor/
 │   ├── predicciones_fase3_xgboost_catboost.csv     # probabilidades 1X2 ML
 │   ├── predicciones_fase4_stacking_ensemble.csv    # tabla combinada (matchday 1)
 │   └── predicciones_fase5_montecarlo.csv           # probabilidad de campeón, todo el torneo
+├── scripts/   (mercados nuevos)
+│   ├── A01_ingesta_statsbomb.py     # FASE A -- descarga eventos StatsBomb -> CSV
+│   ├── A02_reporte_cobertura.py     # FASE A -- cobertura real por año/torneo/mercado
+│   ├── A03_ingesta_jugadores.py     # FASE D -- jugador-partido: minutos + tiros a puerta
+│   ├── B01_pipeline_corners.py      # FASE B -- córners: walk-forward + predicción WC2026
+│   ├── B02_calibracion_corners.py   # FASE B -- diagnóstico + calibración de líneas Over
+│   ├── B03_correlacion_corners.py   # FASE B -- cópula del 1x2 (corrige el empate inflado)
+│   ├── C01_pipeline_tarjetas.py     # FASE C -- tarjetas: walk-forward + predicción WC2026
+│   ├── D01_pipeline_tiros_jugador.py # FASE D -- tiros a puerta jugador: walk-forward + ranking
+│   ├── predecir_corners.py          # CLI a demanda de córners (análogo a predecir_partido)
+│   ├── predecir_tarjetas.py         # CLI a demanda de tarjetas
+│   └── predecir_tiros_jugador.py    # CLI a demanda de tiros a puerta por jugador
+├── src/   (mercados nuevos)
+│   ├── statsbomb_loader.py          # ingesta+parseo de StatsBomb (córners/tiros/tarjetas/minutos)
+│   ├── models/corners_dixon_coles.py # FASE B -- Dixon-Coles de córners (Poisson vs Bin.Neg.)
+│   ├── models/tarjetas_model.py     # FASE C -- conteo de tarjetas + covariable de fase
+│   └── models/tiros_jugador.py      # FASE D -- jerárquico Gamma-Poisson de tiros a puerta
 └── requirements.txt
 ```
+
+## Mercados adicionales (córners, tarjetas, tiros) — fuente StatsBomb
+
+El dataset martj42 **solo trae el marcador**: no hay córners, tarjetas ni tiros.
+Para esos mercados se abre una fuente nueva, **StatsBomb Open Data**, de la que se
+derivan a nivel partido (y jugador) a partir de los eventos crudos. FBref vía
+`soccerdata` se evaluó pero queda descartado como columna vertebral: responde 403
+(Cloudflare) y no expone córners a nivel selección de forma fiable.
+
+**Cobertura real (honesta).** Solo torneos de selecciones: WC 2018/2022, Euro
+2020/2024, Copa América 2024, AFCON 2023 → **314 partidos modernos (2018+)**, 76
+selecciones, mediana 7 partidos/selección. No hay profundidad histórica de córners
+como sí la hay de goles (49k partidos). De las 48 selecciones del Mundial 2026, 40
+tienen historial (3 por mapeo de nombre) y **8 caen al promedio del campo**
+(Bosnia, Curaçao, Haití, Irak, Jordania, Nueva Zelanda, Noruega, Uzbekistán).
+Reporte completo en `outputs/reporte_cobertura_mercados.md`.
+
+**Modelo de córners (Fase B).** Clona el Dixon-Coles de goles cambiando el target a
+córners (ataque/defensa de córner + ventaja de local), **quita la corrección τ** de
+marcadores bajos (no aplica) y compara Poisson vs Binomial Negativa. Salidas:
+Over/Under desde la cola de la distribución del total (convolución de marginales) y
+1x2 vía **Skellam(λ,μ)**. Validación walk-forward (250 partidos, sin fuga):
+
+| Métrica | Poisson | Bin.Neg. | Baseline |
+|---|---|---|---|
+| Total córners (log-loss) | 2.723 | **2.713** | 2.729 |
+| O/U 9.5 (log-loss) | 0.678 | 0.678 | 0.676 |
+| 1x2 córners (log-loss) | 0.876 | **0.873** | 0.916 |
+| 1x2 córners (accuracy) | 0.588 | **0.592** | — |
+
+> Lecturas honestas: (1) la sobre-dispersión condicional es **leve** (NB gana por
+> poco; r≈15); (2) el **valor del modelo está en el 1x2** (bate al baseline), no en
+> el O/U del total, que ~= a la tasa base (las fuerzas de equipo se cancelan en el
+> total); (3) la ventaja de local no es identificable (casi todo es sede neutral) y
+> no aplica al Mundial (fixtures neutrales).
+>
+> **Calibración de las líneas Over** (`B02_calibracion_corners.py`): el total se
+> subestimaba ~5% out-of-sample por la deriva al alza de córners (tiempo añadido
+> largo post-2022). Un multiplicador de localización **c=1.04** (elegido por
+> walk-forward) centra la línea 9.5 (gap +0.036 → −0.006): la media predicha pasa de
+> 8.68 a 9.02 (real 9.08). No crea edge en el O/U, pero hace **fiables** las
+> probabilidades Over para decidir.
+>
+> **Empate de córners — cópula** (`B03_correlacion_corners.py`): la independencia
+> sobreestima el empate (~12% vs ~8% real) porque ignora la dependencia negativa
+> (el dominante saca más y concede menos; correlación residual ≈ −0.15). El 1x2 pasa
+> a usar una **cópula gaussiana** (rho=−0.15): baja el empate a ~11% y mejora el 1x2
+> (log-loss 0.876 → 0.873). Clave: la cópula se usa **solo para el 1x2** — aplicarla
+> al total lo empeora (la correlación negativa estrecha la suma, pero el total real
+> está sobre-dispersado), así que el O/U sigue en convolución independiente. Cada
+> salida usa la dependencia que mejor le ajusta.
+
+**Modelo de tarjetas (Fase C).** Mismo motor de conteo, con la "fuerza" de equipo
+reinterpretada (propensión disciplinaria propia + cuánto induce tarjetas al rival)
+y una covariable de **fase del torneo** (knockout): en los datos la eliminatoria
+trae **x1.18** tarjetas. Validación walk-forward (250 partidos, línea O/U 3.5):
+
+| Variante (calibrada c=1.10) | Total (log-loss) | O/U 3.5 (log-loss) | O/U 3.5 (acc) |
+|---|---|---|---|
+| Poisson + KO | 2.242 | 0.683 | 0.556 |
+| **Bin.Neg. + KO** | **2.240** | **0.684** | 0.552 |
+| Bin.Neg. sin KO | 2.243 | 0.688 | 0.560 |
+| Baseline | 2.263 | 0.693 | — |
+
+> Lecturas honestas: (1) las tarjetas están **más sobre-dispersas** que los córners
+> (Var/Media=1.65), así que la NB sí ayuda y es el modelo desplegado; (2) la
+> covariable knockout aporta señal real; (3) el **árbitro es el factor dominante y no
+> es observable**, así que el techo es bajo. Aun así, tras **calibrar la línea Over**
+> (la subestimación era ~11% por la deriva al alza de tarjetas en el fútbol moderno:
+> Euro/Copa 2024 ≫ torneos antiguos), el O/U de tarjetas pasa a **batir al baseline
+> modestamente** (0.684 vs 0.693; antes 0.698). Sigue siendo ruidoso, pero el sesgo
+> de localización ocultaba el poco valor real que había.
+
+**Modelo de tiros a puerta por jugador (Fase D).** Primero se derivan los minutos
+jugados por jugador-partido (de `Starting XI` + `Substitution`), incluyendo a quien
+jugó y no disparó (clave para una tasa no sesgada): **10 029 jugador-partidos, 2 579
+jugadores**. El modelo es un **jerárquico empirical-Bayes Gamma-Poisson**: tasa de
+tiros a puerta por 90' con efecto aleatorio por jugador (θ_p) y por rival (φ_o), ambos
+encogidos hacia la media según el tamaño muestral, con la predictiva en Binomial
+Negativa. Walk-forward (9 343 jugador-partidos, con minutos reales):
+
+| Variante | Conteo (log-loss) | O/U 0.5 (log-loss) | O/U 0.5 (acc) |
+|---|---|---|---|
+| **Jugador + Rival** | **0.626** | **0.488** | 0.792 |
+| Solo jugador | 0.627 | 0.488 | 0.793 |
+| Baseline global | 0.677 | 0.524 | 0.785 |
+
+> Lecturas honestas: (1) el **efecto jugador aporta señal fuerte** (k≈1: hay enormes
+> diferencias reales entre jugadores) y bate al baseline; (2) el **efecto rival es
+> despreciable** (k≈25, muy encogido): tu propia habilidad domina sobre a quién
+> enfrentas; (3) **límite estructural**: la predicción es condicional a los minutos.
+> Sin once probable del Mundial 2026, la incertidumbre de alineación domina, así que
+> no hay tabla por fixture — se entrega un ranking de tiradores y un CLI por minutos.
+
+```bash
+python scripts/A01_ingesta_statsbomb.py     # descarga+cachea (~333 partidos)
+python scripts/A02_reporte_cobertura.py      # reporte de cobertura
+python scripts/A03_ingesta_jugadores.py      # jugador-partido: minutos + tiros a puerta
+python scripts/B01_pipeline_corners.py       # córners: validación + predicciones WC2026
+python scripts/B02_calibracion_corners.py    # córners: diagnóstico/calibración de líneas Over
+python scripts/B03_correlacion_corners.py    # córners: cópula del 1x2 (empate)
+python scripts/C01_pipeline_tarjetas.py      # tarjetas: validación + predicciones WC2026
+python scripts/D01_pipeline_tiros_jugador.py # tiros a puerta jugador: validación + ranking
+python scripts/predecir_corners.py "Spain" "Germany"            # córners a demanda
+python scripts/predecir_tarjetas.py "Mexico" "Czech Republic"   # tarjetas a demanda
+python scripts/predecir_tiros_jugador.py "Messi" "France"       # tiros a puerta a demanda
+```
+
+> **Estos modelos son ESTÁTICOS — no se re-entrenan a diario** (a diferencia de los de
+> goles). Se entrenan con StatsBomb (eventos de torneos ya jugados), una fuente que no
+> se actualiza cada día: martj42 trae el marcador diario, no córners/tarjetas/tiros, así
+> que no hay nada nuevo de lo que aprender. Por eso el workflow `update-and-retrain.yml`
+> NO los incluye (sería fingir un aprendizaje que no ocurre). Se regeneran a mano
+> (`A01,A03,B01,C01,D01`) solo cuando StatsBomb publique un torneo nuevo. La fuente "en
+> vivo" que lo habría permitido (Kaggle WC2026) resultó fabricada y se descartó.
+
+**Integración en la web** (`web/app.js`): los CSV de córners y tarjetas se cargan en
+la web y se muestran como mercados con el mismo marco de **edge/BET vs casa** que los
+de goles (línea base "pegajosa" anclada a la tasa real de StatsBomb; el BET surge
+donde el modelo se separa de la base). Reglas de honestidad aplicadas:
+- Un mercado de córners/tarjetas solo aparece si **ambas** selecciones tienen
+  historial en StatsBomb; si una no (8 selecciones del WC2026), no se muestra — no se
+  rellena con el promedio del campo.
+- Se marcan `unverifiable`: no hay feed de resultados reales de córners/tarjetas, así
+  que se sugieren pero **no se autoliquidan** ni cuentan en el récord W-L (solo goles).
+- Tiros por jugador NO se muestra por partido (depende del once, desconocido). Vive
+  como sección aparte **"Amenaza de tiro a puerta"**: ranking histórico de tiros a
+  puerta/90', con aviso de que es condicional a jugar, no un pick por fixture.
+
+El efecto natural: en córners el **1x2 sale BET** (el modelo diverge real de la base)
+y el **O/U sale PASA** (≈ base) — la mecánica revela dónde hay valor y dónde no.
 
 ## Cómo correr el proyecto
 

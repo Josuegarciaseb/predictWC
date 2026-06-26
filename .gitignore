@@ -1,2 +1,11 @@
 /.claude
 .vercel
+.venv/
+__pycache__/
+*.pyc
+kaggle.json
+
+# Caché de eventos crudos de StatsBomb (~cientos de MB, ~333 JSON). No hace falta
+# en el repo: los modelos/CI/web usan los CSV de data/processed/. Se regenera con
+# scripts/A01_ingesta_statsbomb.py cuando se necesite.
+data/raw/statsbomb/

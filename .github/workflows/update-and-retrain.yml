@@ -63,6 +63,13 @@ jobs:
           python scripts/06_heatmap_marcador.py --todos
           python scripts/07_export_matrices.py
           python scripts/08_archivar_predicciones.py
+          # NOTA: los mercados nuevos (córners/tarjetas/tiros) NO se re-entrenan aquí
+          # A PROPÓSITO. Se entrenan con StatsBomb (eventos de torneos ya jugados), una
+          # fuente que NO se actualiza a diario: martj42 trae el MARCADOR del día, no
+          # córners/tarjetas/tiros, así que no hay nada nuevo de lo que aprender. Meterlos
+          # en este paso "Re-entrenar" sería sugerir un aprendizaje que no ocurre. Son
+          # modelos ESTÁTICOS: se regeneran a mano (scripts A01,A03,B01,C01,D01) solo
+          # cuando StatsBomb publique datos de un torneo nuevo. Ver README.
 
       - name: Commit y push de datos + resultados
         if: steps.check.outputs.cambios == 'true'

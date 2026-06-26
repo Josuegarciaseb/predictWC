@@ -1,0 +1,13 @@
+# Dependencias de la FASE A de ingesta de mercados nuevos (córners/tarjetas/tiros).
+# Instalar en un venv (probado en Python 3.14.3, sin incompatibilidades):
+#   py -m venv .venv
+#   .venv\Scripts\python -m pip install -r requirements-ingesta.txt
+#
+# StatsBomb (la fuente REAL del proyecto) usa solo requests. FBref (histórico extra,
+# correr en máquina propia por el Cloudflare) usa soccerdata.
+# NOTA: se descartó Kaggle como fuente — el dataset 'mominullptr/fifa-world-cup-2026'
+# resultó simulado/fabricado (asignaciones de árbitro erróneas). No reintroducir.
+pandas>=2.0
+numpy>=1.24
+requests>=2.31
+soccerdata>=1.9      # FBref (selecciones); respeta su rate-limiting

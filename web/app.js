@@ -85,6 +85,13 @@ const marketLine = (model, anchor) => anchor + (model - anchor) * MKT_BETA;
    ANCHOR_OVER, pero para cada línea x.5). Permite calcular el edge del total
    más probable contra la baseline ingenua de ESA línea, no solo de la 2.5. */
 const TOTAL_ANCHOR = { 0.5:0.93, 1.5:0.74, 2.5:0.50, 3.5:0.28, 4.5:0.14 };
+/* Anclas base de los mercados nuevos (frecuencias reales en StatsBomb 2018+, las
+   mismas "pegajosas" que ANCHOR_OVER): córners O/U por línea, córners 1x2 por lado
+   (local saca más / visita saca más) y tarjetas O/U por línea. El edge nace donde
+   el modelo de córners/tarjetas se separa de esta base. */
+const CORNERS_OVER_ANCHOR = { 7.5:0.63, 8.5:0.51, 9.5:0.41, 10.5:0.32, 11.5:0.25 };
+const CORNERS_1X2_ANCHOR  = { home:0.51, away:0.42 };
+const CARDS_OVER_ANCHOR   = { 2.5:0.68, 3.5:0.49, 4.5:0.26 };
 
 function matrixOver25(M){         // P(local + visita >= 3)
   let s = 0;
@@ -179,15 +186,74 @@ function pickHit(pickKey, r){
   return null;
 }
 
-/* Nota: el dataset es SOLO goles (martj42/international_results). No hay datos
-   reales de remates, córners, tarjetas ni nada por jugador, así que NO se
-   muestran esos mercados: cualquier cifra sería una invención derivada del xG,
-   no una probabilidad medida. Solo se publican mercados que el modelo estima
-   de verdad a partir de goles (1X2, Over/Under 2.5, Ambos marcan). */
+/* Mercados de GOLES (1X2, Over 2.5, Ambos marcan): del dataset martj42.
+   Mercados de CÓRNERS y TARJETAS: de modelos propios sobre StatsBomb Open Data
+   (datos reales de eventos, no invención). Solo se añaden a un partido si AMBAS
+   selecciones tienen historial en StatsBomb; si una no lo tiene, el mercado no se
+   puede estudiar de verdad y NO se muestra (no se rellena con el promedio del
+   campo). Estos picks se marcan `unverifiable`: no hay feed de resultados reales
+   de córners/tarjetas, así que se sugieren pero no se autoliquidan como los goles.
+   Tiros a puerta por jugador NO se muestran por partido: dependen del once, que no
+   se conoce; viven como ranking aparte, no como predicción por fixture. */
+
+/* elige la línea O/U más informativa (lado favorito bajo un techo), como bestTotal */
+function bestOU(pOvers, cap = 0.85){
+  let best = null;
+  for (const { line, pOver } of pOvers){
+    if (pOver == null || Number.isNaN(pOver)) continue;
+    const model = Math.max(pOver, 1 - pOver);
+    if (model > cap) continue;
+    if (!best || model > best.model) best = { line, side: pOver >= 0.5 ? "Over" : "Under", model };
+  }
+  if (!best){                                   // todas >cap: la menos extrema
+    for (const { line, pOver } of pOvers){
+      if (pOver == null || Number.isNaN(pOver)) continue;
+      const model = Math.max(pOver, 1 - pOver);
+      if (!best || model < best.model) best = { line, side: pOver >= 0.5 ? "Over" : "Under", model };
+    }
+  }
+  return best;
+}
+const conData = row => row && !(row.sin_datos_statsbomb && String(row.sin_datos_statsbomb).trim());
+
+function cornersMarkets(row){
+  if (!conData(row)) return [];
+  const out = [];
+  // 1x2 de córners: lado que saca más (modelo=cópula, línea=base pegajosa del lado)
+  const pl = +row.p_mas_corners_local, pv = +row.p_mas_corners_visita;
+  const localFav = pl >= pv;
+  const model = localFav ? pl : pv;
+  const anchor = localFav ? CORNERS_1X2_ANCHOR.home : CORNERS_1X2_ANCHOR.away;
+  const lbl = `Más córners ${name(localFav ? row.local : row.visitante)}`;
+  out.push({ ...mkMarket(lbl, model, marketLine(model, anchor), localFav ? "CL" : "CV"),
+             unverifiable:true, group:"corners" });
+  // Over/Under de córners: línea más informativa
+  const b = bestOU([8.5, 9.5, 10.5].map(l => ({ line:l, pOver:+row[`p_over_${l}`] })));
+  if (b){
+    const aOver = CORNERS_OVER_ANCHOR[b.line] ?? 0.5;
+    const anchor2 = b.side === "Over" ? aOver : 1 - aOver;
+    out.push({ ...mkMarket(`${b.side} ${b.line} córners`, b.model, marketLine(b.model, anchor2),
+               `C${b.side[0]}@${b.line}`), unverifiable:true, group:"corners" });
+  }
+  return out;
+}
+
+function cardsMarkets(row){
+  if (!conData(row)) return [];
+  const b = bestOU([2.5, 3.5, 4.5].map(l => ({ line:l, pOver:+row[`p_over_${l}`] })));
+  if (!b) return [];
+  const aOver = CARDS_OVER_ANCHOR[b.line] ?? 0.5;
+  const anchor = b.side === "Over" ? aOver : 1 - aOver;
+  return [{ ...mkMarket(`${b.side} ${b.line} tarjetas`, b.model, marketLine(b.model, anchor),
+            `T${b.side[0]}@${b.line}`), unverifiable:true, group:"cards" }];
+}
 
 function enrich(){
   const pois = {};
   store.f2.forEach(r => { pois[`${r.local}|${r.visitante}`] = r; });
+  const corMap = {}, carMap = {};
+  (store.corners || []).forEach(r => { corMap[`${r.local}|${r.visitante}`] = r; });
+  (store.cards   || []).forEach(r => { carMap[`${r.local}|${r.visitante}`] = r; });
 
   store.games = store.f4.map(m => {
     const key = `${m.local}|${m.visitante}`;
@@ -212,9 +278,15 @@ function enrich(){
       markets.push(mkMarket("Ambos equipos marcan", btts, marketLine(btts, ANCHOR_BTTS), "B"));
     }
 
-    // resultado real (si está registrado) + liquidación de los picks
+    // Mercados nuevos (StatsBomb): solo si ambas selecciones tienen historial.
+    markets.push(...cornersMarkets(corMap[key]), ...cardsMarkets(carMap[key]));
+
+    // resultado real (si está registrado) + liquidación de los picks. Los mercados
+    // `unverifiable` (córners/tarjetas) NO se liquidan: no hay feed de sus resultados.
     const result = settleScore(resolvedScore(key));
-    if (result) markets.forEach(mk => { if (mk.bet) mk.outcome = pickHit(mk.pickKey, result) ? "win" : "loss"; });
+    if (result) markets.forEach(mk => {
+      if (mk.bet && !mk.unverifiable) mk.outcome = pickHit(mk.pickKey, result) ? "win" : "loss";
+    });
 
     // Marcador exacto (el marcador más probable): cuenta como acierto SOLO si
     // se clava; fallar no penaliza (sin "loss") -- acertar un marcador exacto
@@ -227,10 +299,11 @@ function enrich(){
     }
 
     const betMarkets = markets.filter(k=>k.bet);
+    const verifBets  = betMarkets.filter(k=>!k.unverifiable);   // solo goles se liquidan
     const betEdge = betMarkets.reduce((s,k)=>s+(k.edge||0),0);
     return { ...m, key, xgL:lh, xgV:lv, markets, hasMx:!!mx, exact,
-      bets:betMarkets.length, betEdge, result,
-      betsWon: betMarkets.filter(k=>k.outcome==="win").length };
+      bets:betMarkets.length, betsVerif:verifBets.length, betEdge, result,
+      betsWon: verifBets.filter(k=>k.outcome==="win").length };
   });
 }
 
@@ -247,12 +320,23 @@ function betPill(k){
   if (k.edge <= -BET_EDGE)   return `<span class="skip-pill avoid">EVITAR</span>`; // edge claramente negativo
   return `<span class="skip-pill">PASA</span>`;                                  // sin valor: no apostar
 }
+const GROUP_LABEL = { corners: "Córners", cards: "Tarjetas" };
 function rowsHTML(markets){
+  let lastGroup = null;
   return markets.map(k => {
+    const grp = k.group || null;
+    // subcabecera al entrar en un bloque de mercado nuevo (córners/tarjetas):
+    // los separa de los goles y avisa de que no se autoliquidan.
+    let header = "";
+    if (grp && grp !== lastGroup){
+      header = `<tr class="m-group"><td colspan="4">${GROUP_LABEL[grp]}
+        <span class="m-group-tag">StatsBomb · no se liquida</span></td></tr>`;
+    }
+    lastGroup = grp;
     const edgeCell = (k.edge == null)
       ? `<span class="m-edge">—</span>`
       : `<span class="m-edge ${k.edge>0?'pos':''}">${edgePct(k.edge)}</span>`;
-    return `<tr>
+    return `${header}<tr${grp?' class="m-extra"':''}>
       <td>${k.label}</td>
       <td class="m-model">${pct(k.model)}</td>
       <td>${edgeCell}</td>
@@ -266,10 +350,11 @@ function pickCardHTML(m, { feature=false } = {}){
   const foot = m.hasMx
     ? `<button class="pick-foot" data-key="${m.key}">Ver distribución completa <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:15px;height:15px"><use href="#i-arrow"/></svg></button>`
     : "";
-  const settledCls = m.result ? (!m.bets ? "" : m.betsWon===m.bets ? "all" : m.betsWon ? "some" : "none") : "";
+  const nv = m.betsVerif || 0;   // picks liquidables (goles); córners/tarjetas no se liquidan
+  const settledCls = m.result ? (!nv ? "" : m.betsWon===nv ? "all" : m.betsWon ? "some" : "none") : "";
   const finalBadge = m.result ? `<span class="final-badge ${settledCls}">Final ${m.result.score.replace("-","–")}</span>` : "";
-  const resultLine = (m.result && m.bets)
-    ? `<p class="result-line ${settledCls}">${m.betsWon===m.bets?"✓ ":m.betsWon===0?"✗ ":""}${m.betsWon} de ${m.bets} ${m.bets===1?"pick acertado":"picks acertados"}</p>`
+  const resultLine = (m.result && nv)
+    ? `<p class="result-line ${settledCls}">${m.betsWon===nv?"✓ ":m.betsWon===0?"✗ ":""}${m.betsWon} de ${nv} ${nv===1?"pick acertado":"picks acertados"}</p>`
     : "";
   return `
     <div class="pick-tagrow"><span class="pick-tag">${tag}</span>${finalBadge}</div>
@@ -286,7 +371,7 @@ function pickCardHTML(m, { feature=false } = {}){
     ${foot}`;
 }
 function buildNote(m){
-  const [m1, mO, mB] = m.markets;
+  const [m1, mO, mB] = m.markets.filter(k => !k.group);   // solo mercados de goles
   const favName = m1.label.replace(/^Gana /,"").replace(/ \([12]\)$/,"");
   const s = [];
   if (m1.bet)
@@ -313,8 +398,9 @@ function renderFeature(){
   // pick de mercado de goles (Over/BTTS) — el caso más didáctico, como el
   // ejemplo de referencia. Desempata por edge total.
   const score = g => {
-    const x2 = g.markets[0] && g.markets[0].bet;
-    const goals = g.markets.slice(1).some(k=>k.bet);
+    const goalsM = g.markets.filter(k => !k.group);
+    const x2 = goalsM[0] && goalsM[0].bet;
+    const goals = goalsM.slice(1).some(k=>k.bet);
     return (x2 && goals ? 1000 : 0) + g.bets*10 + g.betEdge;
   };
   const best = [...store.games].sort((a,b)=> score(b) - score(a))[0];
@@ -659,6 +745,23 @@ function renderElo(){
     </tbody>`;
 }
 
+/* Top tiradores: ranking histórico de tiros a puerta/90' (StatsBomb). NO es un
+   pick por partido (no hay once probable); por eso vive como sección aparte. */
+function renderTiradores(){
+  const t = store.tiradores || [];
+  const sec = document.getElementById("tiradores");
+  if (!t.length){ if (sec) sec.style.display = "none"; return; }
+  const rows = t.slice(0, 20).map((d, i) => `
+    <tr><td class="r rk">${i + 1}</td>
+      <td>${d.player}</td>
+      <td class="r val">${(+d.sot_por_90).toFixed(2)}</td>
+      <td class="r">${Math.round(+d.exp90)}</td></tr>`).join("");
+  document.getElementById("tiradoresTable").innerHTML = `
+    <thead><tr><th class="r">#</th><th>Jugador</th>
+      <th class="r">TP/90'</th><th class="r">Partidos-90</th></tr></thead>
+    <tbody>${rows}</tbody>`;
+}
+
 /* ===================================================================
    HEATMAP MODAL
    =================================================================== */
@@ -853,20 +956,24 @@ async function init(){
     // fase4/fase2/matrices: se leen del ARCHIVO acumulado (incluye los partidos
     // ya jugados, que el dataset diario saca del set de predicción). Si el
     // archivo aún no existe, se cae a los outputs "vivos".
-    const [elo, mc, f4, f2, matrices, resultados] = await Promise.all([
+    const [elo, mc, f4, f2, matrices, resultados, corners, cards, tiradores] = await Promise.all([
       loadCSV("ranking_elo_actual.csv"),
       loadCSV("predicciones_fase5_montecarlo.csv"),
       loadCSV("predicciones_fase4_archivo.csv").catch(() => loadCSV("predicciones_fase4_stacking_ensemble.csv")),
       loadCSV("predicciones_fase2_archivo.csv").catch(() => loadCSV("predicciones_fase2_poisson_dixon_coles.csv")),
       loadJSON("matrices_marcador_archivo.json").catch(() => loadJSON("matrices_marcador.json")).catch(() => ({})),
       fetch("resultados.json", { cache:"no-store" }).then(r => r.json()).catch(() => ({})),
+      loadCSV("predicciones_faseB_corners.csv").catch(() => []),
+      loadCSV("predicciones_faseC_tarjetas.csv").catch(() => []),
+      loadCSV("ranking_tiros_jugador.csv").catch(() => []),
     ]);
     store.elo = elo; store.mc = mc; store.f4 = f4; store.f2 = f2; store.matrices = matrices;
+    store.corners = corners; store.cards = cards; store.tiradores = tiradores;
     store.manual = resultados; store.api = {}; store.sheet = {};
     store.resultados = mergeResults();
     enrich();
     computeRecord();
-    renderFeature(); renderCalculator(); renderResults(); renderGrid(); wireToolbar(); renderChamp(); renderPodium(); renderElo();
+    renderFeature(); renderCalculator(); renderResults(); renderGrid(); wireToolbar(); renderChamp(); renderPodium(); renderElo(); renderTiradores();
     updateStatus();
 
     // resultados reales automáticos: API (TheSportsDB) + override manual, cada minuto
