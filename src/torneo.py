@@ -122,3 +122,38 @@ BRACKET_R32: list[dict] = [
     {"id": 15, "slot_a": ("pos", "J", 1), "slot_b": ("pos", "H", 2)},
     {"id": 16, "slot_a": ("pos", "K", 1), "slot_b": ("tercero", ["D", "E", "I", "J", "L"])},
 ]
+
+
+# Árbol oficial de eliminación del Mundial 2026 (no el emparejamiento secuencial).
+# Fuente: cuadro oficial FIFA (números de partido M73-M104), verificado contra
+# https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_knockout_stage
+#
+# OJO: el emparejamiento "secuencial" ingenuo (ganador id1 vs id2, id3 vs id4...)
+# NO reproduce este árbol: solo 3 de los 8 cruces de octavos de final coinciden.
+# Por eso la adyacencia se fija explícitamente aquí.
+#
+# Mapeo partido FIFA -> id de BRACKET_R32 (por sus slots):
+#   M73=1  M74=3  M75=4  M76=2  M77=6  M78=5  M79=7  M80=8
+#   M81=10 M82=9  M83=12 M84=11 M85=13 M86=15 M87=16 M88=14
+#
+# Octavos de final (M89-M96): cada cruce empareja a los ganadores de dos llaves
+# de R32, identificadas por su id en BRACKET_R32.
+BRACKET_R16: list[tuple[int, int]] = [
+    (3, 6),    # M89: ganador M74 vs ganador M77
+    (1, 4),    # M90: ganador M73 vs ganador M75
+    (2, 5),    # M91: ganador M76 vs ganador M78
+    (7, 8),    # M92: ganador M79 vs ganador M80
+    (12, 11),  # M93: ganador M83 vs ganador M84
+    (10, 9),   # M94: ganador M81 vs ganador M82
+    (15, 14),  # M95: ganador M86 vs ganador M88
+    (13, 16),  # M96: ganador M85 vs ganador M87
+]
+
+# De octavos de final en adelante: cada llave empareja a los ganadores de dos
+# llaves de la ronda anterior, por su índice (0-based) dentro de esa ronda.
+# Cuartos (M97-M100) desde R16; semis (M101-M102) desde cuartos; final (M104).
+BRACKET_AVANCE: list[list[tuple[int, int]]] = [
+    [(0, 1), (4, 5), (2, 3), (6, 7)],  # Cuartos: M97=R16[0]vR16[1], M98=R16[4]vR16[5], M99=R16[2]vR16[3], M100=R16[6]vR16[7]
+    [(0, 1), (2, 3)],                  # Semis:   M101=QF[0]vQF[1], M102=QF[2]vQF[3]
+    [(0, 1)],                          # Final:   M104=SF[0]vSF[1]
+]

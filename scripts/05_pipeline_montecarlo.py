@@ -11,6 +11,7 @@ from models.poisson_dixon_coles import DixonColesModel
 from montecarlo import simular_torneo_montecarlo
 
 PROCESSED_DIR = Path(__file__).resolve().parent.parent / "data" / "processed"
+RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw"
 OUTPUTS_DIR = Path(__file__).resolve().parent.parent / "outputs"
 
 N_SIMULACIONES = 5000
@@ -18,6 +19,11 @@ N_SIMULACIONES = 5000
 
 def main():
     historico = pd.read_csv(PROCESSED_DIR / "historico_con_elo.csv", parse_dates=["date"])
+
+    # Fixtures aún por jugar (incluye los cruces eliminatorios reales ya sorteados):
+    # con esto el Monte Carlo arranca desde la llave real cuando la fase de grupos termina.
+    fixtures_pendientes = pd.read_csv(PROCESSED_DIR / "partidos_a_predecir.csv", parse_dates=["date"])
+    shootouts = pd.read_csv(RAW_DIR / "shootouts.csv", parse_dates=["date"])
 
     print("Ajustando Dixon-Coles con todo el histórico disponible...")
     dc = DixonColesModel(cutoff_years=11, half_life_years=2.5)
@@ -27,9 +33,10 @@ def main():
     historico_elo = calcular_elo_historico(historico[cols_elo])
     elo_final = historico_elo.attrs["elo_final"]
 
-    print(f"Corriendo {N_SIMULACIONES} simulaciones del Mundial completo...")
+    print(f"Corriendo {N_SIMULACIONES} simulaciones del Mundial...")
     t0 = time.time()
-    tabla = simular_torneo_montecarlo(dc, elo_final, historico, n_sims=N_SIMULACIONES, seed=42)
+    tabla = simular_torneo_montecarlo(dc, elo_final, historico, fixtures_pendientes=fixtures_pendientes,
+                                      shootouts=shootouts, n_sims=N_SIMULACIONES, seed=42)
     print(f"Listo en {time.time() - t0:.0f}s")
 
 

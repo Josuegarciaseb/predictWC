@@ -228,31 +228,53 @@ python scripts/07_export_matrices.py
 python scripts/08_archivar_predicciones.py
 ```
 
-`05_pipeline_montecarlo.py` simula el Mundial completo (no solo los 40
-partidos del dataset) 5,000 veces: fase de grupos -> Octavos de 32 (formato
-nuevo de 2026, no Octavos de 16) -> Octavos de Final -> Cuartos -> Semis ->
-Final. La estructura oficial (12 grupos, calendario de 72 partidos, llave de
-eliminación) se obtuvo por búsqueda web porque el dataset local solo trae 40
-de esos 72 partidos -- los otros 32 ya tenían resultado real al momento de
-armar el dataset y están en `historico_con_elo.csv`, no en
-`partidos_a_predecir.csv`. Esos 32 partidos reales se usan tal cual en cada
-simulación; los 40 restantes (y cualquier cruce de eliminación directa,
-que puede ser entre cualquier par de las 48 selecciones según cómo avance
-cada simulación) se generan muestreando de la matriz de marcador de
-Dixon-Coles para ese par de equipos.
+`05_pipeline_montecarlo.py` simula el Mundial 5,000 veces: fase de grupos ->
+Octavos de 32 (formato nuevo de 2026, no Octavos de 16) -> Octavos de Final ->
+Cuartos -> Semis -> Final. La estructura oficial (12 grupos, calendario de 72
+partidos, llave de eliminación) se obtuvo por búsqueda web. Los partidos con
+resultado real (en `historico_con_elo.csv`) se usan tal cual en cada simulación;
+los que faltan se generan muestreando de la matriz de marcador de Dixon-Coles
+para ese par de equipos.
 
-**Resultado** (top 10 favoritos a ganar el título, sobre 5,000 simulaciones):
+**Anclaje a la llave real (data-driven).** El simulador tiene dos modos y elige
+solo según el estado del dataset (`construir_bracket_real` en `src/montecarlo.py`):
 
-| Selección | Llega a octavos32 | Cuartos | Semis | Final | **Campeón** |
+- **Modo clásico** (fase de grupos aún en curso): re-simula el torneo completo
+  desde la primera jornada, muestreando los partidos sin resultado.
+- **Modo anclado** (fase de grupos terminada): deja de re-simular los grupos.
+  Lee del propio dataset la **llave R32 real ya sorteada** (martj42 publica los
+  cruces) y arranca desde ahí: los 32 clasificados parten de octavos con
+  probabilidad 1.0 y solo se simula la eliminatoria hacia adelante. Cada cruce se
+  ancla leyendo el fixture real que contiene al equipo resuelto por posición de
+  grupo, así que la asignación de "mejores terceros" sale de la realidad, no del
+  repartidor simplificado. Si un cruce todavía no se publicó, se deriva de la
+  tabla real como respaldo. Además, cualquier partido eliminatorio **ya jugado**
+  se fija con su resultado real (incl. ganador por penales desde `shootouts.csv`)
+  en vez de re-muestrearse. Todo esto es automático: en cuanto el workflow diario
+  trae la fase de grupos completa, la Fase 5 conmuta sola a modo anclado.
+
+**Resultado** (top 8 favoritos a ganar el título, sobre 5,000 simulaciones en
+**modo anclado** — partiendo de la llave R32 real, fase de grupos ya terminada):
+
+| Selección | Octavos16 | Cuartos | Semis | Final | **Campeón** |
 |---|---|---|---|---|---|
-| Argentina | 99.6% | 52.3% | 41.5% | 29.4% | **19.4%** |
-| Brasil | 100% | 51.8% | 34.9% | 21.4% | **11.4%** |
-| España | 92.4% | 41.0% | 30.1% | 18.2% | **11.1%** |
-| Inglaterra | 99.4% | 48.7% | 29.1% | 16.8% | **9.2%** |
-| Francia | 98.9% | 46.0% | 26.4% | 14.0% | **6.8%** |
-| Colombia | 98.8% | 33.1% | 22.3% | 11.4% | **5.9%** |
-| Portugal | 83.4% | 29.4% | 20.0% | 10.8% | **5.7%** |
+| Argentina | 93% | 78% | 57% | 38% | **25.5%** |
+| España | 77% | 48% | 35% | 23% | **12.2%** |
+| Brasil | 65% | 49% | 30% | 16% | **9.0%** |
+| Inglaterra | 80% | 53% | 31% | 15% | **8.0%** |
+| Francia | 78% | 50% | 31% | 16% | **7.6%** |
+| Portugal | 67% | 34% | 22% | 13% | **7.1%** |
+| Colombia | 85% | 56% | 23% | 12% | **5.8%** |
+| Bélgica | 62% | 48% | 21% | 10% | **4.0%** |
 
+> Ya no hay columna "llega a octavos32": en modo anclado los 32 clasificados reales
+> entran con probabilidad 1.0. Las rondas de octavos de final en adelante siguen el
+> **árbol oficial 2026** (`BRACKET_R16` / `BRACKET_AVANCE` en `src/torneo.py`), no un
+> emparejamiento secuencial — eso decide, p.ej., que el camino real de Argentina la
+> lleve a ~78% de cuartos. Comparado con el modo clásico (pre-eliminatorias),
+> Argentina sube de ~19% a ~26% de campeón porque su llave real concreta resultó
+> favorable; el reparto se reacomoda según los cruces que de verdad salieron.
+>
 > Las fuerzas de Dixon-Coles se calibran con `strength_shrinkage=0.85` (ver tabla de
 > correcciones arriba): sin ese encogimiento el favorito daba ~24% de campeón, casi el
 > doble del mercado. El reparto resultante queda alineado con las casas de apuestas.
@@ -276,13 +298,16 @@ exactamente 32 equipos en "llega a octavos de 32", 2 en "llega a la final" y
   estándar en simuladores públicos de este tipo.
 - FIFA define una tabla oficial exacta para decidir qué grupo específico
   aporta cada "mejor tercero" a la llave de Octavos de 32 (depende de cuáles
-  8 de los 12 grupos clasifican). Esa tabla completa (cientos de
-  combinaciones) no se reprodujo aquí -- se usa una asignación determinista
-  simplificada que respeta los grupos candidatos de cada cruce, pero no es
-  la tabla oficial exacta.
-- No está públicamente detallado qué ganador de Octavos de 32 enfrenta a cuál
-  en Octavos de Final -- se asume el emparejamiento secuencial estándar
-  (ganador M1 vs ganador M2, etc.).
+  8 de los 12 grupos clasifican). Esa tabla completa no se reprodujo aquí; en
+  **modo clásico** se usa una asignación determinista simplificada. En **modo
+  anclado** esta limitación desaparece: los cruces se leen de la llave real
+  publicada, así que la asignación de terceros es la oficial.
+- La adyacencia del árbol (qué ganador enfrenta a cuál en cada ronda, de R32
+  hasta la final) usa el **cuadro oficial 2026** (`BRACKET_R16` / `BRACKET_AVANCE`
+  en `src/torneo.py`), verificado contra el bracket de FIFA/Wikipedia. Antes se
+  usaba un emparejamiento secuencial ingenuo (ganador M1 vs M2…) que solo
+  reproducía 3 de los 8 cruces de octavos de final; ya corregido. Cuando un
+  partido eliminatorio se juega, su resultado real se fija por par de equipos.
 - Los empates en eliminación directa (sin datos de tiempo extra/penales) se
   resuelven re-normalizando P(local)/P(visita) de la propia matriz de
   Dixon-Coles, sin modelar el detalle de penales.
