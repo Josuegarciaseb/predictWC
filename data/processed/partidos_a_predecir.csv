@@ -1,13 +1,12 @@
 date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,decided_by_shootout,elo_local_antes,elo_visita_antes
-2026-07-01,England,DR Congo,,,FIFA World Cup,Atlanta,United States,True,False,2088.2995035336085,1803.5728858214907
-2026-07-01,Belgium,Senegal,,,FIFA World Cup,Seattle,United States,True,False,1941.7002859082204,1893.7571585961846
-2026-07-01,United States,Bosnia and Herzegovina,,,FIFA World Cup,Santa Clara,United States,False,False,1862.3103239641375,1685.5488344043151
-2026-07-02,Portugal,Croatia,,,FIFA World Cup,Toronto,Canada,True,False,2050.857076274923,1959.7958485731942
-2026-07-02,Spain,Austria,,,FIFA World Cup,Inglewood,United States,True,False,2189.0876724611894,1886.613151408343
-2026-07-02,Switzerland,Algeria,,,FIFA World Cup,Vancouver,Canada,True,False,1967.0108398728582,1875.4112358711573
-2026-07-03,Argentina,Cape Verde,,,FIFA World Cup,Miami Gardens,United States,True,False,2209.325944654751,1699.124777134015
-2026-07-03,Australia,Egypt,,,FIFA World Cup,Arlington,United States,True,False,1890.7953421101708,1848.0243170518806
-2026-07-03,Colombia,Ghana,,,FIFA World Cup,Kansas City,United States,True,False,2072.987292789261,1686.9844309987445
-2026-07-04,Paraguay,France,,,FIFA World Cup,Philadelphia,United States,True,False,1886.3534806836128,2182.948053391291
-2026-07-04,Canada,Morocco,,,FIFA World Cup,Houston,United States,True,False,1860.8073848183521,2007.8677496550915
-2026-07-05,Brazil,Norway,,,FIFA World Cup,East Rutherford,United States,True,False,2106.1197487410464,1985.5177863382162
+2026-07-02,Portugal,Croatia,,,FIFA World Cup,Toronto,Canada,True,False,2050.857058678097,1959.7958216212485
+2026-07-02,Spain,Austria,,,FIFA World Cup,Inglewood,United States,True,False,2189.0876808047087,1886.6131557741403
+2026-07-02,Switzerland,Algeria,,,FIFA World Cup,Vancouver,Canada,True,False,1967.010802743763,1875.411256497026
+2026-07-03,Argentina,Cape Verde,,,FIFA World Cup,Miami Gardens,United States,True,False,2209.3259363582424,1699.1248579816709
+2026-07-03,Australia,Egypt,,,FIFA World Cup,Arlington,United States,True,False,1890.7946171844487,1848.0229257124863
+2026-07-03,Colombia,Ghana,,,FIFA World Cup,Kansas City,United States,True,False,2072.9870984076347,1686.9844210133424
+2026-07-04,Canada,Morocco,,,FIFA World Cup,Houston,United States,True,False,1860.8073126227405,2007.867720119969
+2026-07-04,Paraguay,France,,,FIFA World Cup,Philadelphia,United States,True,False,1886.3534477763671,2182.9480031004273
+2026-07-05,Mexico,England,,,FIFA World Cup,Mexico City,Mexico,False,False,2030.0859128442526,2098.0553059213944
+2026-07-05,Brazil,Norway,,,FIFA World Cup,East Rutherford,United States,True,False,2106.119728398737,1985.5176433967865
+2026-07-06,United States,Belgium,,,FIFA World Cup,Seattle,United States,False,False,1877.5148832082675,1967.5855448524842
