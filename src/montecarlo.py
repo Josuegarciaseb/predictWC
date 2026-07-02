@@ -181,7 +181,8 @@ def cargar_resultados_ko(historico: pd.DataFrame, shootouts: pd.DataFrame | None
 class MotorSimulacion:
     def __init__(self, modelo_dc, elo_final: dict[str, float], resultados_reales: dict, rng: random.Random,
                  bracket_real: tuple | None = None, resultados_ko: dict | None = None,
-                 ganadores_penales: dict | None = None):
+                 ganadores_penales: dict | None = None,
+                 cache_matrices: dict[tuple[str, str], np.ndarray] | None = None):
         self.dc = modelo_dc
         self.elo_final = elo_final
         self.resultados_reales = resultados_reales
@@ -189,7 +190,10 @@ class MotorSimulacion:
         self.bracket_real = bracket_real
         self.resultados_ko = resultados_ko or {}
         self.ganadores_penales = ganadores_penales or {}
-        self._cache_matrices: dict[tuple[str, str], np.ndarray] = {}
+        # La caché puede compartirse entre simulaciones que usan el mismo
+        # modelo (misma variante bootstrap): las matrices son deterministas
+        # por (modelo, local, visita).
+        self._cache_matrices = cache_matrices if cache_matrices is not None else {}
 
 
     def _matriz(self, local: str, visita: str) -> np.ndarray:
@@ -432,7 +436,11 @@ class MotorSimulacion:
 def simular_torneo_montecarlo(modelo_dc, elo_final: dict[str, float], historico: pd.DataFrame,
                                 fixtures_pendientes: pd.DataFrame | None = None,
                                 shootouts: pd.DataFrame | None = None,
-                                n_sims: int = 3000, seed: int = 42) -> pd.DataFrame:
+                                n_sims: int = 3000, seed: int = 42,
+                                variantes_dc: list | None = None) -> pd.DataFrame:
+    """Si se pasan `variantes_dc` (de DixonColesModel.generar_variantes_bootstrap),
+    cada simulación usa una variante al azar: la incertidumbre de las fuerzas se
+    propaga al torneo y evita la sobreconfianza multiplicativa en prob_campeon."""
     resultados_reales = cargar_resultados_reales(historico)
     bracket_real = construir_bracket_real(historico, fixtures_pendientes)
     resultados_ko, ganadores_penales = cargar_resultados_ko(historico, shootouts)
@@ -446,11 +454,16 @@ def simular_torneo_montecarlo(modelo_dc, elo_final: dict[str, float], historico:
     todos_los_equipos = sorted({e for grupo in GRUPOS.values() for e in grupo})
     contador = {eq: defaultdict(int) for eq in todos_los_equipos}
 
+    modelos = variantes_dc if variantes_dc else [modelo_dc]
+    caches = [dict() for _ in modelos]
+
     rng = random.Random(seed)
     for _ in range(n_sims):
-        motor = MotorSimulacion(modelo_dc, elo_final, resultados_reales, rng,
+        b = rng.randrange(len(modelos))
+        motor = MotorSimulacion(modelos[b], elo_final, resultados_reales, rng,
                                 bracket_real=bracket_real, resultados_ko=resultados_ko,
-                                ganadores_penales=ganadores_penales)
+                                ganadores_penales=ganadores_penales,
+                                cache_matrices=caches[b])
         avance = motor.simular_una_vez()
         for eq in todos_los_equipos:
             contador[eq][avance.get(eq, "grupos")] += 1

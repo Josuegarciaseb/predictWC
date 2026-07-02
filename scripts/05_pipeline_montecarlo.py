@@ -15,6 +15,7 @@ RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw"
 OUTPUTS_DIR = Path(__file__).resolve().parent.parent / "outputs"
 
 N_SIMULACIONES = 5000
+N_BOOTSTRAP = 50  # variantes de fuerzas para propagar incertidumbre de parámetros
 
 
 def main():
@@ -29,6 +30,11 @@ def main():
     dc = DixonColesModel(cutoff_years=11, half_life_years=2.5)
     dc.fit(historico)
 
+    print(f"Generando {N_BOOTSTRAP} variantes bootstrap de fuerzas (incertidumbre de parámetros)...")
+    t0 = time.time()
+    variantes = dc.generar_variantes_bootstrap(historico, n_boot=N_BOOTSTRAP, seed=123)
+    print(f"Listo en {time.time() - t0:.0f}s")
+
     cols_elo = ["date", "home_team", "away_team", "home_score", "away_score", "tournament", "neutral"]
     historico_elo = calcular_elo_historico(historico[cols_elo])
     elo_final = historico_elo.attrs["elo_final"]
@@ -36,7 +42,8 @@ def main():
     print(f"Corriendo {N_SIMULACIONES} simulaciones del Mundial...")
     t0 = time.time()
     tabla = simular_torneo_montecarlo(dc, elo_final, historico, fixtures_pendientes=fixtures_pendientes,
-                                      shootouts=shootouts, n_sims=N_SIMULACIONES, seed=42)
+                                      shootouts=shootouts, n_sims=N_SIMULACIONES, seed=42,
+                                      variantes_dc=variantes)
     print(f"Listo en {time.time() - t0:.0f}s")
 
 

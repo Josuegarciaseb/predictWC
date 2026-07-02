@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import copy
+
 import numpy as np
 import pandas as pd
 from scipy import sparse
-from scipy.stats import poisson
+from scipy.stats import nbinom, poisson
 from scipy.optimize import minimize_scalar
 from sklearn.linear_model import PoissonRegressor
 
@@ -24,16 +26,30 @@ def _tau(x: np.ndarray, y: np.ndarray, lam: np.ndarray, mu: np.ndarray, rho: flo
 class DixonColesModel:
     def __init__(self, cutoff_years: float = 11, half_life_years: float = 2.5,
                  alpha_ridge: float = 1e-4, max_goals: int = 10,
-                 strength_shrinkage: float = 0.85):
+                 strength_shrinkage: float = 1.0, dispersion: float = 0.06):
         self.cutoff_years = cutoff_years
         self.half_life_years = half_life_years
         self.alpha_ridge = alpha_ridge
         self.max_goals = max_goals
-        # Encoge ataque/defensa hacia la media del campo (1.0 = sin cambio,
-        # <1.0 = menos favoritismo). Corrige la sobreconfianza del modelo:
-        # con estimaciones puntuales fijas, la ventaja del #1 se compone
-        # multiplicativamente por ronda y dispara su prob. de campeón muy por
-        # encima del mercado. Aplana el spread sin tocar al equipo promedio.
+        # Sobredispersión phi: los goles marginales pasan de Poisson(lam) a
+        # Negative Binomial con media lam y varianza lam*(1+phi*lam), que es
+        # el resultado de un shock multiplicativo Gamma sobre lam (forma del
+        # partido, "partido loco"). La varianza extra crece con lam^2, así que
+        # engorda la cola del favorito y casi no toca al débil. phi=0 recupera
+        # el Poisson exacto. El GLM sigue estimando bien la media bajo
+        # sobredispersión (quasi-Poisson), por lo que fit() no cambia.
+        # phi=0.06 elegido por barrido walk-forward 2018-2025 (scripts/09):
+        # ratio goleadas esp/obs 0.998 (vs 0.976 con Poisson) con +0.11% de
+        # log-loss 1X2; con phi>=0.09 el visitante se sobre-ensancha.
+        self.dispersion = dispersion
+        # Encoge ataque/defensa hacia la media del campo (1.0 = sin cambio).
+        # Se usó 0.85 para contener la sobreconfianza en prob_campeon del Monte
+        # Carlo, pero el backtest (scripts/09) mostró que a nivel partido
+        # aplasta la cola de goleadas (ratio esp/obs 0.87 vs 0.98) y ADEMÁS
+        # empeora el log-loss 1X2. La sobreconfianza del torneo se controla
+        # ahora con generar_variantes_bootstrap() en el Monte Carlo, que
+        # propaga la incertidumbre de las fuerzas sin sesgar la media de
+        # ningún partido. Se conserva el parámetro solo para experimentos.
         self.strength_shrinkage = strength_shrinkage
 
         self.equipos_: list[str] = []
@@ -46,7 +62,9 @@ class DixonColesModel:
         self.attack_global_promedio_: float = 0.0
 
 
-    def fit(self, df_historico: pd.DataFrame, fecha_corte: str | None = None) -> "DixonColesModel":
+    def _matrices_entrenamiento(self, df_historico: pd.DataFrame, fecha_corte: str | None = None):
+        """Prepara la ventana de entrenamiento y la matriz de diseño del GLM.
+        Devuelve (train, X, y, w, equipos, idx_equipo)."""
         df = df_historico.copy()
         df["date"] = pd.to_datetime(df["date"])
         if fecha_corte is not None:
@@ -90,28 +108,38 @@ class DixonColesModel:
         X = sparse.hstack([X_attack, X_defense, X_home]).tocsr()
         y = long_df["goals"].values
         w = long_df["peso"].values
+        return train, X, y, w, equipos, idx_equipo
 
+    def _ajustar_glm(self, X, y, w, equipos: list[str]):
+        """Ajusta el GLM Poisson y devuelve (attack, defense, home_adv, intercept)."""
+        n_eq = len(equipos)
         modelo = PoissonRegressor(alpha=self.alpha_ridge, max_iter=500, tol=1e-6)
         modelo.fit(X, y, sample_weight=w)
-
         coef = modelo.coef_
-        self.attack_ = pd.Series(coef[:n_eq], index=equipos)
-        self.defense_ = pd.Series(coef[n_eq:2 * n_eq], index=equipos)
-        self.home_adv_ = float(coef[2 * n_eq])
-        self.intercept_ = float(modelo.intercept_)
+        attack = pd.Series(coef[:n_eq], index=equipos)
+        defense = pd.Series(coef[n_eq:2 * n_eq], index=equipos)
+        return attack, defense, float(coef[2 * n_eq]), float(modelo.intercept_)
+
+    def _aplicar_shrinkage(self):
+        # Shrinkage hacia la media (preserva al equipo promedio: la media de las
+        # series no cambia, por lo que intercept_ y home_adv_ siguen válidos).
+        if self.strength_shrinkage != 1.0:
+            s = self.strength_shrinkage
+            self.attack_ = self.attack_global_promedio_ + s * (self.attack_ - self.attack_global_promedio_)
+            self.defense_ = self._defense_global_promedio + s * (self.defense_ - self._defense_global_promedio)
+
+    def fit(self, df_historico: pd.DataFrame, fecha_corte: str | None = None) -> "DixonColesModel":
+        train, X, y, w, equipos, idx_equipo = self._matrices_entrenamiento(df_historico, fecha_corte)
+
+        self.attack_, self.defense_, self.home_adv_, self.intercept_ = self._ajustar_glm(X, y, w, equipos)
         self.equipos_ = equipos
         self.idx_equipo_ = idx_equipo
         self.attack_global_promedio_ = float(self.attack_.mean())
         self._defense_global_promedio = float(self.defense_.mean())
 
-        # Shrinkage hacia la media (preserva al equipo promedio: la media de las
-        # series no cambia, por lo que intercept_ y home_adv_ siguen válidos).
-        # Se aplica ANTES de estimar rho para que rho se ajuste sobre los
-        # lambdas ya encogidos.
-        if self.strength_shrinkage != 1.0:
-            s = self.strength_shrinkage
-            self.attack_ = self.attack_global_promedio_ + s * (self.attack_ - self.attack_global_promedio_)
-            self.defense_ = self._defense_global_promedio + s * (self.defense_ - self._defense_global_promedio)
+        # El shrinkage (si se usa) va ANTES de estimar rho para que rho se
+        # ajuste sobre los lambdas ya encogidos.
+        self._aplicar_shrinkage()
 
         lam_train, mu_train = self._lambda_mu(
             train["home_team"].values, train["away_team"].values, train["neutral"].values
@@ -129,6 +157,43 @@ class DixonColesModel:
         res = minimize_scalar(neg_ll_rho, bounds=(-0.2, 0.2), method="bounded")
         self.rho_ = float(res.x)
         return self
+
+    def generar_variantes_bootstrap(self, df_historico: pd.DataFrame, fecha_corte: str | None = None,
+                                    n_boot: int = 50, seed: int = 123) -> list["DixonColesModel"]:
+        """Variantes del modelo por bootstrap bayesiano (pesos exponenciales).
+
+        Cada variante es una muestra plausible de las fuerzas ataque/defensa
+        dado el histórico: se re-ajusta el GLM multiplicando el peso de cada
+        partido por un factor ~Exp(1) (así ningún partido desaparece y ningún
+        equipo se queda sin datos, a diferencia del bootstrap por remuestreo).
+        El Monte Carlo alterna variantes entre simulaciones para propagar la
+        incertidumbre de parámetros: en las sims donde el favorito "salió
+        débil" pierde temprano, lo que contiene su prob_campeon sin sesgar la
+        media de ningún partido (reemplaza al viejo strength_shrinkage=0.85).
+
+        rho no se re-estima (solo afecta celdas 0-0/0-1/1-0/1-1 y es estable);
+        cada variante hereda el rho del modelo base, por lo que hay que llamar
+        a fit() antes."""
+        if self.attack_ is None:
+            raise RuntimeError("Llama a fit() antes de generar variantes bootstrap.")
+
+        train, X, y, w, equipos, _ = self._matrices_entrenamiento(df_historico, fecha_corte)
+        n_partidos = len(train)
+        rng = np.random.default_rng(seed)
+
+        variantes = []
+        for _ in range(n_boot):
+            # el mismo factor para las dos filas (local/visita) de cada partido
+            factor = rng.exponential(1.0, size=n_partidos)
+            w_boot = w * np.tile(factor, 2)
+
+            v = copy.copy(self)
+            v.attack_, v.defense_, v.home_adv_, v.intercept_ = self._ajustar_glm(X, y, w_boot, equipos)
+            v.attack_global_promedio_ = float(v.attack_.mean())
+            v._defense_global_promedio = float(v.defense_.mean())
+            v._aplicar_shrinkage()
+            variantes.append(v)
+        return variantes
 
 
     def _fuerza(self, equipo: str) -> tuple[float, float]:
@@ -156,8 +221,13 @@ class DixonColesModel:
         lam, mu = float(lam[0]), float(mu[0])
 
         g = np.arange(0, self.max_goals + 1)
-        px = poisson.pmf(g, lam)
-        py = poisson.pmf(g, mu)
+        if self.dispersion > 0:
+            n_nb = 1.0 / self.dispersion
+            px = nbinom.pmf(g, n_nb, n_nb / (n_nb + lam))
+            py = nbinom.pmf(g, n_nb, n_nb / (n_nb + mu))
+        else:
+            px = poisson.pmf(g, lam)
+            py = poisson.pmf(g, mu)
         M = np.outer(px, py)
 
         for (xx, yy) in [(0, 0), (0, 1), (1, 0), (1, 1)]:

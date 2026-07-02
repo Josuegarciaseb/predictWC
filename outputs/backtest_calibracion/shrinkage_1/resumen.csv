@@ -1,0 +1,2 @@
+shrinkage,anios,n_partidos,log_loss_1x2,rps_1x2,pit_chi2_local,pit_pval_local,pit_chi2_visita,pit_pval_visita,brier_over_3.5,ratio_esp_obs_over_3.5,brier_over_4.5,ratio_esp_obs_over_4.5,brier_margen_>=3,ratio_esp_obs_margen_>=3,brier_alguno_>=3,ratio_esp_obs_alguno_>=3
+1.0,2018-2025,7742,0.8621018168195609,0.1680326043436451,45.4,0.0,6.55,0.68431,0.19125,0.9814,0.12124,0.9568,0.14539,0.9761,0.19702,0.9982
