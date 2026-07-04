@@ -1,10 +1,9 @@
 date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,decided_by_shootout,elo_local_antes,elo_visita_antes
-2026-07-03,Australia,Egypt,,,FIFA World Cup,Arlington,United States,True,False,1890.794711638159,1848.0227777272667
-2026-07-03,Argentina,Cape Verde,,,FIFA World Cup,Miami Gardens,United States,True,False,2209.325056838371,1699.124611792131
-2026-07-03,Colombia,Ghana,,,FIFA World Cup,Kansas City,United States,True,False,2072.986397590557,1686.9839257296892
-2026-07-04,Canada,Morocco,,,FIFA World Cup,Houston,United States,True,False,1860.806600304981,2007.8672027093426
-2026-07-04,Paraguay,France,,,FIFA World Cup,Philadelphia,United States,True,False,1886.3526763342572,2182.94710161322
-2026-07-05,Brazil,Norway,,,FIFA World Cup,East Rutherford,United States,True,False,2106.1190021913853,1985.516846207835
-2026-07-05,Mexico,England,,,FIFA World Cup,Mexico City,Mexico,False,False,2030.0852366889771,2098.0543600199308
-2026-07-06,Portugal,Spain,,,FIFA World Cup,Dallas,United States,True,False,2073.1686151386884,2204.748786851119
-2026-07-06,United States,Belgium,,,FIFA World Cup,Seattle,United States,False,False,1877.514254451067,1967.5848013806017
+2026-07-04,Canada,Morocco,,,FIFA World Cup,Houston,United States,True,False,1860.806937778328,2007.8677461277318
+2026-07-04,Paraguay,France,,,FIFA World Cup,Philadelphia,United States,True,False,1886.3526877589638,2182.948946315737
+2026-07-05,Mexico,England,,,FIFA World Cup,Mexico City,Mexico,False,False,2030.0853691926025,2098.0562753169543
+2026-07-05,Brazil,Norway,,,FIFA World Cup,East Rutherford,United States,True,False,2106.119159382567,1985.518876881193
+2026-07-06,United States,Belgium,,,FIFA World Cup,Seattle,United States,False,False,1877.5145391225683,1967.5863976626563
+2026-07-06,Argentina,Egypt,,,FIFA World Cup,Atlanta,United States,True,False,2212.346604505215,1851.6974860286225
+2026-07-06,Portugal,Spain,,,FIFA World Cup,Dallas,United States,True,False,2073.1701782720506,2204.7507763581607
+2026-07-06,Switzerland,Colombia,,,FIFA World Cup,Vancouver,Canada,True,False,2000.4152106916395,2078.853822076659
