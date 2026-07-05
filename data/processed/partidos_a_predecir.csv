@@ -1,9 +1,8 @@
 date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,decided_by_shootout,elo_local_antes,elo_visita_antes
-2026-07-04,Canada,Morocco,,,FIFA World Cup,Houston,United States,True,False,1860.806937778328,2007.8677461277318
-2026-07-04,Paraguay,France,,,FIFA World Cup,Philadelphia,United States,True,False,1886.3526877589638,2182.948946315737
-2026-07-05,Mexico,England,,,FIFA World Cup,Mexico City,Mexico,False,False,2030.0853691926025,2098.0562753169543
-2026-07-05,Brazil,Norway,,,FIFA World Cup,East Rutherford,United States,True,False,2106.119159382567,1985.518876881193
-2026-07-06,United States,Belgium,,,FIFA World Cup,Seattle,United States,False,False,1877.5145391225683,1967.5863976626563
-2026-07-06,Argentina,Egypt,,,FIFA World Cup,Atlanta,United States,True,False,2212.346604505215,1851.6974860286225
-2026-07-06,Portugal,Spain,,,FIFA World Cup,Dallas,United States,True,False,2073.1701782720506,2204.7507763581607
-2026-07-06,Switzerland,Colombia,,,FIFA World Cup,Vancouver,Canada,True,False,2000.4152106916395,2078.853822076659
+2026-07-05,Mexico,England,,,FIFA World Cup,Mexico City,Mexico,False,False,2030.085327066717,2098.056276047049
+2026-07-05,Brazil,Norway,,,FIFA World Cup,East Rutherford,United States,True,False,2106.1191403523308,1985.5188697343424
+2026-07-06,Argentina,Egypt,,,FIFA World Cup,Atlanta,United States,True,False,2212.346613485184,1851.6974669108079
+2026-07-06,Switzerland,Colombia,,,FIFA World Cup,Vancouver,Canada,True,False,2000.4152135727688,2078.853815264843
+2026-07-06,Portugal,Spain,,,FIFA World Cup,Dallas,United States,True,False,2073.1701654813755,2204.7507702573957
+2026-07-06,United States,Belgium,,,FIFA World Cup,Seattle,United States,False,False,1877.514332993317,1967.5863807334913
+2026-07-09,France,Morocco,,,FIFA World Cup,Foxborough,United States,True,False,2192.1594428583417,2039.3842220205572

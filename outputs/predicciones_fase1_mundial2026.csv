@@ -1,9 +1,8 @@
 fecha,local,visitante,elo_local,elo_visitante,prob_local_elo,prob_visita_elo
-2026-07-04,Canada,Morocco,1860.8,2007.9,0.3,0.7
-2026-07-04,Paraguay,France,1886.4,2182.9,0.154,0.846
 2026-07-05,Mexico,England,2030.1,2098.1,0.546,0.454
 2026-07-05,Brazil,Norway,2106.1,1985.5,0.667,0.333
-2026-07-06,United States,Belgium,1877.5,1967.6,0.514,0.486
 2026-07-06,Argentina,Egypt,2212.3,1851.7,0.889,0.111
-2026-07-06,Portugal,Spain,2073.2,2204.8,0.319,0.681
 2026-07-06,Switzerland,Colombia,2000.4,2078.9,0.389,0.611
+2026-07-06,Portugal,Spain,2073.2,2204.8,0.319,0.681
+2026-07-06,United States,Belgium,1877.5,1967.6,0.514,0.486
+2026-07-09,France,Morocco,2192.2,2039.4,0.707,0.293
