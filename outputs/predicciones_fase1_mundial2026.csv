@@ -1,6 +1,5 @@
 fecha,local,visitante,elo_local,elo_visitante,prob_local_elo,prob_visita_elo
-2026-07-06,Argentina,Egypt,2212.3,1851.7,0.889,0.111
-2026-07-06,Switzerland,Colombia,2000.4,2078.9,0.389,0.611
 2026-07-09,France,Morocco,2192.2,2039.4,0.707,0.293
 2026-07-10,Spain,Belgium,2223.9,2021.6,0.762,0.238
 2026-07-11,Norway,England,2025.5,2130.8,0.353,0.647
+2026-07-11,Argentina,Switzerland,2219.0,2007.1,0.772,0.228

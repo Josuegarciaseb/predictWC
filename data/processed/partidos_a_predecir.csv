@@ -1,6 +1,5 @@
 date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,decided_by_shootout,elo_local_antes,elo_visita_antes
-2026-07-06,Argentina,Egypt,,,FIFA World Cup,Atlanta,United States,True,False,2212.346613485184,1851.6974669108079
-2026-07-06,Switzerland,Colombia,,,FIFA World Cup,Vancouver,Canada,True,False,2000.4152135727688,2078.853815264843
-2026-07-09,France,Morocco,,,FIFA World Cup,Foxborough,United States,True,False,2192.1594428583417,2039.3842220205572
-2026-07-10,Spain,Belgium,,,FIFA World Cup,Inglewood,United States,True,False,2223.9029249482874,2021.5861570917107
-2026-07-11,Norway,England,,,FIFA World Cup,Miami Gardens,United States,True,False,2025.533317560279,2130.814078701803
+2026-07-09,France,Morocco,,,FIFA World Cup,Foxborough,United States,True,False,2192.1594478261,2039.38423753302
+2026-07-10,Spain,Belgium,,,FIFA World Cup,Inglewood,United States,True,False,2223.902931551177,2021.586202587029
+2026-07-11,Norway,England,,,FIFA World Cup,Miami Gardens,United States,True,False,2025.5333256188835,2130.81408164092
+2026-07-11,Argentina,Switzerland,,,FIFA World Cup,Kansas City,United States,True,False,2219.0333172324476,2007.07537223243
