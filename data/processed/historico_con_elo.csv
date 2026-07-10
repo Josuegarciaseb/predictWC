@@ -43304,7 +43304,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2019-11-18,Dominica,Saint Vincent and the Grenadines,1.0,0.0,CONCACAF Nations League,Roseau,Dominica,False,False,1180.3003117416406,1383.8859552971462
 2019-11-18,Argentina,Uruguay,2.0,2.0,Friendly,Tel Aviv,Israel,True,False,2014.5124616309622,2002.5334898162168
 2019-11-18,Spain,Romania,5.0,0.0,UEFA Euro qualification,Madrid,Spain,False,False,2049.6187074675227,1751.0534004883891
-2019-11-19,Wales,Hungary,2.0,0.0,UEFA Euro qualification,Cardiff,Wales,False,False,1789.6581515363516,1667.6175776936338
+2019-11-19,Netherlands,Estonia,5.0,0.0,UEFA Euro qualification,Amsterdam,Netherlands,False,False,2051.9652625475696,1510.444281387963
 2019-11-19,Germany,Northern Ireland,6.0,1.0,UEFA Euro qualification,Frankfurt,Germany,False,False,1973.650228376872,1696.116489245713
 2019-11-19,Ethiopia,Ivory Coast,2.0,1.0,African Cup of Nations qualification,Bahir Dar,Ethiopia,False,False,1375.0692094013898,1741.9607353927897
 2019-11-19,Libya,Tanzania,2.0,1.0,African Cup of Nations qualification,Monastir,Tunisia,True,False,1566.3577262470876,1442.5572967689977
@@ -43328,7 +43328,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2019-11-19,Barbados,Cayman Islands,3.0,0.0,CONCACAF Nations League,Bridgetown,Barbados,False,False,1292.4251770944497,1202.3169680062822
 2019-11-19,Hong Kong,Cambodia,2.0,0.0,FIFA World Cup qualification,Hong Kong,Hong Kong,False,False,1338.3098670802037,1063.2015670747687
 2019-11-19,Puerto Rico,Anguilla,3.0,0.0,CONCACAF Nations League,Bayamón,Puerto Rico,False,False,1205.1537212805968,968.5067818782414
-2019-11-19,Netherlands,Estonia,5.0,0.0,UEFA Euro qualification,Amsterdam,Netherlands,False,False,2051.9652625475696,1510.444281387963
+2019-11-19,Wales,Hungary,2.0,0.0,UEFA Euro qualification,Cardiff,Wales,False,False,1789.6581515363516,1667.6175776936338
 2019-11-19,Jordan,Taiwan,5.0,0.0,FIFA World Cup qualification,Amman,Jordan,False,False,1591.0974853976895,1166.9528658998506
 2019-11-19,Nepal,Kuwait,0.0,1.0,FIFA World Cup qualification,Thimphu,Bhutan,True,False,1159.608528237217,1510.1006003281648
 2019-11-19,Syria,Philippines,1.0,0.0,FIFA World Cup qualification,Dubai,United Arab Emirates,True,False,1603.2818010449787,1345.9555203608309
@@ -43339,8 +43339,8 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2019-11-19,Iraq,Bahrain,0.0,0.0,FIFA World Cup qualification,Amman,Jordan,True,False,1702.385745862548,1595.1258426297327
 2019-11-19,Saudi Arabia,Paraguay,0.0,0.0,Friendly,Riyadh,Saudi Arabia,False,False,1632.6477367030295,1786.1598060072643
 2019-11-19,Brazil,South Korea,3.0,0.0,Friendly,Abu Dhabi,United Arab Emirates,True,False,2107.8329425216434,1830.0674725810984
-2019-11-19,Yemen,Singapore,1.0,2.0,FIFA World Cup qualification,Muharraq,Bahrain,True,False,1358.9321890611036,1293.168385153943
 2019-11-19,Lebanon,North Korea,0.0,0.0,FIFA World Cup qualification,Beirut,Lebanon,False,False,1525.8257664743767,1493.2620232286256
+2019-11-19,Yemen,Singapore,1.0,2.0,FIFA World Cup qualification,Muharraq,Bahrain,True,False,1358.9321890611036,1293.168385153943
 2019-11-19,Afghanistan,Qatar,0.0,1.0,FIFA World Cup qualification,Dushanbe,Tajikistan,True,False,1314.5299512270767,1795.0396235369542
 2019-11-19,Oman,India,1.0,0.0,FIFA World Cup qualification,Muscat,Oman,False,False,1611.392499986153,1364.9227207321278
 2019-11-19,Myanmar,Mongolia,1.0,0.0,FIFA World Cup qualification,Mandalay,Myanmar,False,False,1244.7147020674788,1101.4755759190618
@@ -47950,7 +47950,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2024-11-16,Sweden,Slovakia,2.0,1.0,UEFA Nations League,Solna,Sweden,False,False,1784.1772171607242,1740.6193927793324
 2024-11-16,Guinea,DR Congo,1.0,0.0,African Cup of Nations qualification,Abidjan,Ivory Coast,True,False,1596.4817370700628,1691.54893487983
 2024-11-17,Austria,Slovenia,1.0,1.0,UEFA Nations League,Vienna,Austria,False,False,1916.1422506601466,1741.1884022655117
-2024-11-17,Norway,Kazakhstan,5.0,0.0,UEFA Nations League,Oslo,Norway,False,False,1841.7098831826213,1470.1471207559598
+2024-11-17,Finland,Greece,0.0,2.0,UEFA Nations League,Helsinki,Finland,False,False,1598.4271366986281,1838.903882602659
 2024-11-17,Latvia,Armenia,1.0,2.0,UEFA Nations League,Riga,Latvia,False,False,1343.3026067142985,1421.7723871034832
 2024-11-17,Italy,France,1.0,3.0,UEFA Nations League,Milan,Italy,False,False,2027.992518714688,2061.164801539143
 2024-11-17,Israel,Belgium,1.0,0.0,UEFA Nations League,Budapest,Hungary,True,False,1625.14647657103,1920.4449397566405
@@ -47961,9 +47961,9 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2024-11-17,Algeria,Liberia,5.0,1.0,African Cup of Nations qualification,Tizi Ouzou,Algeria,False,False,1777.9827724063155,1407.8616567373895
 2024-11-17,Papua New Guinea,Solomon Islands,1.0,2.0,FIFA World Cup qualification,Port Moresby,Papua New Guinea,False,False,1417.9508549395146,1486.574944541555
 2024-11-17,El Salvador,Montserrat,1.0,0.0,CONCACAF Nations League,San Salvador,El Salvador,False,False,1526.7844502612284,1219.22482491353
-2024-11-17,Togo,Equatorial Guinea,3.0,0.0,African Cup of Nations qualification,Lomé,Togo,False,False,1454.818156973114,1584.474505388573
 2024-11-17,Thailand,Laos,1.0,1.0,Friendly,Pathum Thani,Thailand,False,False,1565.8656314399132,943.3222022827682
-2024-11-17,Finland,Greece,0.0,2.0,UEFA Nations League,Helsinki,Finland,False,False,1598.4271366986281,1838.903882602659
+2024-11-17,Togo,Equatorial Guinea,3.0,0.0,African Cup of Nations qualification,Lomé,Togo,False,False,1454.818156973114,1584.474505388573
+2024-11-17,Norway,Kazakhstan,5.0,0.0,UEFA Nations League,Oslo,Norway,False,False,1841.7098831826213,1470.1471207559598
 2024-11-18,Cuba,Saint Kitts and Nevis,4.0,0.0,CONCACAF Nations League,Santiago de Cuba,Cuba,False,False,1429.5089818573297,1338.848794664484
 2024-11-18,Croatia,Portugal,1.0,1.0,UEFA Nations League,Split,Croatia,False,False,1939.898890224012,2042.0138468683401
 2024-11-18,Serbia,Denmark,0.0,0.0,UEFA Nations League,Leskovac,Serbia,False,False,1875.131146982848,1911.670060075904
@@ -48894,8 +48894,8 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2025-11-13,Guatemala,Panama,2.0,3.0,FIFA World Cup qualification,Guatemala City,Guatemala,False,False,1666.2984755300108,1839.1874135146002
 2025-11-13,Algeria,Zimbabwe,3.0,1.0,Friendly,Jeddah,Saudi Arabia,True,False,1796.2188659045635,1434.0626538861031
 2025-11-14,Uganda,Chad,2.0,1.0,Friendly,Berrechid,Morocco,True,False,1537.1120536049677,1247.749294313967
-2025-11-14,Angola,Argentina,0.0,2.0,Friendly,Luanda,Angola,False,False,1592.0976504221467,2168.7756272277798
 2025-11-14,Japan,Ghana,2.0,0.0,Kirin Cup,Toyota,Japan,False,False,1939.5226459284384,1635.5028482151506
+2025-11-14,Angola,Argentina,0.0,2.0,Friendly,Luanda,Angola,False,False,1592.0976504221467,2168.7756272277798
 2025-11-14,Australia,Venezuela,0.0,1.0,Friendly,Houston,United States,True,False,1899.8149793065675,1788.9123862846582
 2025-11-14,South Korea,Bolivia,2.0,0.0,Friendly,Daejeon,South Korea,False,False,1883.7467225919509,1741.2876997685069
 2025-11-14,Morocco,Mozambique,1.0,0.0,Friendly,Tangier,Morocco,False,False,1912.1753555340265,1507.4586033037072
@@ -48908,9 +48908,9 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2025-11-14,Finland,Malta,0.0,1.0,FIFA World Cup qualification,Helsinki,Finland,False,False,1583.2059315643287,1297.4072885480157
 2025-11-14,Poland,Netherlands,1.0,1.0,FIFA World Cup qualification,Warsaw,Poland,False,False,1769.770064157751,2011.0558109236945
 2025-11-14,Croatia,Faroe Islands,3.0,1.0,FIFA World Cup qualification,Rijeka,Croatia,False,False,1976.13779119665,1420.803804158767
-2025-11-14,Uzbekistan,Egypt,2.0,0.0,Al Ain International Cup,Al Ain,United Arab Emirates,True,False,1801.3408551292762,1771.1654289071723
-2025-11-14,Tunisia,Jordan,3.0,2.0,Friendly,Radès,Tunisia,False,False,1752.7016898179606,1718.8615310885332
 2025-11-14,Gibraltar,Montenegro,1.0,2.0,FIFA World Cup qualification,Gibraltar,Gibraltar,False,False,1121.6276061566798,1495.0663683144664
+2025-11-14,Tunisia,Jordan,3.0,2.0,Friendly,Radès,Tunisia,False,False,1752.7016898179606,1718.8615310885332
+2025-11-14,Uzbekistan,Egypt,2.0,0.0,Al Ain International Cup,Al Ain,United Arab Emirates,True,False,1801.3408551292762,1771.1654289071723
 2025-11-15,Russia,Chile,0.0,2.0,Friendly,Sochi,Russia,False,False,1847.7842789148604,1766.479597945973
 2025-11-15,Libya,Mauritania,1.0,0.0,Friendly,Benina,Libya,False,False,1531.2227486789645,1455.3951309777688
 2025-11-15,Kuwait,Tanzania,4.0,3.0,Friendly,Cairo,Egypt,True,False,1434.8638395184964,1432.1334693954504
@@ -48963,16 +48963,16 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2025-11-17,Cape Verde,Egypt,1.0,1.0,Al Ain International Cup,Al Ain,United Arab Emirates,True,True,1670.5561564551442,1754.0398189109667
 2025-11-17,Czech Republic,Gibraltar,6.0,0.0,FIFA World Cup qualification,Olomouc,Czech Republic,False,False,1779.8498468252023,1115.6201636669978
 2025-11-17,Vanuatu,Fiji,2.0,0.0,MSG Prime Minister's Cup,Port Moresby,Papua New Guinea,True,False,1400.3193580151537,1490.050027811853
+2025-11-18,Kuwait,Gambia,2.0,2.0,Friendly,Cairo,Egypt,True,False,1444.785254766944,1535.3031712965424
 2025-11-18,Mali,Jordan,3.0,2.0,Friendly,Radès,Tunisia,True,False,1711.498234444385,1712.5338778865926
 2025-11-18,Japan,Bolivia,3.0,0.0,Kirin Cup,Tokyo,Japan,False,False,1942.8606981748258,1735.3327496794561
 2025-11-18,Benin,Burkina Faso,0.0,3.0,Friendly,Mohammedia,Morocco,True,False,1558.7105005212572,1660.8397283260538
-2025-11-18,Kenya,Senegal,0.0,8.0,Friendly,Antalya,Turkey,True,False,1462.426738095826,1902.862654465463
-2025-11-18,Saudi Arabia,Algeria,0.0,2.0,Friendly,Jeddah,Saudi Arabia,False,False,1705.374309721459,1799.5365361448414
 2025-11-18,Guinea,Niger,1.0,1.0,Friendly,Mohammedia,Morocco,True,False,1599.5335574388648,1497.754886158024
-2025-11-18,Kuwait,Gambia,2.0,2.0,Friendly,Cairo,Egypt,True,False,1444.785254766944,1535.3031712965424
+2025-11-18,Kenya,Senegal,0.0,8.0,Friendly,Antalya,Turkey,True,False,1462.426738095826,1902.862654465463
+2025-11-18,Lesotho,Malawi,0.0,1.0,Friendly,Bloemfontein,South Africa,True,False,1417.438261297545,1445.217836253404
+2025-11-18,Saudi Arabia,Algeria,0.0,2.0,Friendly,Jeddah,Saudi Arabia,False,False,1705.374309721459,1799.5365361448414
 2025-11-18,Oman,Ivory Coast,0.0,2.0,Friendly,Seeb,Oman,False,False,1606.2950444418057,1712.7459880418965
 2025-11-18,Morocco,Uganda,4.0,0.0,Friendly,Tangier,Morocco,False,False,1913.213117417726,1540.2920041766527
-2025-11-18,Angola,Zambia,3.0,2.0,Friendly,Luanda,Angola,False,False,1590.2848225668204,1545.3751343315364
 2025-11-18,Timor-Leste,Tajikistan,0.0,5.0,AFC Asian Cup qualification,Darwin,Australia,True,False,928.9165880014167,1436.9720612810286
 2025-11-18,Maldives,Philippines,0.0,2.0,AFC Asian Cup qualification,Malé,Maldives,False,False,1088.5892061202894,1304.0329759151052
 2025-11-18,Brunei,Lebanon,0.0,3.0,AFC Asian Cup qualification,Bandar Seri Begawan,Brunei,False,False,924.0213976535881,1451.5832057616742
@@ -48986,8 +48986,8 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2025-11-18,Brazil,Tunisia,1.0,1.0,Friendly,Lille,France,True,False,2052.8008462137004,1759.0293430199013
 2025-11-18,Canada,Venezuela,2.0,0.0,Friendly,Fort Lauderdale,United States,True,False,1885.532774670543,1802.0002501140968
 2025-11-18,Chile,Peru,2.0,1.0,Friendly,Sochi,Russia,True,False,1788.6663443970801,1776.0026847171623
+2025-11-18,Angola,Zambia,3.0,2.0,Friendly,Luanda,Angola,False,False,1590.2848225668204,1545.3751343315364
 2025-11-18,Cyprus,Estonia,2.0,4.0,Friendly,Limassol,Cyprus,False,False,1371.8730401429007,1403.198996589796
-2025-11-18,Lesotho,Malawi,0.0,1.0,Friendly,Bloemfontein,South Africa,True,False,1417.438261297545,1445.217836253404
 2025-11-18,Colombia,Australia,3.0,0.0,Friendly,New York,United States,True,False,2056.553357202609,1886.7271154771288
 2025-11-18,Guatemala,Suriname,3.0,1.0,FIFA World Cup qualification,Guatemala City,Guatemala,False,False,1652.4168921054204,1607.5376049999848
 2025-11-18,Ecuador,New Zealand,2.0,0.0,Friendly,Harrison,United States,True,False,1990.1521575322886,1749.9963013220224
@@ -48995,7 +48995,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2025-11-18,Belarus,Greece,0.0,0.0,FIFA World Cup qualification,Zalaegerszeg,Hungary,True,False,1527.655380599209,1831.1499970400541
 2025-11-18,Scotland,Denmark,4.0,2.0,FIFA World Cup qualification,Glasgow,Scotland,False,False,1797.9225504369278,1949.1546686347408
 2025-11-18,Sweden,Slovenia,1.0,1.0,FIFA World Cup qualification,Solna,Sweden,False,False,1731.5077266272474,1733.8869840019404
-2025-11-18,Wales,North Macedonia,7.0,1.0,FIFA World Cup qualification,Cardiff,Wales,False,False,1740.6482003678682,1655.8027670189554
+2025-11-18,Belgium,Liechtenstein,7.0,0.0,FIFA World Cup qualification,Liège,Belgium,False,False,1882.6377767361128,960.9320276340358
 2025-11-18,Iraq,United Arab Emirates,2.0,1.0,FIFA World Cup qualification,Basra,Iraq,False,False,1710.034136325445,1665.6726386535029
 2025-11-18,United States,Uruguay,5.0,1.0,Friendly,Tampa,United States,False,False,1821.3924559062482,1980.5892590989636
 2025-11-18,South Korea,Ghana,1.0,0.0,Friendly,Seoul,South Korea,False,False,1889.7016726810016,1632.1647959687632
@@ -49003,7 +49003,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2025-11-18,Kosovo,Switzerland,1.0,1.0,FIFA World Cup qualification,Pristina,Kosovo,False,False,1751.3725747743101,1945.1556407432822
 2025-11-18,Austria,Bosnia and Herzegovina,1.0,1.0,FIFA World Cup qualification,Vienna,Austria,False,False,1869.0428559880977,1614.1028957259916
 2025-11-18,Mexico,Paraguay,1.0,2.0,Friendly,San Antonio,United States,True,False,1938.4067993291117,1874.4348279086296
-2025-11-18,Haiti,Nicaragua,2.0,0.0,FIFA World Cup qualification,Willemstad,Curaçao,True,False,1690.670656646394,1524.763514044104
+2025-11-18,Wales,North Macedonia,7.0,1.0,FIFA World Cup qualification,Cardiff,Wales,False,False,1740.6482003678682,1655.8027670189554
 2025-11-18,Panama,El Salvador,3.0,0.0,FIFA World Cup qualification,Panama City,Panama,False,False,1853.0689969391906,1476.3350378258783
 2025-11-18,Romania,San Marino,7.0,1.0,FIFA World Cup qualification,Ploiești,Romania,False,False,1695.5068112376846,934.5391302629328
 2025-11-18,Costa Rica,Honduras,0.0,0.0,FIFA World Cup qualification,San José,Costa Rica,False,False,1761.8103874858823,1700.2582861242438
@@ -49014,7 +49014,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2025-11-18,Antigua and Barbuda,Guyana,1.0,4.0,CONCACAF Series,North Sound,Antigua and Barbuda,False,False,1116.5955970838913,1469.6348002091172
 2025-11-18,Saint Kitts and Nevis,Belize,2.0,6.0,CONCACAF Series,Basseterre,Saint Kitts and Nevis,False,False,1287.53927789427,1292.1634940693737
 2025-11-18,Faroe Islands,Kazakhstan,1.0,0.0,Friendly,Pula,Croatia,True,False,1419.623619094919,1475.6056921302552
-2025-11-18,Belgium,Liechtenstein,7.0,0.0,FIFA World Cup qualification,Liège,Belgium,False,False,1882.6377767361128,960.9320276340358
+2025-11-18,Haiti,Nicaragua,2.0,0.0,FIFA World Cup qualification,Willemstad,Curaçao,True,False,1690.670656646394,1524.763514044104
 2025-11-19,Laos,Vietnam,0.0,2.0,AFC Asian Cup qualification,Vientiane,Laos,False,False,960.6392915036043,1458.9141613537222
 2025-11-20,Vanuatu,Solomon Islands,2.0,1.0,MSG Prime Minister's Cup,Port Moresby,Papua New Guinea,True,False,1423.8069693036134,1465.5542276380593
 2025-11-20,Papua New Guinea,Fiji,2.0,0.0,MSG Prime Minister's Cup,Port Moresby,Papua New Guinea,False,False,1445.8345716439997,1466.5624165233933
@@ -49022,10 +49022,10 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2025-11-25,Syria,South Sudan,2.0,0.0,Arab Cup qualification,Doha,Qatar,True,False,1570.9808823410704,1281.7924438322318
 2025-11-25,Palestine,Libya,0.0,0.0,Arab Cup qualification,Al Rayyan,Qatar,True,True,1559.4859175930244,1536.553953789601
 2025-11-25,Mauritania,Kuwait,0.0,2.0,Arab Cup qualification,Al Rayyan,Qatar,True,False,1450.0639258671322,1447.3331807813352
-2025-11-26,Oman,Somalia,0.0,0.0,Arab Cup qualification,Doha,Qatar,True,True,1591.5735220644658,1059.2373868957773
-2025-11-26,Bahrain,Djibouti,1.0,0.0,Arab Cup qualification,Al Rayyan,Qatar,True,False,1531.74389451944,1080.6787116057503
 2025-11-26,Sudan,Lebanon,2.0,1.0,Arab Cup qualification,Al Rayyan,Qatar,True,False,1479.2572806301625,1455.7107664557077
 2025-11-26,Comoros,Yemen,4.0,4.0,Arab Cup qualification,Doha,Qatar,True,True,1491.9320612299762,1298.6420760617798
+2025-11-26,Oman,Somalia,0.0,0.0,Arab Cup qualification,Doha,Qatar,True,True,1591.5735220644658,1059.2373868957773
+2025-11-26,Bahrain,Djibouti,1.0,0.0,Arab Cup qualification,Al Rayyan,Qatar,True,False,1531.74389451944,1080.6787116057503
 2025-12-01,Qatar,Palestine,0.0,1.0,Arab Cup,Al Khor,Qatar,False,False,1610.0091597817648,1558.4973003380164
 2025-12-01,Tunisia,Syria,0.0,1.0,Arab Cup,Al Rayyan,Qatar,True,False,1765.9166781506215,1578.1418113593836
 2025-12-02,Egypt,Kuwait,1.0,1.0,Arab Cup,Lusail,Qatar,True,False,1751.0927538451076,1470.010020753493
@@ -49046,10 +49046,10 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2025-12-07,Qatar,Tunisia,0.0,3.0,Arab Cup,Al Khor,Qatar,False,False,1589.0249662709823,1741.547196345674
 2025-12-08,Morocco,Saudi Arabia,1.0,0.0,Arab Cup,Lusail,Qatar,True,False,1908.872883153308,1707.0670211398074
 2025-12-08,Oman,Comoros,2.0,1.0,Arab Cup,Doha,Qatar,True,False,1578.8589533234497,1473.1139111729299
-2025-12-09,Bahrain,Sudan,3.0,1.0,Arab Cup,Al Rayyan,Qatar,True,False,1519.6016435909855,1494.2745642656462
 2025-12-09,Algeria,Iraq,2.0,0.0,Arab Cup,Al Rayyan,Qatar,True,False,1813.5465490771744,1735.0870085487288
-2025-12-09,Egypt,Jordan,0.0,3.0,Arab Cup,Al Khor,Qatar,True,False,1739.2784476179595,1721.012895160501
+2025-12-09,Bahrain,Sudan,3.0,1.0,Arab Cup,Al Rayyan,Qatar,True,False,1519.6016435909855,1494.2745642656462
 2025-12-09,United Arab Emirates,Kuwait,3.0,1.0,Arab Cup,Doha,Qatar,True,False,1647.700397734243,1470.6676498309112
+2025-12-09,Egypt,Jordan,0.0,3.0,Arab Cup,Al Khor,Qatar,True,False,1739.2784476179595,1721.012895160501
 2025-12-11,Morocco,Syria,1.0,0.0,Arab Cup,Al Rayyan,Qatar,True,False,1914.8319010506646,1599.5038014497156
 2025-12-11,Palestine,Saudi Arabia,1.0,2.0,Arab Cup,Lusail,Qatar,True,False,1582.4889855634144,1701.1080032424509
 2025-12-12,Jordan,Iraq,1.0,0.0,Arab Cup,Al Rayyan,Qatar,True,False,1744.036859958491,1720.5006833090788
@@ -49061,8 +49061,8 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2025-12-22,Mali,Zambia,1.0,1.0,African Cup of Nations,Casablanca,Morocco,True,False,1721.5280425704964,1539.3198412291692
 2025-12-22,South Africa,Angola,2.0,1.0,African Cup of Nations,Marrakesh,Morocco,True,False,1671.7184695271173,1596.3401156691875
 2025-12-22,Egypt,Zimbabwe,2.0,1.0,African Cup of Nations,Agadir,Morocco,True,False,1716.2544828199696,1447.668702251956
-2025-12-23,Senegal,Botswana,3.0,0.0,African Cup of Nations,Tangier,Morocco,True,False,1906.3499463619933,1428.2329851294066
 2025-12-23,DR Congo,Benin,1.0,0.0,African Cup of Nations,Rabat,Morocco,True,False,1716.3756674051697,1546.2114360946978
+2025-12-23,Senegal,Botswana,3.0,0.0,African Cup of Nations,Tangier,Morocco,True,False,1906.3499463619933,1428.2329851294066
 2025-12-23,Nigeria,Tanzania,2.0,1.0,African Cup of Nations,Fez,Morocco,True,False,1737.4907575273219,1422.2120541470028
 2025-12-23,Tunisia,Uganda,3.0,1.0,African Cup of Nations,Rabat,Morocco,True,False,1760.140290022735,1537.9794847522812
 2025-12-24,Cameroon,Gabon,1.0,0.0,African Cup of Nations,Agadir,Morocco,True,False,1665.6247264231697,1578.2343103700603
@@ -49073,26 +49073,26 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2025-12-26,Zambia,Comoros,0.0,0.0,African Cup of Nations,Casablanca,Morocco,True,False,1550.144985253988,1461.8511217458963
 2025-12-26,Morocco,Mali,1.0,1.0,African Cup of Nations,Rabat,Morocco,False,False,1936.0979937093994,1710.7028985456777
 2025-12-26,Angola,Zimbabwe,1.0,1.0,African Cup of Nations,Marrakesh,Morocco,True,False,1578.6464573707487,1439.7644667042712
-2025-12-27,Senegal,DR Congo,1.0,1.0,African Cup of Nations,Tangier,Morocco,True,False,1911.07171773148,1728.6598692083846
 2025-12-27,Benin,Botswana,1.0,0.0,African Cup of Nations,Rabat,Morocco,True,False,1533.9272342914828,1423.5112137599199
+2025-12-27,Senegal,DR Congo,1.0,1.0,African Cup of Nations,Tangier,Morocco,True,False,1911.07171773148,1728.6598692083846
 2025-12-27,Uganda,Tanzania,1.0,1.0,African Cup of Nations,Rabat,Morocco,True,False,1523.2817464056106,1415.9098873921134
 2025-12-27,Nigeria,Tunisia,3.0,2.0,African Cup of Nations,Fez,Morocco,True,False,1743.7929242822113,1774.8380283694055
+2025-12-28,Algeria,Burkina Faso,1.0,0.0,African Cup of Nations,Rabat,Morocco,True,False,1831.92511352896,1684.699861489645
+2025-12-28,Equatorial Guinea,Sudan,0.0,1.0,African Cup of Nations,Casablanca,Morocco,True,False,1473.4085232086436,1467.4120662997716
 2025-12-28,Ivory Coast,Cameroon,1.0,1.0,African Cup of Nations,Marrakesh,Morocco,True,False,1737.0359355462087,1682.5817121082434
 2025-12-28,Gabon,Mozambique,2.0,3.0,African Cup of Nations,Agadir,Morocco,True,False,1561.2773246849865,1490.4790878722154
-2025-12-28,Equatorial Guinea,Sudan,0.0,1.0,African Cup of Nations,Casablanca,Morocco,True,False,1473.4085232086436,1467.4120662997716
-2025-12-28,Algeria,Burkina Faso,1.0,0.0,African Cup of Nations,Rabat,Morocco,True,False,1831.92511352896,1684.699861489645
 2025-12-29,Zimbabwe,South Africa,2.0,3.0,African Cup of Nations,Marrakesh,Morocco,True,False,1448.3082065008189,1669.1548521062277
 2025-12-29,Angola,Egypt,0.0,0.0,African Cup of Nations,Agadir,Morocco,True,False,1570.102717574201,1744.4159940869827
 2025-12-29,Morocco,Zambia,3.0,0.0,African Cup of Nations,Rabat,Morocco,False,False,1919.5911197228102,1544.5470496998148
 2025-12-29,Comoros,Mali,0.0,0.0,African Cup of Nations,Casablanca,Morocco,True,False,1467.4490573000694,1727.209772532267
-2025-12-30,Botswana,DR Congo,0.0,3.0,African Cup of Nations,Rabat,Morocco,True,False,1407.930389026503,1739.4951458740532
-2025-12-30,Benin,Senegal,0.0,3.0,African Cup of Nations,Tangier,Morocco,True,False,1549.5080590248997,1900.2364410658115
 2025-12-30,Uganda,Nigeria,1.0,3.0,African Cup of Nations,Fez,Morocco,True,False,1516.541546158619,1768.298077856218
 2025-12-30,Tanzania,Tunisia,1.0,1.0,African Cup of Nations,Rabat,Morocco,True,False,1422.650087639105,1750.3328747953988
+2025-12-30,Benin,Senegal,0.0,3.0,African Cup of Nations,Tangier,Morocco,True,False,1549.5080590248997,1900.2364410658115
+2025-12-30,Botswana,DR Congo,0.0,3.0,African Cup of Nations,Rabat,Morocco,True,False,1407.930389026503,1739.4951458740532
+2025-12-31,Mozambique,Cameroon,1.0,2.0,African Cup of Nations,Agadir,Morocco,True,False,1517.5015720614065,1686.0795840228768
+2025-12-31,Gabon,Ivory Coast,2.0,3.0,African Cup of Nations,Marrakesh,Morocco,True,False,1534.2548404957954,1733.5380636315754
 2025-12-31,Equatorial Guinea,Algeria,1.0,3.0,African Cup of Nations,Rabat,Morocco,True,False,1450.5202299796297,1845.4232347900345
 2025-12-31,Sudan,Burkina Faso,0.0,2.0,African Cup of Nations,Casablanca,Morocco,True,False,1490.3003595287855,1671.2017402285705
-2025-12-31,Gabon,Ivory Coast,2.0,3.0,African Cup of Nations,Marrakesh,Morocco,True,False,1534.2548404957954,1733.5380636315754
-2025-12-31,Mozambique,Cameroon,1.0,2.0,African Cup of Nations,Agadir,Morocco,True,False,1517.5015720614065,1686.0795840228768
 2026-01-03,Mali,Tunisia,1.0,1.0,African Cup of Nations,Casablanca,Morocco,True,True,1712.950493309405,1733.7579182025574
 2026-01-03,Senegal,Sudan,3.0,1.0,African Cup of Nations,Tangier,Morocco,True,False,1909.4680754891272,1472.6903386630854
 2026-01-04,Morocco,Tanzania,1.0,0.0,African Cup of Nations,Rabat,Morocco,False,False,1924.3920203223313,1439.2250442319464
@@ -49105,8 +49105,8 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-01-09,Morocco,Cameroon,2.0,0.0,African Cup of Nations,Rabat,Morocco,False,False,1925.8902870027796,1719.6882600915758
 2026-01-10,Egypt,Ivory Coast,3.0,2.0,African Cup of Nations,Agadir,Morocco,True,False,1750.6553206235103,1777.5135917491934
 2026-01-10,Algeria,Nigeria,0.0,2.0,African Cup of Nations,Marrakesh,Morocco,True,False,1867.7995459408057,1795.4377288971627
-2026-01-14,Morocco,Nigeria,0.0,0.0,African Cup of Nations,Rabat,Morocco,False,True,1935.7763327569128,1836.1170728129464
 2026-01-14,Senegal,Egypt,1.0,0.0,African Cup of Nations,Tangier,Morocco,True,False,1925.3220269245674,1774.8912112945568
+2026-01-14,Morocco,Nigeria,0.0,0.0,African Cup of Nations,Rabat,Morocco,False,True,1935.7763327569128,1836.1170728129464
 2026-01-17,Egypt,Nigeria,0.0,0.0,African Cup of Nations,Casablanca,Morocco,True,True,1761.566808072616,1847.7895650521368
 2026-01-18,Morocco,Senegal,3.0,0.0,African Cup of Nations,Rabat,Morocco,False,False,1924.1038405177223,1938.6464301465082
 2026-01-18,Bolivia,Panama,1.0,1.0,Friendly,Tarija,Bolivia,False,False,1728.9667589169892,1856.7690666315073
@@ -49121,22 +49121,22 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-03-25,Equatorial Guinea,Kyrgyzstan,1.0,0.0,Friendly,Antalya,Turkey,True,False,1444.218212634334,1467.7009759773794
 2026-03-25,Puerto Rico,Guam,4.0,0.0,FIFA Series,Bayamón,Puerto Rico,False,False,1364.5372976964654,1006.6787331789039
 2026-03-25,Kazakhstan,Namibia,2.0,0.0,FIFA Series,Astana,Kazakhstan,False,False,1464.0081997307682,1440.0382745937634
-2026-03-26,Georgia,Israel,2.0,2.0,Friendly,Tbilisi,Georgia,False,False,1698.5019901611386,1684.3890137114324
-2026-03-26,Moldova,Lithuania,0.0,2.0,Friendly,Chișinău,Moldova,False,False,1338.204002805989,1310.6772746245003
-2026-03-26,Brazil,France,1.0,2.0,Friendly,Foxborough,United States,True,False,2045.9135110829802,2107.024299565919
-2026-03-26,Colombia,Croatia,1.0,2.0,Friendly,Orlando,United States,True,False,2066.121257053241,1980.9181007055147
-2026-03-26,Cyprus,Belarus,0.0,1.0,Friendly,Nicosia,Cyprus,False,False,1353.946161558365,1539.9607164047966
-2026-03-26,Poland,Albania,2.0,1.0,FIFA World Cup qualification,Warsaw,Poland,False,False,1780.6884845344666,1697.910351296627
-2026-03-26,Vietnam,Bangladesh,3.0,0.0,Friendly,Hanoi,Vietnam,False,False,1463.0421529487624,1135.28458398734
 2026-03-26,Bolivia,Suriname,2.0,1.0,FIFA World Cup qualification,Guadalupe,Mexico,True,False,1729.2235720688798,1591.6405210415173
-2026-03-26,Italy,Northern Ireland,2.0,0.0,FIFA World Cup qualification,Bergamo,Italy,False,False,1921.1177785823947,1640.378618195376
-2026-03-26,Wales,Bosnia and Herzegovina,1.0,1.0,FIFA World Cup qualification,Cardiff,Wales,False,True,1759.72800140844,1627.5869458315228
 2026-03-26,New Caledonia,Jamaica,0.0,1.0,FIFA World Cup qualification,Zapopan,Mexico,True,False,1613.6440305485442,1678.9252059627308
+2026-03-26,Wales,Bosnia and Herzegovina,1.0,1.0,FIFA World Cup qualification,Cardiff,Wales,False,True,1759.72800140844,1627.5869458315228
+2026-03-26,Italy,Northern Ireland,2.0,0.0,FIFA World Cup qualification,Bergamo,Italy,False,False,1921.1177785823947,1640.378618195376
+2026-03-26,Vietnam,Bangladesh,3.0,0.0,Friendly,Hanoi,Vietnam,False,False,1463.0421529487624,1135.28458398734
+2026-03-26,Poland,Albania,2.0,1.0,FIFA World Cup qualification,Warsaw,Poland,False,False,1780.6884845344666,1697.910351296627
 2026-03-26,Ukraine,Sweden,1.0,3.0,FIFA World Cup qualification,Valencia,Spain,True,False,1842.5536068199433,1726.7160988397088
+2026-03-26,Georgia,Israel,2.0,2.0,Friendly,Tbilisi,Georgia,False,False,1698.5019901611386,1684.3890137114324
+2026-03-26,Colombia,Croatia,1.0,2.0,Friendly,Orlando,United States,True,False,2066.121257053241,1980.9181007055147
+2026-03-26,Brazil,France,1.0,2.0,Friendly,Foxborough,United States,True,False,2045.9135110829802,2107.024299565919
+2026-03-26,Moldova,Lithuania,0.0,2.0,Friendly,Chișinău,Moldova,False,False,1338.204002805989,1310.6772746245003
+2026-03-26,Cyprus,Belarus,0.0,1.0,Friendly,Nicosia,Cyprus,False,False,1353.946161558365,1539.9607164047966
 2026-03-26,Bonaire,Saint Vincent and the Grenadines,3.0,1.0,CONCACAF Series,Rincon,Bonaire,False,False,1146.6809218475805,1389.8667687035806
-2026-03-26,Czech Republic,Republic of Ireland,2.0,2.0,FIFA World Cup qualification,Prague,Czech Republic,False,True,1780.752559114367,1731.9670695098698
-2026-03-26,Slovakia,Kosovo,3.0,4.0,FIFA World Cup qualification,Bratislava,Slovakia,False,False,1720.1801716592215,1755.9848591212524
 2026-03-26,Turkey,Romania,1.0,0.0,FIFA World Cup qualification,Istanbul,Turkey,False,False,1915.7505244543927,1696.0267605380602
+2026-03-26,Slovakia,Kosovo,3.0,4.0,FIFA World Cup qualification,Bratislava,Slovakia,False,False,1720.1801716592215,1755.9848591212524
+2026-03-26,Czech Republic,Republic of Ireland,2.0,2.0,FIFA World Cup qualification,Prague,Czech Republic,False,True,1780.752559114367,1731.9670695098698
 2026-03-26,Bahamas,Anguilla,1.0,3.0,CONCACAF Series,George Town,Cayman Islands,True,False,1007.0364629121295,908.777975685426
 2026-03-26,Saint Martin,Barbados,3.0,1.0,CONCACAF Series,Rincon,Bonaire,True,False,1306.171632325755,1156.396892234301
 2026-03-26,Cayman Islands,British Virgin Islands,1.0,1.0,CONCACAF Series,George Town,Cayman Islands,False,False,1062.9635082039597,1002.4906236817428
@@ -49155,27 +49155,27 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-03-27,Montenegro,Andorra,2.0,0.0,Friendly,Podgorica,Montenegro,False,False,1497.4736863591318,1139.7505793972455
 2026-03-27,Morocco,Ecuador,1.0,1.0,Friendly,Madrid,Spain,True,False,1953.9846184424875,1996.1706402348548
 2026-03-27,Netherlands,Norway,2.0,1.0,Friendly,Amsterdam,Netherlands,False,False,2004.9837080468037,1955.773830262085
-2026-03-27,South Africa,Panama,1.0,1.0,Friendly,Durban,South Africa,False,False,1657.768694726017,1845.1268128147954
+2026-03-27,Saudi Arabia,Egypt,0.0,4.0,Friendly,Jeddah,Saudi Arabia,False,False,1698.6509637288075,1767.0387353073029
 2026-03-27,Algeria,Guatemala,7.0,0.0,Friendly,Genoa,Italy,True,False,1827.120202025022,1668.3139760638878
 2026-03-27,Libya,Niger,0.0,0.0,"Morocco, Capital of African Football",Casablanca,Morocco,True,False,1537.542571044609,1500.6032950991198
 2026-03-27,Greece,Paraguay,0.0,1.0,Friendly,Athens,Greece,False,False,1818.8446612344665,1886.2555598625547
 2026-03-27,Russia,Nicaragua,3.0,1.0,Friendly,Krasnodar,Russia,False,False,1825.5975324637532,1510.1751966562304
 2026-03-27,New Zealand,Finland,0.0,2.0,FIFA Series,Auckland,New Zealand,False,False,1743.9778186194562,1553.5228033584037
 2026-03-27,Costa Rica,Jordan,2.0,2.0,Friendly,Antalya,Turkey,True,False,1754.2129750973947,1759.4200823263275
-2026-03-27,Indonesia,Saint Kitts and Nevis,4.0,0.0,FIFA Series,Jakarta,Indonesia,False,False,1479.9756007448739,1257.8247535904661
-2026-03-27,China,Curaçao,2.0,0.0,FIFA Series,Sydney,Australia,True,False,1529.0961521456068,1631.4488859816015
-2026-03-27,Australia,Cameroon,1.0,0.0,FIFA Series,Sydney,Australia,False,False,1877.1592156264962,1709.8022143374426
-2026-03-27,Azerbaijan,Saint Lucia,6.0,1.0,FIFA Series,Sumgait,Azerbaijan,False,False,1384.329375496251,1231.3526831984268
-2026-03-27,Saudi Arabia,Egypt,0.0,4.0,Friendly,Jeddah,Saudi Arabia,False,False,1698.6509637288075,1767.0387353073029
-2026-03-27,Chile,Cape Verde,4.0,2.0,FIFA Series,Auckland,New Zealand,True,False,1798.3020162974833,1673.5032215210033
-2026-03-27,Guyana,Dominica,2.0,0.0,CONCACAF Series,Santiago de los Caballeros,Dominican Republic,True,False,1477.9029486775335,1173.5237168952392
 2026-03-27,Solomon Islands,Bulgaria,2.0,10.0,FIFA Series,Jakarta,Indonesia,True,False,1451.5594363053833,1499.3616079800383
+2026-03-27,Azerbaijan,Saint Lucia,6.0,1.0,FIFA Series,Sumgait,Azerbaijan,False,False,1384.329375496251,1231.3526831984268
+2026-03-27,Iran,Nigeria,1.0,2.0,Friendly,Antalya,Turkey,True,False,1867.9316011584247,1842.3176378174498
+2026-03-27,China,Curaçao,2.0,0.0,FIFA Series,Sydney,Australia,True,False,1529.0961521456068,1631.4488859816015
+2026-03-27,South Africa,Panama,1.0,1.0,Friendly,Durban,South Africa,False,False,1657.768694726017,1845.1268128147954
+2026-03-27,Australia,Cameroon,1.0,0.0,FIFA Series,Sydney,Australia,False,False,1877.1592156264962,1709.8022143374426
+2026-03-27,Chile,Cape Verde,4.0,2.0,FIFA Series,Auckland,New Zealand,True,False,1798.3020162974833,1673.5032215210033
+2026-03-27,Indonesia,Saint Kitts and Nevis,4.0,0.0,FIFA Series,Jakarta,Indonesia,False,False,1479.9756007448739,1257.8247535904661
+2026-03-27,Kenya,Estonia,1.0,1.0,FIFA Series,Kigali,Rwanda,True,True,1458.9394461992958,1421.1258751743317
 2026-03-27,Rwanda,Grenada,4.0,0.0,FIFA Series,Kigali,Rwanda,False,False,1417.3223772175625,1323.0141072173783
 2026-03-27,Venezuela,Trinidad and Tobago,4.0,1.0,FIFA Series,Tashkent,Uzbekistan,True,False,1790.5387204138883,1558.0597850116333
 2026-03-27,Uzbekistan,Gabon,3.0,1.0,FIFA Series,Tashkent,Uzbekistan,False,False,1813.3456533762567,1523.4095244356656
-2026-03-27,Iran,Nigeria,1.0,2.0,Friendly,Antalya,Turkey,True,False,1867.9316011584247,1842.3176378174498
 2026-03-27,Belize,Sint Maarten,2.0,3.0,CONCACAF Series,Santiago de los Caballeros,Dominican Republic,True,False,1321.8780183731776,1308.7328560156293
-2026-03-27,Kenya,Estonia,1.0,1.0,FIFA Series,Kigali,Rwanda,True,True,1458.9394461992958,1421.1258751743317
+2026-03-27,Guyana,Dominica,2.0,0.0,CONCACAF Series,Santiago de los Caballeros,Dominican Republic,True,False,1477.9029486775335,1173.5237168952392
 2026-03-28,Ivory Coast,South Korea,4.0,0.0,Friendly,Milton Keynes,England,True,False,1753.277701078147,1891.9663064047
 2026-03-28,San Marino,Faroe Islands,1.0,2.0,Friendly,Serravalle,San Marino,False,False,934.0191809625572,1431.221111494406
 2026-03-28,Burkina Faso,Guinea-Bissau,5.0,0.0,Friendly,Ouagadougou,Burkina Faso,False,False,1655.6815490367824,1356.686360440974
@@ -49205,7 +49205,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-03-30,Indonesia,Bulgaria,0.0,1.0,FIFA Series,Jakarta,Indonesia,False,False,1486.3201947462503,1524.9901119852193
 2026-03-30,New Zealand,Chile,4.0,1.0,FIFA Series,Auckland,New Zealand,False,False,1712.4087653086756,1810.5924724260483
 2026-03-30,Cyprus,Moldova,3.0,2.0,Friendly,Nicosia,Cyprus,False,False,1346.3724902847316,1317.9328537047663
-2026-03-30,Azerbaijan,Sierra Leone,1.0,1.0,FIFA Series,Sumgait,Azerbaijan,False,True,1393.7814459916751,1469.1405088265703
+2026-03-30,Germany,Ghana,2.0,1.0,Friendly,Stuttgart,Germany,False,False,1974.7118243618113,1624.912454668861
 2026-03-30,Saint Kitts and Nevis,Solomon Islands,4.0,2.0,FIFA Series,Jakarta,Indonesia,True,False,1251.4801595890897,1425.9309323002024
 2026-03-30,Cape Verde,Finland,1.0,1.0,FIFA Series,Auckland,New Zealand,True,True,1661.2127653924383,1585.0918566691844
 2026-03-30,Dominica,Sint Maarten,0.0,0.0,CONCACAF Series,Santiago de los Caballeros,Dominican Republic,True,False,1167.9820976028411,1321.705565712665
@@ -49214,31 +49214,31 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-03-30,Uzbekistan,Venezuela,0.0,0.0,FIFA Series,Tashkent,Uzbekistan,False,True,1816.9385922364188,1799.6298370232341
 2026-03-30,Guyana,Belize,3.0,1.0,CONCACAF Series,Santiago de los Caballeros,Dominican Republic,True,False,1483.4445679699315,1308.9053086761419
 2026-03-30,Rwanda,Estonia,2.0,0.0,FIFA Series,Kigali,Rwanda,False,False,1428.8669569703136,1422.4809814166697
-2026-03-30,Germany,Ghana,2.0,1.0,Friendly,Stuttgart,Germany,False,False,1974.7118243618113,1624.912454668861
+2026-03-30,Azerbaijan,Sierra Leone,1.0,1.0,FIFA Series,Sumgait,Azerbaijan,False,True,1393.7814459916751,1469.1405088265703
 2026-03-31,England,Japan,0.0,1.0,Friendly,London,England,False,False,2076.933382481608,1958.6169394018661
 2026-03-31,Algeria,Uruguay,0.0,0.0,Friendly,Turin,Italy,True,False,1839.996902258748,1964.3550206219402
 2026-03-31,Argentina,Zambia,5.0,0.0,Friendly,Buenos Aires,Argentina,False,False,2170.7432130363354,1539.7461491002937
+2026-03-31,Austria,South Korea,1.0,0.0,Friendly,Vienna,Austria,False,False,1860.5465134587703,1866.1054567140072
 2026-03-31,Benin,Guinea,1.0,0.0,"Morocco, Capital of African Football",Casablanca,Morocco,True,False,1532.7855425974642,1591.7729947696648
 2026-03-31,Brazil,Croatia,3.0,1.0,Friendly,Orlando,United States,True,False,2037.6545038182392,1993.322437946677
-2026-03-31,Burkina Faso,Guinea-Bissau,1.0,1.0,Friendly,Ouagadougou,Burkina Faso,False,False,1659.3370791604566,1353.0308303173
 2026-03-31,Canada,Tunisia,0.0,0.0,Friendly,Toronto,Canada,False,False,1888.8820122821212,1741.632093163474
 2026-03-31,Costa Rica,Iran,0.0,5.0,Friendly,Antalya,Turkey,True,False,1754.362836470582,1857.1957047641952
-2026-03-31,Austria,South Korea,1.0,0.0,Friendly,Vienna,Austria,False,False,1860.5465134587703,1866.1054567140072
+2026-03-31,Burkina Faso,Guinea-Bissau,1.0,1.0,Friendly,Ouagadougou,Burkina Faso,False,False,1659.3370791604566,1353.0308303173
 2026-03-31,Niger,Togo,0.0,1.0,"Morocco, Capital of African Football",Casablanca,Morocco,True,False,1501.9273073058553,1457.3037145463422
-2026-03-31,Hungary,Greece,0.0,0.0,Friendly,Budapest,Hungary,False,False,1745.087164133943,1807.9094127385733
-2026-03-31,Ivory Coast,Scotland,1.0,0.0,Friendly,Liverpool,England,True,False,1779.1385507688397,1818.6252563369976
-2026-03-31,Jordan,Nigeria,2.0,2.0,Friendly,Antalya,Turkey,True,False,1759.2702209531403,1853.0535342116793
-2026-03-31,Liberia,Libya,2.0,2.0,"Morocco, Capital of African Football",Casablanca,Morocco,True,False,1419.7791354270175,1536.2185588378736
-2026-03-31,Botswana,Malawi,1.0,0.0,Mukuru 4 Nations,Francistown,Botswana,False,False,1372.187760613138,1454.4199753228106
 2026-03-31,Morocco,Paraguay,2.0,1.0,Friendly,Lens,France,True,False,1955.192897658413,1897.1908083584478
-2026-03-31,Mexico,Belgium,1.0,1.0,Friendly,Chicago,United States,True,False,1946.694950286757,1903.3713775446959
-2026-03-31,Montenegro,Slovenia,2.0,3.0,Friendly,Podgorica,Montenegro,False,False,1499.4815243855644,1731.4583686966012
 2026-03-31,Equatorial Guinea,Madagascar,1.0,1.0,Friendly,Manavgat,Turkey,True,False,1454.893073563022,1510.6748117950642
+2026-03-31,Mexico,Belgium,1.0,1.0,Friendly,Chicago,United States,True,False,1946.694950286757,1903.3713775446959
+2026-03-31,Botswana,Malawi,1.0,0.0,Mukuru 4 Nations,Francistown,Botswana,False,False,1372.187760613138,1454.4199753228106
+2026-03-31,Montenegro,Slovenia,2.0,3.0,Friendly,Podgorica,Montenegro,False,False,1499.4815243855644,1731.4583686966012
+2026-03-31,Jordan,Nigeria,2.0,2.0,Friendly,Antalya,Turkey,True,False,1759.2702209531403,1853.0535342116793
+2026-03-31,Ivory Coast,Scotland,1.0,0.0,Friendly,Liverpool,England,True,False,1779.1385507688397,1818.6252563369976
+2026-03-31,Hungary,Greece,0.0,0.0,Friendly,Budapest,Hungary,False,False,1745.087164133943,1807.9094127385733
+2026-03-31,Liberia,Libya,2.0,2.0,"Morocco, Capital of African Football",Casablanca,Morocco,True,False,1419.7791354270175,1536.2185588378736
 2026-03-31,Haiti,Iceland,1.0,1.0,Friendly,Toronto,Canada,True,False,1696.0389146404405,1612.2911495465066
 2026-03-31,Netherlands,Ecuador,1.0,1.0,Friendly,Eindhoven,Netherlands,False,False,2010.9350042047417,1994.9623610189294
 2026-03-31,Kosovo,Turkey,0.0,1.0,FIFA World Cup qualification,Pristina,Kosovo,False,False,1776.6820153183871,1920.5453416929272
 2026-03-31,Norway,Switzerland,0.0,0.0,Friendly,Oslo,Norway,False,False,1949.822534104147,1928.3341938035041
-2026-03-31,Cameroon,China,2.0,0.0,FIFA Series,Melbourne,Australia,True,False,1705.3853083589804,1553.2153722646508
+2026-03-31,Czech Republic,Denmark,2.0,2.0,FIFA World Cup qualification,Prague,Czech Republic,False,True,1773.6852082944931,1925.6024258148766
 2026-03-31,Republic of Ireland,North Macedonia,0.0,0.0,Friendly,Dublin,Republic of Ireland,False,False,1739.0344203297436,1630.1822524336046
 2026-03-31,San Marino,Andorra,0.0,0.0,Friendly,Serravalle,San Marino,False,False,932.1742000267095,1137.7427413708128
 2026-03-31,Senegal,Gambia,3.0,1.0,Friendly,Diamniadio,Senegal,False,False,1917.9403932179193,1532.7552452821512
@@ -49254,7 +49254,7 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-03-31,Bosnia and Herzegovina,Italy,1.0,1.0,FIFA World Cup qualification,Zenica,Bosnia and Herzegovina,False,True,1637.8028398895467,1926.393888759322
 2026-03-31,Sweden,Poland,3.0,2.0,FIFA World Cup qualification,Solna,Sweden,False,False,1761.4075455196457,1789.7468834701222
 2026-03-31,United States,Portugal,0.0,2.0,Friendly,Atlanta,United States,False,False,1822.7921277675537,2029.3617135897694
-2026-03-31,Czech Republic,Denmark,2.0,2.0,FIFA World Cup qualification,Prague,Czech Republic,False,True,1773.6852082944931,1925.6024258148766
+2026-03-31,Cameroon,China,2.0,0.0,FIFA Series,Melbourne,Australia,True,False,1705.3853083589804,1553.2153722646508
 2026-03-31,Australia,Curaçao,5.0,1.0,FIFA Series,Melbourne,Australia,False,False,1881.5761216049584,1607.3296658625575
 2026-03-31,Kazakhstan,Comoros,1.0,0.0,FIFA Series,Astana,Kazakhstan,False,False,1476.338110665498,1479.7810255803884
 2026-03-31,Wales,Northern Ireland,1.0,1.0,Friendly,Cardiff,Wales,False,False,1749.512107350416,1635.1025080184488
@@ -49263,63 +49263,62 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-05-26,Morocco,Burundi,5.0,0.0,Friendly,Salé,Morocco,False,False,1963.5388014694943,1389.9497962455596
 2026-05-26,Nigeria,Zimbabwe,2.0,0.0,Unity Cup,London,England,True,False,1850.4179365331295,1464.0249555615944
 2026-05-27,India,Jamaica,0.0,2.0,Unity Cup,London,England,True,False,1267.381239122279,1677.8227973353323
-2026-05-28,Egypt,Russia,1.0,0.0,Friendly,Cairo,Egypt,False,False,1796.5708396444243,1822.419455418096
 2026-05-28,Republic of Ireland,Qatar,1.0,0.0,Friendly,Dublin,Republic of Ireland,False,False,1736.6729631500336,1570.4318725939213
-2026-05-29,Andorra,Iraq,0.0,1.0,Friendly,Girona,Spain,True,False,1134.794415845446,1727.9178898203138
-2026-05-29,Bosnia and Herzegovina,North Macedonia,0.0,0.0,Friendly,Sarajevo,Bosnia and Herzegovina,False,False,1646.4672838233362,1635.560747525222
+2026-05-28,Egypt,Russia,1.0,0.0,Friendly,Cairo,Egypt,False,False,1796.5708396444243,1822.419455418096
 2026-05-29,Iran,Gambia,3.0,1.0,Friendly,Aksu,Turkey,True,False,1871.443174338687,1531.0240555742073
 2026-05-29,South Africa,Nicaragua,0.0,0.0,Friendly,Johannesburg,South Africa,False,False,1652.5604485658514,1507.6601865099783
-2026-05-30,Zimbabwe,India,1.0,0.0,Unity Cup,London,England,True,False,1460.3652079120693,1264.153904580397
-2026-05-30,Nigeria,Jamaica,3.0,0.0,Unity Cup,London,England,True,False,1854.0776841826546,1681.0501318772144
-2026-05-30,Scotland,Curaçao,4.0,1.0,Friendly,Glasgow,Scotland,False,False,1807.4936058163619,1602.458099183232
+2026-05-29,Andorra,Iraq,0.0,1.0,Friendly,Girona,Spain,True,False,1134.794415845446,1727.9178898203138
+2026-05-29,Bosnia and Herzegovina,North Macedonia,0.0,0.0,Friendly,Sarajevo,Bosnia and Herzegovina,False,False,1646.4672838233362,1635.560747525222
 2026-05-30,Ecuador,Saudi Arabia,2.0,1.0,Friendly,Harrison,United States,True,False,1998.1816370726299,1674.4387403989824
 2026-05-30,South Korea,Trinidad and Tobago,5.0,0.0,Friendly,Provo,United States,True,False,1858.7586619208637,1547.9222923578477
 2026-05-30,Mexico,Australia,1.0,0.0,Friendly,Pasadena,United States,True,False,1947.8843378869576,1886.447688284284
-2026-05-31,Japan,Iceland,1.0,0.0,Friendly,Tokyo,Japan,False,False,1974.1861946559939,1614.655979266118
-2026-05-31,Switzerland,Jordan,4.0,1.0,Friendly,St. Gallen,Switzerland,False,False,1931.6950360763428,1761.9058186316902
-2026-05-31,Singapore,Mongolia,4.0,0.0,Friendly,Singapore,Singapore,False,False,1288.209467165268,1026.5489041090384
-2026-05-31,Poland,Ukraine,0.0,2.0,Friendly,Wrocław,Poland,False,False,1775.8060348502856,1814.5647387080955
-2026-05-31,United States,Senegal,3.0,2.0,Friendly,Charlotte,United States,False,False,1812.2540441901922,1919.6715829258633
-2026-05-31,Czech Republic,Kosovo,2.0,1.0,Friendly,Prague,Czech Republic,False,False,1776.2809376289056,1761.379705585417
-2026-05-31,Cape Verde,Serbia,3.0,0.0,Friendly,Lisbon,Portugal,True,False,1658.5170907429065,1836.068409444538
-2026-05-31,Brazil,Panama,6.0,2.0,Friendly,Rio de Janeiro,Brazil,False,False,2050.7508547367115,1850.335058974961
+2026-05-30,Scotland,Curaçao,4.0,1.0,Friendly,Glasgow,Scotland,False,False,1807.4936058163619,1602.458099183232
+2026-05-30,Zimbabwe,India,1.0,0.0,Unity Cup,London,England,True,False,1460.3652079120693,1264.153904580397
+2026-05-30,Nigeria,Jamaica,3.0,0.0,Unity Cup,London,England,True,False,1854.0776841826546,1681.0501318772144
 2026-05-31,Germany,Finland,4.0,0.0,Friendly,Mainz,Germany,False,False,1976.1084897581002,1587.7875313187162
-2026-06-01,Norway,Sweden,3.0,1.0,Friendly,Oslo,Norway,False,False,1946.4616918313084,1775.3483941394823
+2026-05-31,Cape Verde,Serbia,3.0,0.0,Friendly,Lisbon,Portugal,True,False,1658.5170907429065,1836.068409444538
+2026-05-31,Czech Republic,Kosovo,2.0,1.0,Friendly,Prague,Czech Republic,False,False,1776.2809376289056,1761.379705585417
+2026-05-31,Japan,Iceland,1.0,0.0,Friendly,Tokyo,Japan,False,False,1974.1861946559939,1614.655979266118
+2026-05-31,Brazil,Panama,6.0,2.0,Friendly,Rio de Janeiro,Brazil,False,False,2050.7508547367115,1850.335058974961
+2026-05-31,Singapore,Mongolia,4.0,0.0,Friendly,Singapore,Singapore,False,False,1288.209467165268,1026.5489041090384
+2026-05-31,Switzerland,Jordan,4.0,1.0,Friendly,St. Gallen,Switzerland,False,False,1931.6950360763428,1761.9058186316902
+2026-05-31,United States,Senegal,3.0,2.0,Friendly,Charlotte,United States,False,False,1812.2540441901922,1919.6715829258633
+2026-05-31,Poland,Ukraine,0.0,2.0,Friendly,Wrocław,Poland,False,False,1775.8060348502856,1814.5647387080955
+2026-06-01,Colombia,Costa Rica,3.0,1.0,Friendly,Bogotá,Colombia,False,False,2041.3474781187992,1740.11536689609
 2026-06-01,Austria,Tunisia,1.0,0.0,Friendly,Vienna,Austria,False,False,1867.8933082519138,1747.749150677
 2026-06-01,Canada,Uzbekistan,2.0,0.0,Friendly,Edmonton,Canada,False,False,1882.7649547685953,1812.8714620655649
-2026-06-01,Colombia,Costa Rica,3.0,1.0,Friendly,Bogotá,Colombia,False,False,2041.3474781187992,1740.11536689609
-2026-06-01,Bulgaria,Montenegro,0.0,1.0,Friendly,Plovdiv,Bulgaria,False,False,1539.674002665939,1493.1073822489234
 2026-06-01,Turkey,North Macedonia,4.0,0.0,Friendly,Istanbul,Turkey,False,False,1935.8476514258975,1638.6487140291215
+2026-06-01,Bulgaria,Montenegro,0.0,1.0,Friendly,Plovdiv,Bulgaria,False,False,1539.674002665939,1493.1073822489234
+2026-06-01,Slovakia,Malta,2.0,1.0,Friendly,Dunajská Streda,Slovakia,False,False,1709.9550225637836,1324.81101846267
 2026-06-01,Maldives,Afghanistan,0.0,1.0,Diamond Jubilee International Football Tournament,Malé,Maldives,False,False,1073.3018618384588,1241.2514974391427
 2026-06-01,Maldives,Pakistan,0.0,3.0,Diamond Jubilee International Football Tournament,Malé,Maldives,False,False,1063.2158467935124,1040.1532732223704
-2026-06-01,Slovakia,Malta,2.0,1.0,Friendly,Dunajská Streda,Slovakia,False,False,1709.9550225637836,1324.81101846267
+2026-06-01,Norway,Sweden,3.0,1.0,Friendly,Oslo,Norway,False,False,1946.4616918313084,1775.3483941394823
 2026-06-02,Croatia,Belgium,0.0,2.0,Friendly,Rijeka,Croatia,False,False,1980.2260870282048,1904.61190723151
 2026-06-02,Georgia,Romania,1.0,1.0,Friendly,Tbilisi,Georgia,False,False,1700.7062003338228,1680.759936197829
 2026-06-02,Haiti,New Zealand,4.0,0.0,Friendly,Fort Lauderdale,United States,True,False,1693.674084920829,1734.1694101691112
 2026-06-02,Morocco,Madagascar,4.0,0.0,Friendly,Rabat,Morocco,False,False,1964.3501140392111,1509.0829388619159
 2026-06-02,Wales,Ghana,1.0,1.0,Friendly,Cardiff,Wales,False,False,1744.020908083805,1621.0858719855573
-2026-06-03,Albania,Israel,0.0,1.0,Friendly,Tirana,Albania,False,False,1682.1493737928822,1687.56022914183
-2026-06-03,DR Congo,Denmark,0.0,0.0,Friendly,Liège,Belgium,True,False,1751.3806276314162,1923.0066964804641
 2026-06-03,Gibraltar,British Virgin Islands,4.0,0.0,Friendly,Europa Point,Gibraltar,False,False,1114.7174513778332,1026.3286803407195
 2026-06-03,Luxembourg,Italy,0.0,1.0,Friendly,Luxembourg,Luxembourg,False,False,1428.884466143713,1917.7294448255325
+2026-06-03,DR Congo,Denmark,0.0,0.0,Friendly,Liège,Belgium,True,False,1751.3806276314162,1923.0066964804641
 2026-06-03,South Korea,El Salvador,1.0,0.0,Friendly,Provo,United States,True,False,1864.4849163933568,1490.3001115468246
-2026-06-03,Poland,Nigeria,2.0,2.0,Friendly,Warsaw,Poland,False,False,1758.1890824202455,1865.878080524001
+2026-06-03,Albania,Israel,0.0,1.0,Friendly,Tirana,Albania,False,False,1682.1493737928822,1687.56022914183
+2026-06-03,Netherlands,Algeria,0.0,1.0,Friendly,Rotterdam,Netherlands,False,False,2007.7157281510413,1843.4308091379287
 2026-06-03,Philippines,Guam,5.0,1.0,Friendly,Manila,Philippines,False,False,1319.3203201969359,1030.740457968601
 2026-06-03,Panama,Dominican Republic,4.0,2.0,Friendly,Panama City,Panama,False,False,1844.6848214128825,1487.9464379864842
-2026-06-03,Netherlands,Algeria,0.0,1.0,Friendly,Rotterdam,Netherlands,False,False,2007.7157281510413,1843.4308091379287
+2026-06-03,Poland,Nigeria,2.0,2.0,Friendly,Warsaw,Poland,False,False,1758.1890824202455,1865.878080524001
 2026-06-04,Iran,Mali,2.0,0.0,Friendly,Antalya,Turkey,True,False,1875.1484522554458,1709.1887065980377
 2026-06-04,Andorra,Liechtenstein,2.0,0.0,Friendly,Encamp,Andorra,False,False,1134.1573810137468,974.4733730564296
 2026-06-04,France,Ivory Coast,1.0,2.0,Friendly,Nantes,France,False,False,2127.6527485239403,1790.2702012894754
 2026-06-04,Guatemala,Czech Republic,1.0,5.0,Friendly,Harrison,United States,True,False,1655.437275830162,1783.0893307099482
-2026-06-04,Slovenia,Cyprus,1.0,1.0,Friendly,Ljubljana,Slovenia,False,False,1737.8325108332422,1352.8353813150231
+2026-06-04,Spain,Iraq,1.0,1.0,Friendly,A Coruña,Spain,False,False,2205.28085195748,1728.5549246520131
 2026-06-04,Cambodia,Bhutan,4.0,0.0,Friendly,Phnom Penh,Cambodia,False,False,1060.2521286130457,895.198455734178
 2026-06-04,Mexico,Serbia,5.0,1.0,Friendly,Toluca,Mexico,False,False,1956.1342518860656,1810.3302796395492
 2026-06-04,Northern Ireland,Guinea,1.0,0.0,Friendly,La Línea de la Concepción,Spain,True,False,1640.59370728506,1577.1709094741689
-2026-06-04,Spain,Iraq,1.0,1.0,Friendly,A Coruña,Spain,False,False,2205.28085195748,1728.5549246520131
+2026-06-04,Slovenia,Cyprus,1.0,1.0,Friendly,Ljubljana,Slovenia,False,False,1737.8325108332422,1352.8353813150231
 2026-06-04,Sweden,Greece,2.0,2.0,Friendly,Solna,Sweden,False,False,1770.1418077252076,1808.9754088771522
 2026-06-04,Lesotho,Kenya,1.0,1.0,Friendly,Pretoria,South Africa,True,False,1408.2361222281384,1470.766312093628
-2026-06-05,Hungary,Finland,2.0,1.0,Friendly,Budapest,Hungary,False,False,1744.021167995364,1585.6600600120096
-2026-06-05,Moldova,Bulgaria,2.0,2.0,Friendly,Chișinău,Moldova,False,False,1311.4699626744748,1525.6891023019525
+2026-06-05,Indonesia,Oman,3.0,0.0,Friendly,Jakarta,Indonesia,False,False,1471.6363040655306,1587.6677491512003
 2026-06-05,Angola,Mauritania,1.0,1.0,Friendly,Casablanca,Morocco,True,False,1580.5306578759785,1427.2323279417449
 2026-06-05,Azerbaijan,Malta,0.0,2.0,Friendly,Szombathely,Hungary,True,False,1392.8964004353543,1323.656634390839
 2026-06-05,Belarus,Syria,4.0,1.0,Friendly,Minsk,Belarus,False,False,1556.8484388331124,1596.003453741789
@@ -49327,7 +49326,8 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-06-05,Georgia,Bahrain,2.0,0.0,Friendly,Tbilisi,Georgia,False,False,1697.3847877917422,1536.9872371642905
 2026-06-05,Haiti,Peru,1.0,2.0,Friendly,Miami,United States,True,False,1714.5996467895202,1755.781719441091
 2026-06-05,Hong Kong,Mongolia,2.0,0.0,Friendly,Hong Kong,Hong Kong,False,False,1329.7870607149318,1022.3912807366183
-2026-06-05,Indonesia,Oman,3.0,0.0,Friendly,Jakarta,Indonesia,False,False,1471.6363040655306,1587.6677491512003
+2026-06-05,Hungary,Finland,2.0,1.0,Friendly,Budapest,Hungary,False,False,1744.021167995364,1585.6600600120096
+2026-06-05,Moldova,Bulgaria,2.0,2.0,Friendly,Chișinău,Moldova,False,False,1311.4699626744748,1525.6891023019525
 2026-06-05,San Marino,Bangladesh,1.0,2.0,Friendly,Serravalle,San Marino,False,False,935.1225255520761,1132.535732581907
 2026-06-05,Singapore,China,1.0,2.0,Friendly,Singapore,Singapore,False,False,1292.367090537688,1542.1897892289567
 2026-06-05,Slovakia,Montenegro,2.0,2.0,Friendly,Košice,Slovakia,False,False,1711.1094066356147,1507.09228261291
@@ -49338,59 +49338,57 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-06-05,Central African Republic,Togo,1.0,1.0,Friendly,Mohammedia,Morocco,True,False,1372.2719142725557,1471.4004072731054
 2026-06-05,Puerto Rico,Saudi Arabia,0.0,3.0,Friendly,Austin,United States,True,False,1369.6643284098197,1671.7530928785818
 2026-06-05,Paraguay,Nicaragua,4.0,0.0,Friendly,Asunción,Paraguay,False,False,1888.8449045473665,1513.7347458174868
-2026-06-06,Argentina,Honduras,2.0,0.0,Friendly,College Station,United States,True,False,2171.329559133601,1709.2662508922233
 2026-06-06,Armenia,Kazakhstan,1.0,1.0,Friendly,Yerevan,Armenia,False,False,1414.3505477221825,1485.4509481518223
 2026-06-06,Australia,Switzerland,1.0,1.0,Friendly,San Diego,United States,True,False,1878.197774285176,1937.8077456732785
 2026-06-06,Belgium,Tunisia,5.0,0.0,Friendly,Brussels,Belgium,False,False,1926.6078912654025,1743.3545888932515
-2026-06-06,Ethiopia,Malawi,1.0,0.0,Friendly,Dire Dawa,Ethiopia,False,False,1385.1798980006156,1442.558666096684
-2026-06-06,Sierra Leone,Liberia,1.0,0.0,Friendly,Bo,Sierra Leone,False,False,1470.0255543828912,1423.8182772835346
-2026-06-06,Brazil,Egypt,2.0,1.0,Friendly,Cleveland,United States,True,False,2056.40109229879,1804.4684166303796
+2026-06-06,Bermuda,Cape Verde,3.0,0.0,Friendly,East Hartford,United States,True,False,1309.847620679442,1684.2552205478953
+2026-06-06,Argentina,Honduras,2.0,0.0,Friendly,College Station,United States,True,False,2171.329559133601,1709.2662508922233
+2026-06-06,Bolivia,Scotland,0.0,4.0,Friendly,Harrison,United States,True,False,1721.062795651298,1812.6491538933883
 2026-06-06,Curaçao,Aruba,4.0,0.0,Friendly,Willemstad,Curaçao,False,False,1597.3025511062056,1211.3496858540675
 2026-06-06,England,New Zealand,1.0,0.0,Friendly,Tampa,United States,True,False,2061.3641272274804,1713.24384830042
-2026-06-06,Vanuatu,Fiji,2.0,1.0,Friendly,Port Vila,Vanuatu,False,False,1442.037535252402,1452.017761272821
-2026-06-06,Bermuda,Cape Verde,3.0,0.0,Friendly,East Hartford,United States,True,False,1309.847620679442,1684.2552205478953
-2026-06-06,Bolivia,Scotland,0.0,4.0,Friendly,Harrison,United States,True,False,1721.062795651298,1812.6491538933883
+2026-06-06,Sierra Leone,Liberia,1.0,0.0,Friendly,Bo,Sierra Leone,False,False,1470.0255543828912,1423.8182772835346
 2026-06-06,Albania,Luxembourg,0.0,1.0,Friendly,Tirana,Albania,False,False,1669.4922067671334,1426.9573214446198
-2026-06-06,Estonia,Faroe Islands,1.0,0.0,Baltic Cup,Pärnu,Estonia,False,False,1409.2993434272767,1433.0660924302538
-2026-06-06,Gibraltar,Cayman Islands,4.0,1.0,Friendly,Gibraltar,Gibraltar,False,False,1124.192361295942,1064.271243735674
+2026-06-06,Ethiopia,Malawi,1.0,0.0,Friendly,Dire Dawa,Ethiopia,False,False,1385.1798980006156,1442.558666096684
+2026-06-06,Brazil,Egypt,2.0,1.0,Friendly,Cleveland,United States,True,False,2056.40109229879,1804.4684166303796
+2026-06-06,Vanuatu,Fiji,2.0,1.0,Friendly,Port Vila,Vanuatu,False,False,1442.037535252402,1452.017761272821
+2026-06-06,Gibraltar,Cayman Islands,4.0,1.0,Friendly,Europa Point,Gibraltar,False,False,1124.192361295942,1064.271243735674
 2026-06-06,Kyrgyzstan,Palestine,0.0,0.0,Friendly,Bishkek,Kyrgyzstan,False,False,1441.435430424884,1574.0982137900896
-2026-06-06,Panama,Bosnia and Herzegovina,1.0,1.0,Friendly,St. Louis,United States,True,False,1846.7033052849304,1643.3793173194367
 2026-06-06,Portugal,Chile,2.0,1.0,Friendly,Oeiras,Portugal,False,False,2039.8997971671308,1788.8318275656127
 2026-06-06,Qatar,El Salvador,0.0,0.0,Friendly,Los Angeles,United States,True,False,1566.8796209329648,1488.2209153457575
-2026-06-06,Jamaica,South Africa,0.0,1.0,Friendly,Pachuca,Mexico,True,False,1669.249735535868,1646.485889258343
-2026-06-06,United States,Germany,1.0,2.0,Friendly,Chicago,United States,False,False,1822.4675056859987,1978.2359610648068
 2026-06-06,Romania,Wales,2.0,1.0,Friendly,Bucharest,Romania,False,False,1684.0813487399096,1738.3606298283187
-2026-06-06,Gibraltar,Cayman Islands,4.0,1.0,Friendly,Europa Point,Gibraltar,False,False,1134.1617521798655,1054.3018528517505
-2026-06-06,Venezuela,Turkey,1.0,2.0,Friendly,Fort Lauderdale,United States,True,False,1803.696967194088,1939.3070447865505
-2026-06-06,Myanmar,Guam,6.0,1.0,Tri-Nations Cup,Manila,Philippines,True,False,1136.668014862507,1027.1220754281105
-2026-06-06,British Virgin Islands,Bonaire,2.0,0.0,Friendly,Málaga,Spain,True,False,1016.8537704226106,1153.66358440892
+2026-06-06,United States,Germany,1.0,2.0,Friendly,Chicago,United States,False,False,1822.4675056859987,1978.2359610648068
+2026-06-06,Gibraltar,Cayman Islands,4.0,1.0,Friendly,Gibraltar,Gibraltar,False,False,1134.1617521798655,1054.3018528517505
 2026-06-06,Lithuania,Latvia,1.0,1.0,Baltic Cup,Kaunas,Lithuania,False,True,1325.5729981226411,1330.4405367969873
-2026-06-07,Greece,Italy,0.0,1.0,Friendly,Heraklion,Greece,False,False,1810.717953649195,1919.6565895246258
-2026-06-07,Afghanistan,Pakistan,0.0,2.0,Diamond Jubilee International Football Tournament,Malé,Maldives,True,False,1251.337512484089,1069.4679018164363
-2026-06-07,Croatia,Slovenia,2.0,1.0,Friendly,Varaždin,Croatia,False,False,1958.2301029943123,1728.9878149211443
-2026-06-07,Ecuador,Guatemala,3.0,0.0,Friendly,Columbus,United States,True,False,2000.8672845930305,1643.282139724985
+2026-06-06,British Virgin Islands,Bonaire,2.0,0.0,Friendly,Málaga,Spain,True,False,1016.8537704226106,1153.66358440892
+2026-06-06,Myanmar,Guam,6.0,1.0,Tri-Nations Cup,Manila,Philippines,True,False,1136.668014862507,1027.1220754281105
+2026-06-06,Panama,Bosnia and Herzegovina,1.0,1.0,Friendly,St. Louis,United States,True,False,1846.7033052849304,1643.3793173194367
+2026-06-06,Estonia,Faroe Islands,1.0,0.0,Baltic Cup,Pärnu,Estonia,False,False,1409.2993434272767,1433.0660924302538
+2026-06-06,Jamaica,South Africa,0.0,1.0,Friendly,Pachuca,Mexico,True,False,1669.249735535868,1646.485889258343
+2026-06-06,Venezuela,Turkey,1.0,2.0,Friendly,Fort Lauderdale,United States,True,False,1803.696967194088,1939.3070447865505
 2026-06-07,Jordan,Colombia,0.0,2.0,Friendly,San Diego,United States,True,False,1755.7931090347545,2044.057216830389
 2026-06-07,Liechtenstein,Cyprus,0.0,2.0,Friendly,Vaduz,Liechtenstein,False,False,968.9775773064163,1361.680077227121
-2026-06-07,Morocco,Norway,1.0,1.0,Friendly,Harrison,United States,True,False,1965.823953049545,1951.668278245583
-2026-06-07,Denmark,Ukraine,2.0,1.0,Friendly,Odense,Denmark,False,False,1918.433004242789,1832.1816911381356
 2026-06-07,Kosovo,Andorra,3.0,0.0,Friendly,Pristina,Kosovo,False,False,1754.5713125043744,1139.65317676376
+2026-06-07,Greece,Italy,0.0,1.0,Friendly,Heraklion,Greece,False,False,1810.717953649195,1919.6565895246258
+2026-06-07,Morocco,Norway,1.0,1.0,Friendly,Harrison,United States,True,False,1965.823953049545,1951.668278245583
+2026-06-07,Croatia,Slovenia,2.0,1.0,Friendly,Varaždin,Croatia,False,False,1958.2301029943123,1728.9878149211443
+2026-06-07,Afghanistan,Pakistan,0.0,2.0,Diamond Jubilee International Football Tournament,Malé,Maldives,True,False,1251.337512484089,1069.4679018164363
+2026-06-07,Denmark,Ukraine,2.0,1.0,Friendly,Odense,Denmark,False,False,1918.433004242789,1832.1816911381356
+2026-06-07,Ecuador,Guatemala,3.0,0.0,Friendly,Columbus,United States,True,False,2000.8672845930305,1643.282139724985
 2026-06-08,Mauritania,Niger,1.0,0.0,Friendly,Casablanca,Morocco,True,False,1431.3789465716995,1489.5282080948707
 2026-06-08,Peru,Spain,1.0,3.0,Friendly,Puebla,Mexico,True,False,1764.6019242064024,2195.97874659866
-2026-06-08,Netherlands,Uzbekistan,2.0,1.0,Friendly,New York,United States,True,False,1991.3009952978396,1804.6727117990101
 2026-06-08,France,Northern Ireland,3.0,1.0,Friendly,Lille,France,False,False,2109.1451755416374,1648.788262209661
-2026-06-09,China,Thailand,0.0,0.0,Friendly,Hangzhou,China,False,False,1548.1263488100135,1530.7746348260089
-2026-06-09,Cambodia,Hong Kong,2.0,0.0,Friendly,Phnom Penh,Cambodia,False,False,1066.9501234334039,1332.4106015394505
-2026-06-09,Azerbaijan,San Marino,2.0,1.0,Friendly,Szombathely,Hungary,True,False,1374.9460350541458,927.8550721407195
-2026-06-09,Ethiopia,Malawi,1.0,1.0,Friendly,Dire Dawa,Ethiopia,False,False,1393.9592771822322,1433.7792869150674
-2026-06-09,Argentina,Iceland,3.0,0.0,Friendly,Auburn,United States,True,False,2173.291093718378,1613.3303546899556
-2026-06-09,Angola,Central African Republic,3.0,0.0,Friendly,Casablanca,Morocco,True,False,1576.3840392460238,1375.0500824863007
+2026-06-08,Netherlands,Uzbekistan,2.0,1.0,Friendly,New York,United States,True,False,1991.3009952978396,1804.6727117990101
 2026-06-09,DR Congo,Chile,1.0,2.0,Friendly,Orléans,France,True,False,1755.9543198690915,1786.4913283573987
-2026-06-09,Iraq,Venezuela,0.0,2.0,Friendly,Bridgeview,United States,True,False,1737.8570300108331,1797.413303523363
-2026-06-09,Armenia,Moldova,1.0,1.0,Friendly,Yerevan,Armenia,False,False,1413.5206634536605,1314.643926168487
-2026-06-09,Equatorial Guinea,Comoros,0.0,1.0,Friendly,Marrakesh,Morocco,True,False,1456.4849464961703,1470.6681880940641
+2026-06-09,China,Thailand,0.0,0.0,Friendly,Hangzhou,China,False,False,1548.1263488100135,1530.7746348260089
 2026-06-09,Belarus,Burkina Faso,2.0,2.0,Friendly,Minsk,Belarus,False,False,1571.3146857315776,1644.7964161228556
-2026-06-09,Liberia,Sierra Leone,3.0,1.0,Friendly,Monrovia,Liberia,False,False,1417.794473698227,1476.0493579681988
-2026-06-09,Indonesia,Mozambique,1.0,0.0,Friendly,Jakarta,Indonesia,False,False,1489.9432201191757,1490.8291396884108
+2026-06-09,Angola,Central African Republic,3.0,0.0,Friendly,Casablanca,Morocco,True,False,1576.3840392460238,1375.0500824863007
+2026-06-09,Armenia,Moldova,1.0,1.0,Friendly,Yerevan,Armenia,False,False,1413.5206634536605,1314.643926168487
+2026-06-09,Argentina,Iceland,3.0,0.0,Friendly,Auburn,United States,True,False,2173.291093718378,1613.3303546899556
+2026-06-09,Equatorial Guinea,Comoros,0.0,1.0,Friendly,Marrakesh,Morocco,True,False,1456.4849464961703,1470.6681880940641
+2026-06-09,Ethiopia,Malawi,1.0,1.0,Friendly,Dire Dawa,Ethiopia,False,False,1393.9592771822322,1433.7792869150674
+2026-06-09,Azerbaijan,San Marino,2.0,1.0,Friendly,Szombathely,Hungary,True,False,1374.9460350541458,927.8550721407195
+2026-06-09,Hungary,Kazakhstan,3.0,1.0,Friendly,Debrecen,Hungary,False,False,1747.707876678167,1486.2808324203443
+2026-06-09,Cambodia,Hong Kong,2.0,0.0,Friendly,Phnom Penh,Cambodia,False,False,1066.9501234334039,1332.4106015394505
 2026-06-09,Kyrgyzstan,Palestine,0.0,0.0,Friendly,Bishkek,Kyrgyzstan,False,False,1442.3727810674136,1573.1608631475601
 2026-06-09,Saudi Arabia,Senegal,0.0,0.0,Friendly,San Antonio,United States,True,False,1676.9836586731894,1909.458121430057
 2026-06-09,Tajikistan,India,1.0,1.0,Friendly,Hisor,Tajikistan,False,False,1444.9719548792627,1253.1046397017062
@@ -49399,9 +49397,11 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-06-09,Estonia,Lithuania,1.0,0.0,Baltic Cup,Tallinn,Estonia,False,False,1419.0998151806896,1322.2333796629155
 2026-06-09,Russia,Trinidad and Tobago,3.0,0.0,Friendly,Kaliningrad,Russia,False,False,1820.8216049407476,1542.1960378853546
 2026-06-09,Togo,Benin,5.0,1.0,Friendly,Lomé,Togo,False,False,1468.6222390593605,1545.6900343771815
-2026-06-09,Hungary,Kazakhstan,3.0,1.0,Friendly,Debrecen,Hungary,False,False,1747.707876678167,1486.2808324203443
-2026-06-10,Bolivia,Algeria,0.0,4.0,Friendly,Kansas City,United States,True,False,1707.1440316937203,1859.8455419911304
+2026-06-09,Liberia,Sierra Leone,3.0,1.0,Friendly,Monrovia,Liberia,False,False,1417.794473698227,1476.0493579681988
+2026-06-09,Iraq,Venezuela,0.0,2.0,Friendly,Bridgeview,United States,True,False,1737.8570300108331,1797.413303523363
+2026-06-09,Indonesia,Mozambique,1.0,0.0,Friendly,Jakarta,Indonesia,False,False,1489.9432201191757,1490.8291396884108
 2026-06-10,England,Costa Rica,3.0,0.0,Friendly,Orlando,United States,True,False,2063.7399216222598,1737.4056281845003
+2026-06-10,Bolivia,Algeria,0.0,4.0,Friendly,Kansas City,United States,True,False,1707.1440316937203,1859.8455419911304
 2026-06-10,Afghanistan,Pakistan,0.0,2.0,Diamond Jubilee International Football Tournament,Malé,Maldives,True,False,1223.5806087324515,1097.2248055680739
 2026-06-10,Portugal,Nigeria,2.0,1.0,Friendly,Leiria,Portugal,False,False,2042.2402963753448,1865.656809491515
 2026-06-11,Mexico,South Africa,2.0,0.0,FIFA World Cup,Mexico City,Mexico,False,False,1963.4637278225512,1657.140149482734
@@ -49414,8 +49414,8 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-06-13,Australia,Turkey,2.0,0.0,FIFA World Cup,Vancouver,Canada,True,False,1879.8968480921744,1945.5907084572755
 2026-06-14,Sweden,Tunisia,5.0,1.0,FIFA World Cup,Guadalupe,Mexico,True,False,1768.399262953165,1736.8043168902911
 2026-06-14,Netherlands,Japan,2.0,2.0,FIFA World Cup,Arlington,United States,True,False,1996.392648170273,1975.5118192321563
-2026-06-14,Ivory Coast,Ecuador,1.0,0.0,FIFA World Cup,Philadelphia,United States,True,False,1808.7777742717785,2004.8294172361523
 2026-06-14,Germany,Curaçao,7.0,1.0,FIFA World Cup,Houston,United States,True,False,1986.64446075718,1599.4575443170634
+2026-06-14,Ivory Coast,Ecuador,1.0,0.0,FIFA World Cup,Philadelphia,United States,True,False,1808.7777742717785,2004.8294172361523
 2026-06-15,Saudi Arabia,Uruguay,1.0,1.0,FIFA World Cup,Miami Gardens,United States,True,False,1682.8276348843265,1960.9211137427594
 2026-06-15,Spain,Cape Verde,0.0,0.0,FIFA World Cup,Atlanta,United States,True,False,2198.290067182629,1652.8896346185143
 2026-06-15,Belgium,Egypt,1.0,1.0,FIFA World Cup,Seattle,United States,True,False,1933.1581632683628,1800.6691272376188
@@ -49424,8 +49424,8 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-06-16,Iraq,Norway,1.0,4.0,FIFA World Cup,Foxborough,United States,True,False,1725.403389265147,1952.0754860188727
 2026-06-16,Argentina,Algeria,3.0,0.0,FIFA World Cup,Kansas City,United States,True,False,2174.63141264154,1870.8473214455041
 2026-06-16,Austria,Jordan,3.0,1.0,FIFA World Cup,Santa Clara,United States,True,False,1872.2878700356623,1750.9977581915448
-2026-06-17,Portugal,DR Congo,1.0,1.0,FIFA World Cup,Houston,United States,True,False,2045.6219497915654,1746.8309893329533
 2026-06-17,Uzbekistan,Colombia,1.0,3.0,FIFA World Cup,Mexico City,Mexico,True,False,1799.5810589265766,2048.8525676735985
+2026-06-17,Portugal,DR Congo,1.0,1.0,FIFA World Cup,Houston,United States,True,False,2045.6219497915654,1746.8309893329533
 2026-06-17,Ghana,Panama,1.0,0.0,FIFA World Cup,Toronto,Canada,True,False,1626.7461502410436,1841.4388616456454
 2026-06-17,England,Croatia,4.0,2.0,FIFA World Cup,Arlington,United States,True,False,2068.379440219964,1960.842995895953
 2026-06-18,Czech Republic,South Africa,1.0,1.0,FIFA World Cup,Atlanta,United States,True,False,1771.3176358188318,1649.2250840330896
@@ -49436,17 +49436,17 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-06-19,Scotland,Morocco,0.0,1.0,FIFA World Cup,Foxborough,United States,True,False,1846.5390325748594,1973.4038520692714
 2026-06-19,Brazil,Haiti,3.0,0.0,FIFA World Cup,Philadelphia,United States,True,False,2052.213274898535,1685.8083273003153
 2026-06-19,United States,Australia,2.0,0.0,FIFA World Cup,Seattle,United States,False,False,1863.0993253775284,1933.3055722414572
-2026-06-20,Germany,Ivory Coast,2.0,1.0,FIFA World Cup,Toronto,Canada,True,False,1999.036378640287,1854.1122015917729
-2026-06-20,Netherlands,Sweden,5.0,1.0,FIFA World Cup,Houston,United States,True,False,1994.5918201368906,1819.5480788416946
 2026-06-20,Ecuador,Curaçao,0.0,0.0,FIFA World Cup,Kansas City,United States,True,False,1959.494989916158,1587.0656264339564
+2026-06-20,Germany,Ivory Coast,2.0,1.0,FIFA World Cup,Toronto,Canada,True,False,1999.036378640287,1854.1122015917729
 2026-06-20,Tunisia,Japan,0.0,4.0,FIFA World Cup,Guadalupe,Mexico,True,False,1685.6555010017614,1977.3126472655388
+2026-06-20,Netherlands,Sweden,5.0,1.0,FIFA World Cup,Houston,United States,True,False,1994.5918201368906,1819.5480788416946
 2026-06-21,Belgium,Iran,0.0,0.0,FIFA World Cup,Inglewood,United States,True,False,1922.242198387574,1869.6943102339046
 2026-06-21,New Zealand,Egypt,1.0,3.0,FIFA World Cup,Vancouver,Canada,True,False,1724.6565545783794,1811.5850921184076
 2026-06-21,Spain,Saudi Arabia,4.0,0.0,FIFA World Cup,Atlanta,United States,True,False,2170.780303165073,1702.7557360984233
 2026-06-21,Uruguay,Cape Verde,2.0,2.0,FIFA World Cup,Miami Gardens,United States,True,False,1940.9930125286626,1680.3993986360706
-2026-06-22,Argentina,Austria,2.0,0.0,FIFA World Cup,Arlington,United States,True,False,2190.1933039848154,1902.1868587880315
 2026-06-22,France,Iraq,3.0,0.0,FIFA World Cup,Philadelphia,United States,True,False,2131.289145671033,1703.0012879513674
 2026-06-22,Norway,Senegal,3.0,2.0,FIFA World Cup,East Rutherford,United States,True,False,1974.4775873326523,1882.6165028526382
+2026-06-22,Argentina,Austria,2.0,0.0,FIFA World Cup,Arlington,United States,True,False,2190.1933039848154,1902.1868587880315
 2026-06-22,Jordan,Algeria,1.0,2.0,FIFA World Cup,Santa Clara,United States,True,False,1721.0987694391756,1855.2854301022287
 2026-06-23,Portugal,Uzbekistan,5.0,0.0,FIFA World Cup,Houston,United States,True,False,2024.7343816864266,1782.2710966194363
 2026-06-23,Colombia,DR Congo,1.0,0.0,FIFA World Cup,Zapopan,Mexico,True,False,2066.162529980739,1767.7185574380921
@@ -49470,11 +49470,11 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-06-26,Uruguay,Spain,0.0,1.0,FIFA World Cup,Zapopan,Mexico,True,False,1921.9376721332535,2177.9036329878168
 2026-06-26,Norway,France,1.0,4.0,FIFA World Cup,Foxborough,United States,True,False,1996.7254673397895,2139.512533460168
 2026-06-26,Senegal,Iraq,5.0,0.0,FIFA World Cup,Toronto,Canada,True,False,1860.368622845501,1694.7779001622325
-2026-06-27,Colombia,Portugal,0.0,0.0,FIFA World Cup,Miami Gardens,United States,True,False,2075.290409679192,2048.5537136249354
 2026-06-27,Algeria,Austria,3.0,3.0,FIFA World Cup,Kansas City,United States,True,False,1874.2425147783058,1887.7828701916114
 2026-06-27,Jordan,Argentina,1.0,3.0,FIFA World Cup,Arlington,United States,True,False,1702.1416847630985,2204.5972925812357
-2026-06-27,Panama,England,0.0,2.0,FIFA World Cup,East Rutherford,United States,True,False,1776.0066309399278,2074.6198944403973
+2026-06-27,Colombia,Portugal,0.0,0.0,FIFA World Cup,Miami Gardens,United States,True,False,2075.290409679192,2048.5537136249354
 2026-06-27,Croatia,Ghana,2.0,1.0,FIFA World Cup,Philadelphia,United States,True,False,1948.284363726394,1698.496558895887
+2026-06-27,Panama,England,0.0,2.0,FIFA World Cup,East Rutherford,United States,True,False,1776.0066309399278,2074.6198944403973
 2026-06-27,DR Congo,Uzbekistan,3.0,1.0,FIFA World Cup,Atlanta,United States,True,False,1758.5906777396385,1758.4517646809277
 2026-06-28,South Africa,Canada,0.0,1.0,FIFA World Cup,Inglewood,United States,True,False,1705.8920775990669,1841.9924133308045
 2026-06-29,Netherlands,Morocco,1.0,1.0,FIFA World Cup,Guadalupe,Mexico,True,True,2034.9129822370471,2005.3185169853052
@@ -49483,8 +49483,8 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-06-30,Mexico,Ecuador,2.0,0.0,FIFA World Cup,Mexico City,Mexico,False,False,2000.9857001454225,1972.6930589484741
 2026-06-30,France,Sweden,3.0,0.0,FIFA World Cup,East Rutherford,United States,True,False,2171.5743065586566,1805.39196631216
 2026-06-30,Ivory Coast,Norway,1.0,2.0,FIFA World Cup,Arlington,United States,True,False,1855.279584820957,1964.6636942413006
-2026-07-01,Belgium,Senegal,3.0,2.0,FIFA World Cup,Seattle,United States,True,False,1941.700036020738,1893.75722521441
 2026-07-01,United States,Bosnia and Herzegovina,2.0,0.0,FIFA World Cup,Santa Clara,United States,False,False,1862.3099173529483,1685.5502607165931
+2026-07-01,Belgium,Senegal,3.0,2.0,FIFA World Cup,Seattle,United States,True,False,1941.700036020738,1893.75722521441
 2026-07-01,England,DR Congo,2.0,1.0,FIFA World Cup,Atlanta,United States,True,False,2088.3004047856466,1803.5726856640729
 2026-07-02,Spain,Austria,3.0,0.0,FIFA World Cup,Inglewood,United States,True,False,2189.088683340467,1886.6142934882346
 2026-07-02,Portugal,Croatia,2.0,1.0,FIFA World Cup,Toronto,Canada,True,False,2050.857799087191,1959.796663158762
@@ -49498,5 +49498,6 @@ date,home_team,away_team,home_score,away_score,tournament,city,country,neutral,d
 2026-07-05,Mexico,England,2.0,3.0,FIFA World Cup,Mexico City,Mexico,False,False,2030.0853691926025,2098.0562753169543
 2026-07-06,Portugal,Spain,0.0,1.0,FIFA World Cup,Dallas,United States,True,False,2073.1701782720506,2204.7507763581607
 2026-07-06,United States,Belgium,1.0,4.0,FIFA World Cup,Seattle,United States,False,False,1877.5145391225683,1967.5863976626563
-2026-07-07,Argentina,Egypt,3.0,2.0,FIFA World Cup,Atlanta,United States,True,False,2212.346604505215,1851.6974860286225
 2026-07-07,Switzerland,Colombia,0.0,0.0,FIFA World Cup,Vancouver,Canada,True,True,2000.4152106916395,2078.853822076659
+2026-07-07,Argentina,Egypt,3.0,2.0,FIFA World Cup,Atlanta,United States,True,False,2212.346604505215,1851.6974860286225
+2026-07-09,France,Morocco,2.0,0.0,FIFA World Cup,Foxborough,United States,True,False,2192.1594478261,2039.38423753302
